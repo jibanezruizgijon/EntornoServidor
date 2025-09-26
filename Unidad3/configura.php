@@ -23,7 +23,7 @@
 </head>
 <body>
     <h1>Página personalizada</h1>
-   
     <img src="img/<?= $banner ?>.jpg" alt="<?= $banner ?>">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum temporibus quam, reiciendis nam alias error repellendus facilis, tenetur necessitatibus inventore consequatur optio officiis fuga provident quasi ducimus, molestiae voluptate id?</p>
 </body>
 </html>

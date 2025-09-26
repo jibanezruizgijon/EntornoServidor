@@ -13,9 +13,12 @@
     $altura = $_POST['altura'];
     $caudal = $_POST['caudal'];
     $radio = $diametro / 2;
+
     $volumen = pi() * $radio * $radio * $altura;
     $volumen_litros = $volumen * 1000;
+
     $tiempo = $volumen_litros / $caudal;
+
     $horas = floor($tiempo / 60);
     $minutos = round($tiempo % 60);
     ?>
