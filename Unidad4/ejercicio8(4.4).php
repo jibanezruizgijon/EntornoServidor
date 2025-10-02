@@ -8,6 +8,22 @@
 </head>
 
 <body>
+    <?php
+    $n = $_POST['n'];
+    ?>
+    <table border="1">
+        <tr>
+            <th>Tabla de multiplicar de <?=$n ?></th>
+        </tr>
+        <?php
+        for($i = 1; $i <= 10; $i++){
+            echo "<tr>
+          <td>$n x $i = ", $n*$i ,"</td>
+          </tr>";
+        }
+          
+        ?>
+    </table>
 
 </body>
 
