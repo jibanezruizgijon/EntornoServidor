@@ -6,7 +6,7 @@ $mensaje = "";
 $mostrarImagenCompleta = false;
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $respuesta = strtolower(trim($_POST["respuesta"]));
+    $respuesta = (trim($_POST["respuesta"]));
     if ($respuesta === $respuesta_correcta) {
         $mensaje = "Has acertado";
         $mostrarImagenCompleta = true;
@@ -154,7 +154,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
     ?>
-
 </body>
 
 </html>
