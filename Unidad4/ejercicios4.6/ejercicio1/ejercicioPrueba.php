@@ -1,0 +1,159 @@
+<?php
+// Respuesta correcta
+$respuesta_correcta = "vaca";
+
+$mensaje = "";
+$mostrarImagenCompleta = false;
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $respuesta = (trim($_POST["respuesta"]));
+    if ($respuesta === $respuesta_correcta) {
+        $mensaje = "Has acertado";
+        $mostrarImagenCompleta = true;
+    } else {
+        $mensaje = "Has fallado";
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio1</title>
+    <style>
+        body {
+            text-align: center;
+            margin: 20px;
+        }
+
+        table {
+            margin: auto;
+            border-collapse: collapse;
+        }
+
+        td {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #444;
+            background: gray;
+            background-image: url('vaca.jpg');
+            background-size: 300px 300px;
+            cursor: pointer;
+        }
+
+        /* Fragmentos */
+        .p1 {
+            background-position: 0 0;
+        }
+
+        .p2 {
+            background-position: -100px 0;
+        }
+
+        .p3 {
+            background-position: -200px 0;
+        }
+
+        .p4 {
+            background-position: 0 -100px;
+        }
+
+        .p5 {
+            background-position: -100px -100px;
+        }
+
+        .p6 {
+            background-position: -200px -100px;
+        }
+
+        .p7 {
+            background-position: 0 -200px;
+        }
+
+        .p8 {
+            background-position: -100px -200px;
+        }
+
+        .p9 {
+            background-position: -200px -200px;
+        }
+
+        .oculto {
+            background-color: gray;
+            background-image: none;
+        }
+
+        .imagen-completa {
+            width: 300px;
+            margin: 20px auto;
+        }
+    </style>
+
+    <script>
+        let bloqueActivo = false; // bandera para permitir solo un bloque
+
+        function mostrar(celda) {
+            if (bloqueActivo) return; // si ya hay uno mostrado, no hace nada
+            bloqueActivo = true;
+
+            celda.classList.remove("oculto");
+            setTimeout(function() {
+                celda.classList.add("oculto");
+                bloqueActivo = false; // vuelve a permitir pulsar otro
+            }, 2000);
+        }
+    </script>
+</head>
+
+<body>
+
+    <h2>Juego: Adivina la Imagen</h2>
+
+    <?php
+    if ($mostrarImagenCompleta) {
+    ?>
+        <img src="vaca.jpg" class="imagen-completa">
+        <p><?= $mensaje ?></p>
+    <?php
+    } else {
+    ?>
+        <table>
+            <tr>
+                <td class="p1 oculto" onclick="mostrar(this)"></td>
+                <td class="p2 oculto" onclick="mostrar(this)"></td>
+                <td class="p3 oculto" onclick="mostrar(this)"></td>
+            </tr>
+            <tr>
+                <td class="p4 oculto" onclick="mostrar(this)"></td>
+                <td class="p5 oculto" onclick="mostrar(this)"></td>
+                <td class="p6 oculto" onclick="mostrar(this)"></td>
+            </tr>
+            <tr>
+                <td class="p7 oculto" onclick="mostrar(this)"></td>
+                <td class="p8 oculto" onclick="mostrar(this)"></td>
+                <td class="p9 oculto" onclick="mostrar(this)"></td>
+            </tr>
+        </table>
+        <br>
+        <form method="post">
+            <input type="text" name="respuesta" placeholder="¿Qué es?" required>
+            <button type="submit">Comprobar</button>
+        </form>
+
+        <?php
+        if ($mensaje) {
+        ?>
+            <p><?= $mensaje ?></p>
+            <form method="get">
+                <button type="submit">Volver</button>
+            </form>
+    <?php
+        }
+    }
+    ?>
+</body>
+
+</html>
