@@ -38,7 +38,7 @@
     <h3>LLevas <?=$intentos ?> intentos</h3>
     <!-- Hace un if en cada <td> para comprobar si es esa celda la que se ha pulsado -->
       <!-- Según el if se mostrará el trozo de la imagen a descubrir o se quedará en gris -->
-    <table>
+    <table border="1px">
         <tr>
             <td <?php
               $imagen = ($num ==1)? "img/vaca1.jpg" : "img/gris.jpg";

@@ -32,7 +32,7 @@
 
     ?>
     <!-- Tabla donde aparecerá cada trozo de imagen que se podrá clicar para revelar -->
-    <table>
+    <table border="1px">
         <tr>
             <td><a href="descubre3.php?num=1&intentos=<?=$intentos?>"><img src="img/gris.jpg"></a></td>
             <td><a href="descubre3.php?num=2&intentos=<?=$intentos?>"><img src="img/gris.jpg"></a></td>

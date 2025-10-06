@@ -9,7 +9,13 @@
 
 <body>
   <?php
-  echo 'Se ha llamdo al piso $piso '
+  // Se pregunta si se ha pulsado el boton llamar
+ if (isset($_POST['llamar'])) {
+    $bloque = $_POST['bloque'];
+    $piso = $_POST['piso'];
+  echo "<h3>Se ha llamdo al piso $piso del bloque $bloque</h3> ";
+  }
+  
   ?>
   <table border="1px">
     <thead>
@@ -23,7 +29,13 @@
         echo "<tr>
                 <td>Bloque", $i, "</td>
                 <td>Piso", $j, "</td>
-                <td><input type= \"submit\" name=\"\" value=\"LLAMAR\"></td>
+                <td>
+              <form method='post'>
+                <input type='hidden' name='bloque' value='$i'>
+                <input type='hidden' name='piso' value='$j'>
+                <input type='submit' name='llamar' value='LLAMAR'>
+              </form>
+            </td>
                 </tr>
                 ";
       }
