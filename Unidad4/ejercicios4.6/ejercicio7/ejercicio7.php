@@ -41,22 +41,32 @@
         </thead>
         <?php
         $suma = 1;
+
         for ($i = 1; $i <= 5; $i++) {
         ?>
             <tr>
                 <?php
                 for ($j = 1; $j <= 10; $j++) {
-                ?>
-                    <td <?php
-                        if (!isset($_REQUEST["$suma"])) { ?> style="color: gray;" <?php }
-                        if (isset($_REQUEST[$n1]) && isset($_REQUEST["$suma"])) { ?> style="color: red;" <?php }
-                        if (isset($_REQUEST[$n2]) && isset($_REQUEST["$suma"])) { ?> style="color: red;" <?php }
-                        if (isset($_REQUEST[$n3]) && isset($_REQUEST["$suma"])) { ?> style="color: red;" <?php }
-                        if (isset($_REQUEST[$n4]) && isset($_REQUEST["$suma"])) { ?> style="color: red;" <?php }
-                        if (isset($_REQUEST[$n5]) && isset($_REQUEST["$suma"])) { ?> style="color: red;" <?php }
-                        if (isset($_REQUEST[$n6]) && isset($_REQUEST["$suma"])) { ?> style="color: red;" <?php }
-                        ?>><?= $suma ?></td>
-                <?php
+                    if ($suma > 49) break;
+
+                    $color = "gray"; 
+
+                    if (isset($_POST["$suma"])) {
+                        // Compara el número del bucle con cada númnero acertado para ponerlo en verde
+                        if ($suma == $n1 || $suma == $n2 || $suma == $n3 || $suma == $n4 || $suma == $n5 || $suma == $n6) {
+                            $color = "green";
+                        } else {
+                            $color = "black";
+                        }
+                    } else {
+                        // Compara el número del bucle que antes no ha entrado en los erde con cada númnero acertado para ponerlo en rojo
+                        if ($suma == $n1 || $suma == $n2 || $suma == $n3 || $suma == $n4 || $suma == $n5 || $suma == $n6) {
+                            $color = "red";
+                        }
+                    }
+
+                    echo "<td style='color:$color'>$suma</td>";
+
                     $suma++;
                 }
                 ?>
@@ -67,12 +77,24 @@
     </table>
 
     <?php
-    if (isset($_REQUEST[$n1])) { $aciertos++; }
-    if (isset($_REQUEST[$n2])) { $aciertos++; }
-    if (isset($_REQUEST[$n3])) { $aciertos++; }
-    if (isset($_REQUEST[$n4])) { $aciertos++; }
-    if (isset($_REQUEST[$n5])) { $aciertos++; }
-    if (isset($_REQUEST[$n6])) { $aciertos++; }
+    if (isset($_REQUEST[$n1])) {
+        $aciertos++;
+    }
+    if (isset($_REQUEST[$n2])) {
+        $aciertos++;
+    }
+    if (isset($_REQUEST[$n3])) {
+        $aciertos++;
+    }
+    if (isset($_REQUEST[$n4])) {
+        $aciertos++;
+    }
+    if (isset($_REQUEST[$n5])) {
+        $aciertos++;
+    }
+    if (isset($_REQUEST[$n6])) {
+        $aciertos++;
+    }
 
     $contar = 0;
     for ($i = 1; $i <= 50; $i++) {
@@ -88,7 +110,7 @@
     } else {
     ?>
         <h3>Has acertado <?= $aciertos ?> números</h3>
-        <?php
+    <?php
         if ($serieGanadora === $nSerie) {
             $dinero += 500;
         }
@@ -109,7 +131,7 @@
                 echo "<h3>Has ganado ", $dinero, " euros</h3>";
         }
     }
-        ?>
+    ?>
 </body>
 
 </html>
