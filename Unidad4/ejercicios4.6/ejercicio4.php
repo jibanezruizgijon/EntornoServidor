@@ -9,7 +9,7 @@
 
 <body>
   <?php
-  // Se pregunta si se ha pulsado el boton llamar
+
  if (isset($_POST['llamar'])) {
     $bloque = $_POST['bloque'];
     $piso = $_POST['piso'];

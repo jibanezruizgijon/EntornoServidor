@@ -14,6 +14,7 @@
     table {
       margin-left: auto;
       margin-right: auto;
+       border-collapse: collapse;
     }
 
     img {

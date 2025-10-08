@@ -35,7 +35,7 @@
     </table>
     <br>
 
-    <table border="1px">
+    <table border="1px" >
         <thead>
             <th colspan="10">Bingo</th>
         </thead>

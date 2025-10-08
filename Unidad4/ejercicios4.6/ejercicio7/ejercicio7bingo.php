@@ -11,7 +11,7 @@
     <h2>Selecciona 6 números</h2>
 
     <form action="ejercicio7.php" method="post">
-        <table border="1px">
+        <table border=1>
             <thead>
                 <th colspan="10">Bingo</th>
             </thead>
