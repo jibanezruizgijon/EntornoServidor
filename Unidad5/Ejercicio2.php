@@ -10,21 +10,24 @@
 <body>
     <?php
     if (isset($_POST['n'])) {
+        //Recoge el contador y agrupa el ultimo numero a los anteriores
         $contador = $_POST['contador'];
         $cadenaTexto = $_POST['cadenaTexto'] . " " . $_POST['n'];
     } else {
         $contador = 0;
         $cadenaTexto = "";
-        
     }
 
     if ($contador == 6) {
-        // PHP_INT_MAX   PHP_INT_MIN
+        // PHP_INT_MAX   PHP_INT_MIN??
         $max = 0;
         $min = 9999;
+        //Elimina el primer espacio
         $cadenaTexto = substr($cadenaTexto, 1);
+        //Separa la cadena en diferentes numeros separados por espaco
         $cadenaNumero = explode(" ", $cadenaTexto);
 
+        // Comprueba cual es el máximo y cual el minimo
         foreach ($cadenaNumero as $n) {
             if ($n < $min) {
                 $min = $n;
@@ -36,10 +39,10 @@
         echo "Los números introducidos son: ";
         foreach ($cadenaNumero as $n) {
             if ($n === $max) {
-                echo "máximo:",$n, " ";
+                echo "máximo:", $n, " ";
             }
-            if($n === $min){
-                echo "mínimo:",$n, " ";
+            if ($n === $min) {
+                echo "mínimo:", $n, " ";
             }
             if ($n != $max && $n != $min) {
                 echo $n, " ";
