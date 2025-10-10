@@ -15,6 +15,8 @@
       "as de basto" => 11, "dos de basto" => 0, "tres de basto" => 10, "cuatro de basto" => 0, "cinco de basto" => 0, "seis de basto" => 0, "siete de basto" => 0, "sota de basto" => 2, "caballo de basto" => 3, "rey de basto" => 4,
       "as de espadas" => 11, "dos de espadas" => 0, "tres de espadas" => 10, "cuatro de espadas" => 0, "cinco de espadas" => 0, "seis de espadas" => 0, "siete de espadas" => 0, "sota de espadas" => 2, "caballo de espadas" => 3, "rey de espadas" => 4
     ];
+
+
     $elegidas = [];
     $puntos = 0;
     $nombreCartas = [];

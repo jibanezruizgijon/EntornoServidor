@@ -19,7 +19,6 @@
     }
 
     if ($contador == 6) {
-        // PHP_INT_MAX   PHP_INT_MIN??
         $max = 0;
         $min = 9999;
         //Elimina el primer espacio
@@ -36,16 +35,16 @@
                 $max = $n;
             }
         }
-        echo "Los números introducidos son: ";
+        echo "Los números introducidos son: <br>";
         foreach ($cadenaNumero as $n) {
             if ($n === $max) {
-                echo "máximo:", $n, " ";
+                echo "máximo:", $n, "<br> ";
             }
             if ($n === $min) {
-                echo "mínimo:", $n, " ";
+                echo "mínimo:", $n, " <br>";
             }
             if ($n != $max && $n != $min) {
-                echo $n, " ";
+                echo $n, " <br>";
             }
         }
     } else {
