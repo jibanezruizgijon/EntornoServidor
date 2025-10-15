@@ -8,19 +8,20 @@
 </head>
 
 <body>
-    <h2>Datos de trabajadores</h2>
+    <h1>Datos de trabajadores</h1>
     <?php
     $personas = unserialize(base64_decode($_POST['arrayPersonas']));
-        print_r($personas);
-        foreach ($personas as $persona => $datos) {
-            echo "<h2> $persona </h2> ";
-            
-            foreach ($datos as $dato) {
-                echo  " <h3>$dato </h3>";
-            }
-            echo " <hr>";
-
+    foreach ($personas as $persona => $datos) {
+        $color = ($datos["edad"] > 30) ? "red" : "black";
+    ?>
+        <div style="color: <?= $color ?>">
+            <h2> Nombre: <?= $persona ?> </h2>
+        <?php
+        foreach ($datos as $dato) {
+            echo  "<h3> $dato </h3>";
         }
+        echo "</div> <hr>";
+    }
         ?>
 </body>
 

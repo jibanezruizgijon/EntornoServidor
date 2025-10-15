@@ -21,10 +21,10 @@
 
 <body>
     <table border="1px ">
-        <?phP
+        <?php
 
         if (!isset($_REQUEST['ojo'])) {
-            $numeroOjos = array_fill(0, 99, 0);
+            $numeroOjos = array_fill(0, 100, 0);
         } else {
             $ojo = isset($_GET['ojo']) ? $_GET['ojo'] : 0;
             $cadenaOjos = $_GET['cadenaOjos'];
@@ -49,7 +49,7 @@
                 } else {
                     $imagen = "img/cerrado.png";
                 }
-        ?>><a href="ejercicio1.php?ojo=<?= $n ?>&cadenaOjos= <?= $cadenaOjos ?>"><img src="<?= $imagen ?>"></a></td>
+        ?>><a href="ejercicio1.php?ojo=<?= $n ?>&cadenaOjos=<?=$cadenaOjos?>"><img src="<?= $imagen ?>"></a></td>
 <?php    
             }
             echo "</tr>";

@@ -22,8 +22,7 @@
         $experiencia = $_POST['experiencia'];
         $correo = $_POST['correo'];
 
-        $personas [$nombre] = ["edad" => $edad,"experiencia" => $experiencia,"correo" => $correo];
-        print_r($personas);
+        $personas[$nombre] = ["edad" => $edad, "experiencia" => $experiencia, "correo" => $correo];
     }
 
     ?>
@@ -46,7 +45,7 @@
         <input type="submit" value="Enviar">
         <input type="hidden" name="arrayPersonas" value="<?= base64_encode(serialize($personas)) ?>">
     </form>
-
+    <br>
     <form action="mostrar_listado.php" method="post">
         <input type="hidden" name="arrayPersonas" value="<?= base64_encode(serialize($personas)) ?>">
         <input type="submit" value="Finalizar lista">
