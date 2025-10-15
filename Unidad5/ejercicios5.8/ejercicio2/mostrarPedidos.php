@@ -8,8 +8,22 @@
 </head>
 
 <body>
-    <table>
 
+<?php
+  $cadenaComidas = $_GET['cadenaComidas'];  
+
+  $comidas = unserialize($cadenaComidas);
+?>
+    <table>
+    <?php
+      foreach ($comidas as $comida => $ingredientes ) { 
+        echo "<tr>$comida <td>";
+        foreach($comida as $ingredientes => $ingrediente){
+            echo $ingrediente;
+        }
+        echo "</td></tr>";
+      }  
+    ?>
     </table>
 </body>
 
