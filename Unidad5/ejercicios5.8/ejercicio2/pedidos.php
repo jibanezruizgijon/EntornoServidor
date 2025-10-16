@@ -8,12 +8,8 @@
 </head>
 
 <body>
-    <?php
-    $nPedidos = isset($_REQUEST['nPedidos']) ? $_GET['nPedidos'] : 0;
-
-    ?>
     <h2>Hacer pedidos</h2>
-    <h3>Comidas en el pedido: <?= $nPedidos ?></h3>
+
     <?php
     $comidas = [
         "Pizza" => ["jamon", "atun", "bacon", "pepperoni"],
@@ -22,14 +18,24 @@
     ];
     //$cadenaComidas = serialize($comidas);
 
-    $cadenaComidas = isset($_REQUEST['cadenaComidas']) ? $_GET['cadenaComidas'] :  "";
-    
-    if (isset($_REQUEST['cadenaComidas'])) {
+    $cadenaComidas = isset($_GET['cadenaComidas']) ?  unserialize(base64_decode($_GET['cadenaComidas'])) :  "";
+    $pedidos = $cadenaComidas ? unserialize($cadenaComidas) : [];
+
+    if (isset($_GET['comida']) && isset($_GET['ingredientes'])) {
+        $comida = $_GET['comida'];
+        $ingredientesEnviados = $_GET['ingredientes'];
         
+        $pedidos[] = [
+            "comida" => $comida,
+            "ingredientes" => $ingredientesEnviados
+        ];
+
+        print_r($pedidos);
     }
-
+    ?>
+     <h3>Número de pedidos: <?= count($pedidos) ?></h3>
+     <?php
     foreach ($comidas as $comida => $ingredientes) {
-
     ?>
         <hr>
         <form action="" method="get">
@@ -38,14 +44,15 @@
             <?php
             foreach ($ingredientes as $ingrediente) {
             ?>
-                <?= $ingrediente ?><input type="checkbox" name="">
+                <?= $ingrediente ?><input type="checkbox" name="ingredientes[]" value="<?= $ingrediente ?>">
             <?php
             }
             ?>
             <br><br>
-            <input type="submit" value="enviar">
-            <input type="hidden" name="cadenaComida" value=" <?= $cadenaComidas ?>">
-            <input type="hidden" name="nPedidos" value="<?= $nPedidos + 1 ?>">
+            <input type="hidden" name="comida" value="<?= $comida ?>">
+            <input type="hidden" name="cadenaComidas" value="<?= base64_encode(serialize($cadenaComidas)) ?>">
+            <input type="submit" value="Añadir">
+
         </form>
     <?php
     }
@@ -53,9 +60,11 @@
     <hr>
     <form action="mostrarPedidos.php" method="post">
         <label for="pedido">Enviar todo el pedido</label>
-        <input type="hidden" name="cadenaComidas" value="<?= serialize($cadenaComidas) ?>">
+        <input type="hidden" name="cadenaComidas" value="<?= base64_encode(serialize($cadenaComidas)) ?>">
         <input type="submit" value="Finalizar">
     </form>
+
+
 </body>
 
 </html>
