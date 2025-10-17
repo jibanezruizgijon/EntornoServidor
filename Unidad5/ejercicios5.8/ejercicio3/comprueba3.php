@@ -20,6 +20,7 @@
     $cadena = $_GET["cadena"];
     $numeros = explode(",", $cadena);
     $correcta = "guepardo";
+    $num = $_GET["num"];
 
     if ($palabra == $correcta) {
         ?>
@@ -35,8 +36,8 @@
             <?php
          } else {
             ?>
-              <h2>Lo siento no has acertado</h2>
-              <a href="ejercicio3.php?intentos=<?= $intentos?>&cadena=<?=implode(",", $numeros) ?>">volver</a>
+              <h2>Lo siento no has acertado, Te quedan <?=$intentos ?> intentos</h2>
+              <a href="ejercicio3.php?num=<?= $num?>&intentos=<?= $intentos+1?>&cadena=<?=implode(",", $numeros) ?>">volver</a>
             <?php
          }
     }
