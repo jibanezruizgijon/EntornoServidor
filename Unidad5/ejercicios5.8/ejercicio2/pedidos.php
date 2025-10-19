@@ -11,36 +11,26 @@
     <h2>Hacer pedidos</h2>
 
     <?php
-    // Primer array asociativo y el segundo con los ingredientes que sea clásico
-    // Enviar un array con todos los ingredientes
-    // Inicializar el array pedidos y cantidad si no recibe comidas
-    // else si ya recibe comida se introducen los datos usando unserialize base 64 de pedido
-    // $pedido = unserialize ['pedido']
-    // $pedido[] = $_REQUEST['comida]
-    //$cantidad = ++$REQUEST['cantidad']
-    // mostrar abajo siemrpe el 
     $menu = [
         "Pizza" => ["jamon", "atun", "bacon", "pepperoni"],
         "Hamburguesa" => ["lechuga", "tomate", "queso"],
         "Perrito" => ["lechuga", "cebolla", "patata"]
     ];
-    //$cadenaComidas = serialize($comidas);
 
-    $cadenaComidas = isset($_GET['cadenaComidas']) ?  unserialize(base64_decode($_GET['cadenaComidas'])) :  "";
-    $pedidos = $cadenaComidas ? unserialize($cadenaComidas) : [];
-
-    if (isset($_GET['comida']) && isset($_GET['ingredientes'])) {
+    if (!isset($_GET['comida'])) {
+        $pedido = [];
+        $cantidad = 0;
+    } else {
+        $pedido = unserialize(base64_decode($_GET['pedido']));
         $comida = $_GET['comida'];
-        $ingredientesEnviados = $_GET['ingredientes'];
-
-      
-
-        print_r($pedidos);
+        $cantidad = ++$_GET['cantidad'];
+        $pedido[] = $comida;
     }
     ?>
-    <h3>Número de pedidos: <?= count($pedidos) ?></h3>
+    <h3>Número de pedidos: <?= $cantidad ?></h3>
     <?php
-    foreach ($menu as $c => $ingredientes) {
+    print_r($pedido);
+    foreach ($menu as $tipoComida => $ingredientes) {
     ?>
         <hr>
         <form action="" method="get">
@@ -54,14 +44,33 @@
             }
             ?>
             <br><br>
-
-            <input type="hidden" name="cadenaComidas" value="<?= base64_encode(serialize($pedido)) ?>">
+            <input type="hidden" name="cantidad" value="<?= $cantidad ?> ">
+            <input type="hidden" name="pedido" value="<?= base64_encode(serialize($pedido)) ?>">
             <input type="submit" value="Añadir">
 
         </form>
     <?php
     }
+
+    if (isset($_GET['pedido'])) {
+        echo "<table>";
+
+        foreach ($pedido as $p) {
+
+            echo "<tr>";
+            foreach ($p as $ingrediente) {
+                if ($ingrediente == $p[0]) {
+                    echo "<td> <b>$ingrediente:</b></td>";
+                } else {
+                    echo "<td> $ingrediente</td>";
+                }
+            }
+            echo "</tr>";
+        }
+        echo "</table>";
+    }
     ?>
+
 
 </body>
 
