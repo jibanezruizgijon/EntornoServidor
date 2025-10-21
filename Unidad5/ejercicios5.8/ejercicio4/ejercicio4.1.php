@@ -10,6 +10,10 @@
             text-decoration: none;
             color: black;
         }
+
+        table {
+            float: left;
+        }
     </style>
 </head>
 
@@ -34,30 +38,133 @@
                 echo "<td>$datos</td>";
             }
                 ?>
-                <td><a href="?seleccionado=<?=$persona["nombre"]?>&personas=<?= base64_encode(serialize($personas))?>">Seleccionar</a></td>
-                <?php
-                if ($seleccionado != "") {
-                ?>
-                    <table border="1px solid">
-                        <?php
-                          foreach ($personas as $persona2) {
-                           if ($persona['orientacion'] == "bis" && $persona['nombre'] != $persona2['nombre']) {
-                            echo "<tr>";
-
-                            foreach ($persona2 as $datos) {
-                               echo "<td>$datos</td>";
-                            }
-                            echo "</tr>";
-                           }
-                          }
-                        ?>
-                    </table>
+                <td><a href="?seleccionado=<?= $persona["nombre"] ?>&personas=<?= base64_encode(serialize($personas)) ?>">Seleccionar</a></td>
             <?php
-                }
-                echo "</tr>";
-            }
+            echo "</tr>";
+        }
             ?>
     </table>
+
+    <?php
+    if (isset($_GET['seleccionado'])) {
+    ?>
+        <table border="1px solid">
+            <tr>
+                <th colspan="4">Personas compatibles con <?= $seleccionado ?></th>
+            </tr>
+            <?php
+            // Buscar persona seleccionada
+            foreach ($personas as $personaS) {
+                if ($personaS['nombre'] == $seleccionado) {
+
+                    // Comparar con las demás personas
+                    foreach ($personas as $pareja) {
+                        if ($pareja['nombre'] == $seleccionado) {
+                            continue; // saltar a sí mismo
+                        }
+
+                        // Si el seleccionado es hombre
+                        if ($personaS['sexo'] == "h") {
+
+                            // Heterosexual
+                            if ($personaS['orientacion'] == 'het') {
+                                if ($pareja['sexo'] == "m" && ($pareja['orientacion'] == "het" || $pareja['orientacion'] == "bis")) {
+            ?>
+                                    <tr>
+                                        <td><?= $pareja['nombre'] ?></td>
+                                        <td><?= $pareja['sexo'] ?></td>
+                                        <td><?= $pareja['orientacion'] ?></td>
+                                    </tr>
+                                <?php
+                                }
+                            }
+
+                            // Homosexual
+                            if ($personaS['orientacion'] == "hom") {
+                                if ($pareja['sexo'] == 'h' && ($pareja['orientacion'] == 'hom' || $pareja['orientacion'] == 'bis')) {
+                                ?>
+                                    <tr>
+                                        <td><?= $pareja['nombre'] ?></td>
+                                        <td><?= $pareja['sexo'] ?></td>
+                                        <td><?= $pareja['orientacion'] ?></td>
+                                    </tr>
+                                <?php
+                                }
+                            }
+
+                            // Bisexual
+                            if ($personaS['orientacion'] == 'bis') {
+                                if (
+                                    ($pareja['sexo'] == 'h' && ($pareja['orientacion'] == 'hom' || $pareja['orientacion'] == 'bis')) ||
+                                    ($pareja['sexo'] == 'm' && ($pareja['orientacion'] == 'het' || $pareja['orientacion'] == 'bis'))
+                                ) {
+                                ?>
+                                    <tr>
+                                        <td><?= $pareja['nombre'] ?></td>
+                                        <td><?= $pareja['sexo'] ?></td>
+                                        <td><?= $pareja['orientacion'] ?></td>
+                                    </tr>
+                                <?php
+                                }
+                            }
+                        }
+
+                        // Si la seleccionada es mujer
+                        if ($personaS['sexo'] == "m") {
+
+                            // Heterosexual
+                            if ($personaS['orientacion'] == 'het') {
+                                if ($pareja['sexo'] == 'h' && ($pareja['orientacion'] == 'het' || $pareja['orientacion'] == 'bis')) {
+                                ?>
+                                    <tr>
+                                        <td><?= $pareja['nombre'] ?></td>
+                                        <td><?= $pareja['sexo'] ?></td>
+                                        <td><?= $pareja['orientacion'] ?></td>
+                                    </tr>
+                                <?php
+
+                                }
+                            }
+
+                            // Homosexual
+                            if ($personaS['orientacion'] == 'hom') {
+                                if ($pareja['sexo'] == 'm' && ($pareja['orientacion'] == 'hom' || $pareja['orientacion'] == 'bis')) {
+                                ?>
+                                    <tr>
+                                        <td><?= $pareja['nombre'] ?></td>
+                                        <td><?= $pareja['sexo'] ?></td>
+                                        <td><?= $pareja['orientacion'] ?></td>
+                                    </tr>
+                                <?php
+                                }
+                            }
+
+                            // Bisexual
+                            if ($personaS['orientacion'] == 'bis') {
+                                if (
+                                    ($pareja['sexo'] == 'm' && ($pareja['orientacion'] == 'hom' || $pareja['orientacion'] == 'bis')) ||
+                                    ($pareja['sexo'] == 'h' && ($pareja['orientacion'] == 'het' || $pareja['orientacion'] == 'bis'))
+                                ) {
+                                ?>
+                                    <tr>
+                                        <td><?= $pareja['nombre'] ?></td>
+                                        <td><?= $pareja['sexo'] ?></td>
+                                        <td><?= $pareja['orientacion'] ?></td>
+                                    </tr>
+            <?php
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            ?>
+
+        </table>
+    <?php
+    }
+    ?>
+
 </body>
 
 </html>

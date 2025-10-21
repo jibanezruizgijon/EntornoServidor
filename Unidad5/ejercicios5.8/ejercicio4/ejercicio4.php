@@ -5,6 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ejercicio 4F</title>
+
+    <style>
+        table {
+            float: left;
+        }
+    </style>
 </head>
 
 <body>
@@ -27,9 +33,9 @@
     } else {
 
         $personas = unserialize(base64_decode($_GET['personas']));
-        $nombre = $_GET['nombre'];
-        $sexo = $_GET['sexo'];
-        $orientacion = $_GET['orientacion'];
+        $nombre = $_GET["nombre"];
+        $sexo = $_GET["sexo"];
+        $orientacion = $_GET["orientacion"];
         if ($orientacion == "homosexual") {
             $orientacion = "hom";
         }
