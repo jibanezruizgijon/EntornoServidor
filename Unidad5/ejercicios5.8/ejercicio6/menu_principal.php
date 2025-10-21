@@ -11,13 +11,9 @@
 
 <?php
   if(!isset($_GET['curriculums'])) {
-    $curriculums = [];
+    $curriculums = ["34918356D" => ["nombre" => "Nuria"]];
   } else {
     $curriculums = unserialize(base64_decode($_GET['curriculums']));
-
-
-
-    
   }
   $cadenaCV = base64_encode(serialize($curriculums));
 ?>
@@ -32,7 +28,7 @@
     <h2>Formulario 2</h2>
     <form action="listado_cv.php" method="get">
     <input type="submit" value="Listar cv">
-    <input type="hidden" name="curriculums" value="<?=$cadenaCV ?> ">
+    <input type="hidden" name="curriculums" value="<?=$cadenaCV ?>">
     </form>
 </body> 
 

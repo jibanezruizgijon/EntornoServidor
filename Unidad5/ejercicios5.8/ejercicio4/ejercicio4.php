@@ -40,7 +40,6 @@
             $orientacion = "bis";
         }
         $personas[] = ["nombre" => $nombre, "sexo" => $sexo, "orientacion" => $orientacion];
-        print_r($personas);
     }
 
     $cadenaPersonas = base64_encode(serialize($personas));

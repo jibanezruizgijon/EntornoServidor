@@ -34,7 +34,7 @@
                 echo "<td>$datos</td>";
             }
                 ?>
-                <td><a href="?seleccionado=<?= $persona["nombre"] ?>&personas=<?= base64_encode(serialize($personas)) ?>">Seleccionar</a></td>
+                <td><a href="?seleccionado=<?=$persona["nombre"]?>&personas=<?= base64_encode(serialize($personas))?>">Seleccionar</a></td>
                 <?php
                 if ($seleccionado != "") {
                 ?>

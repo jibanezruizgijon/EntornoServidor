@@ -20,7 +20,7 @@
     }
     $curriculums[$dni][$titulo] = $valor;
 
-    print_r($curriculums);
+    
   }
 
   $cadenaCV = base64_encode(serialize($curriculums));
@@ -32,7 +32,7 @@
     <label for="">Introduce el valor</label>
     <input type="text" name="valor">
     <input type="hidden" name="curriculums" value="<?= $cadenaCV ?>">
-    <input type="hidden" name="dni" value="<?=$dni?> ">
+    <input type="hidden" name="dni" value="<?=$dni?>">
     <input type="submit" value="Añadir">
   </form>
 
