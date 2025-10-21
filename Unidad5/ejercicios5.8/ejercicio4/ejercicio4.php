@@ -15,6 +15,7 @@
 
 <body>
     <?php
+    // Si no se ha recogido el dato personas se crea el array con varias personas 
     if (!isset($_GET['personas'])) {
         $personas = [
             ['nombre' => 'Anita', 'sexo' => 'm', 'orientacion' => 'bis'],
@@ -31,11 +32,12 @@
             ['nombre' => 'Mike', 'sexo' => 'h', 'orientacion' => 'hom']
         ];
     } else {
-
+        // Si se ha recogido el dato personas se recogen los datos para añadir a una persona
         $personas = unserialize(base64_decode($_GET['personas']));
         $nombre = $_GET["nombre"];
         $sexo = $_GET["sexo"];
         $orientacion = $_GET["orientacion"];
+        // Pasa la palabra entera de orientación a la abrebiatura 
         if ($orientacion == "homosexual") {
             $orientacion = "hom";
         }
@@ -45,11 +47,14 @@
         if ($orientacion == "bisexual") {
             $orientacion = "bis";
         }
+        // Se añaden los datos
         $personas[] = ["nombre" => $nombre, "sexo" => $sexo, "orientacion" => $orientacion];
     }
 
     $cadenaPersonas = base64_encode(serialize($personas));
     ?>
+    <!-- Formulario para añadir los datos de una persona -->
+    <h3>Añade los datos de una persona</h3>
     <form action="" method="get">
         <label for="">Introduce el nombre</label>
         <input type="text" name="nombre">
@@ -60,9 +65,11 @@
         <label for="">Introduce tu orientación</label>
         <input type="text" name="orientacion">
         <input type="hidden" name="personas" value="<?= $cadenaPersonas ?>">
+        <br>
         <input type="submit" value="Enviar">
     </form>
     <br>
+    <!-- Formulario para ver todas las personas  -->
     <form action="ejercicio4.1.php" method="get">
         <input type="hidden" name="personas" value="<?= $cadenaPersonas ?>">
         <input type="submit" value="Ver parejas">

@@ -60,98 +60,100 @@
                     // Comparar con las demás personas
                     foreach ($personas as $pareja) {
                         if ($pareja['nombre'] == $seleccionado) {
-                            continue; // saltar a sí mismo
-                        }
+                        } else {
 
-                        // Si el seleccionado es hombre
-                        if ($personaS['sexo'] == "h") {
 
-                            // Heterosexual
-                            if ($personaS['orientacion'] == 'het') {
-                                if ($pareja['sexo'] == "m" && ($pareja['orientacion'] == "het" || $pareja['orientacion'] == "bis")) {
+
+                            // Si el seleccionado es hombre
+                            if ($personaS['sexo'] == "h") {
+
+                                // En caso de ser heterosexual
+                                if ($personaS['orientacion'] == 'het') {
+                                    if ($pareja['sexo'] == "m" && ($pareja['orientacion'] == "het" || $pareja['orientacion'] == "bis")) {
             ?>
-                                    <tr>
-                                        <td><?= $pareja['nombre'] ?></td>
-                                        <td><?= $pareja['sexo'] ?></td>
-                                        <td><?= $pareja['orientacion'] ?></td>
-                                    </tr>
-                                <?php
+                                        <tr>
+                                            <td><?= $pareja['nombre'] ?></td>
+                                            <td><?= $pareja['sexo'] ?></td>
+                                            <td><?= $pareja['orientacion'] ?></td>
+                                        </tr>
+                                    <?php
+                                    }
+                                }
+
+                                // En caso de ser homosexual
+                                if ($personaS['orientacion'] == "hom") {
+                                    if ($pareja['sexo'] == "h" && ($pareja['orientacion'] == "hom" || $pareja['orientacion'] == "bis")) {
+                                    ?>
+                                        <tr>
+                                            <td><?= $pareja['nombre'] ?></td>
+                                            <td><?= $pareja['sexo'] ?></td>
+                                            <td><?= $pareja['orientacion'] ?></td>
+                                        </tr>
+                                    <?php
+                                    }
+                                }
+
+                                // En caso de ser bisexual
+                                if ($personaS['orientacion'] == 'bis') {
+                                    if (
+                                        ($pareja['sexo'] == "h" && ($pareja['orientacion'] == "hom" || $pareja['orientacion'] == "bis")) ||
+                                        ($pareja['sexo'] == "m" && ($pareja['orientacion'] == "het" || $pareja['orientacion'] == "bis"))
+                                    ) {
+                                    ?>
+                                        <tr>
+                                            <td><?= $pareja['nombre'] ?></td>
+                                            <td><?= $pareja['sexo'] ?></td>
+                                            <td><?= $pareja['orientacion'] ?></td>
+                                        </tr>
+                                    <?php
+                                    }
                                 }
                             }
 
-                            // Homosexual
-                            if ($personaS['orientacion'] == "hom") {
-                                if ($pareja['sexo'] == 'h' && ($pareja['orientacion'] == 'hom' || $pareja['orientacion'] == 'bis')) {
-                                ?>
-                                    <tr>
-                                        <td><?= $pareja['nombre'] ?></td>
-                                        <td><?= $pareja['sexo'] ?></td>
-                                        <td><?= $pareja['orientacion'] ?></td>
-                                    </tr>
-                                <?php
+                            // Si la seleccionada es mujer
+                            if ($personaS['sexo'] == "m") {
+
+                                // En caso de ser heterosexual
+                                if ($personaS['orientacion'] == "het") {
+                                    if ($pareja['sexo'] == "h" && ($pareja['orientacion'] == "het" || $pareja['orientacion'] == "bis")) {
+                                    ?>
+                                        <tr>
+                                            <td><?= $pareja['nombre'] ?></td>
+                                            <td><?= $pareja['sexo'] ?></td>
+                                            <td><?= $pareja['orientacion'] ?></td>
+                                        </tr>
+                                    <?php
+
+                                    }
                                 }
-                            }
 
-                            // Bisexual
-                            if ($personaS['orientacion'] == 'bis') {
-                                if (
-                                    ($pareja['sexo'] == 'h' && ($pareja['orientacion'] == 'hom' || $pareja['orientacion'] == 'bis')) ||
-                                    ($pareja['sexo'] == 'm' && ($pareja['orientacion'] == 'het' || $pareja['orientacion'] == 'bis'))
-                                ) {
-                                ?>
-                                    <tr>
-                                        <td><?= $pareja['nombre'] ?></td>
-                                        <td><?= $pareja['sexo'] ?></td>
-                                        <td><?= $pareja['orientacion'] ?></td>
-                                    </tr>
-                                <?php
+                                // En caso de ser homosexual
+                                if ($personaS['orientacion'] == 'hom') {
+                                    if ($pareja['sexo'] == "m" && ($pareja['orientacion'] == "hom" || $pareja['orientacion'] == "bis")) {
+                                    ?>
+                                        <tr>
+                                            <td><?= $pareja['nombre'] ?></td>
+                                            <td><?= $pareja['sexo'] ?></td>
+                                            <td><?= $pareja['orientacion'] ?></td>
+                                        </tr>
+                                    <?php
+                                    }
                                 }
-                            }
-                        }
 
-                        // Si la seleccionada es mujer
-                        if ($personaS['sexo'] == "m") {
-
-                            // Heterosexual
-                            if ($personaS['orientacion'] == 'het') {
-                                if ($pareja['sexo'] == 'h' && ($pareja['orientacion'] == 'het' || $pareja['orientacion'] == 'bis')) {
-                                ?>
-                                    <tr>
-                                        <td><?= $pareja['nombre'] ?></td>
-                                        <td><?= $pareja['sexo'] ?></td>
-                                        <td><?= $pareja['orientacion'] ?></td>
-                                    </tr>
-                                <?php
-
-                                }
-                            }
-
-                            // Homosexual
-                            if ($personaS['orientacion'] == 'hom') {
-                                if ($pareja['sexo'] == 'm' && ($pareja['orientacion'] == 'hom' || $pareja['orientacion'] == 'bis')) {
-                                ?>
-                                    <tr>
-                                        <td><?= $pareja['nombre'] ?></td>
-                                        <td><?= $pareja['sexo'] ?></td>
-                                        <td><?= $pareja['orientacion'] ?></td>
-                                    </tr>
-                                <?php
-                                }
-                            }
-
-                            // Bisexual
-                            if ($personaS['orientacion'] == 'bis') {
-                                if (
-                                    ($pareja['sexo'] == 'm' && ($pareja['orientacion'] == 'hom' || $pareja['orientacion'] == 'bis')) ||
-                                    ($pareja['sexo'] == 'h' && ($pareja['orientacion'] == 'het' || $pareja['orientacion'] == 'bis'))
-                                ) {
-                                ?>
-                                    <tr>
-                                        <td><?= $pareja['nombre'] ?></td>
-                                        <td><?= $pareja['sexo'] ?></td>
-                                        <td><?= $pareja['orientacion'] ?></td>
-                                    </tr>
+                                // En caso de ser bisexual
+                                if ($personaS['orientacion'] == "bis") {
+                                    if (
+                                        ($pareja['sexo'] == "m" && ($pareja['orientacion'] == "hom" || $pareja['orientacion'] == "bis")) ||
+                                        ($pareja['sexo'] == "h" && ($pareja['orientacion'] == "het" || $pareja['orientacion'] == "bis"))
+                                    ) {
+                                    ?>
+                                        <tr>
+                                            <td><?= $pareja['nombre'] ?></td>
+                                            <td><?= $pareja['sexo'] ?></td>
+                                            <td><?= $pareja['orientacion'] ?></td>
+                                        </tr>
             <?php
+                                    }
                                 }
                             }
                         }

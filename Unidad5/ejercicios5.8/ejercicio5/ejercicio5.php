@@ -10,6 +10,7 @@
 <body>
 
     <?php
+    // Si no se ha recogido el dato nombre crea el array con los datos de una persona
     if (!isset($_POST['nombre'])) {
         $personas  = [
             "Juan" =>  ["edad" => 22, "experiencia" => 10, "correo" => "juanutrera@gmail.com"]
@@ -21,7 +22,7 @@
         $edad = $_POST['edad'];
         $experiencia = $_POST['experiencia'];
         $correo = $_POST['correo'];
-
+        // Añade los datos en el array
         $personas[$nombre] = ["edad" => $edad, "experiencia" => $experiencia, "correo" => $correo];
     }
 
@@ -29,6 +30,7 @@
 
     <h2>Introduce los datos del trabajador</h2>
     <hr>
+    <!-- Formulario para introducir los datos del cv de una persona  -->
     <form action="" method="post">
         <label for="nombre">Nombre:</label>
         <input type="text" name="nombre" required>
@@ -46,6 +48,7 @@
         <input type="hidden" name="arrayPersonas" value="<?= base64_encode(serialize($personas)) ?>">
     </form>
     <br>
+    <!-- Formulario con un botón para mostrar todas las personas -->
     <form action="mostrar_listado.php" method="post">
         <input type="hidden" name="arrayPersonas" value="<?= base64_encode(serialize($personas)) ?>">
         <input type="submit" value="Finalizar lista">

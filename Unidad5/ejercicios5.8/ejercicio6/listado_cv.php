@@ -15,16 +15,19 @@
     $cadenaCV = base64_encode(serialize($curriculums));
     $num = 0;
     echo "<h2>Listado de curriculums</h2>";
-    foreach ($curriculums as $curriculum => $datos) {
+    // Recorre todo el array para mostrar los dni
+    // Cada dni es un enlace a otra página que muestra todos los datos de esa persona 
+    foreach ($curriculums as $dni => $datos) {
     ?>
         <h3>Curriculum <?= $num ?></h3>
-        <a href="mostrar_cv.php?curriculums=<?= $cadenaCV ?>&dni=<?= $curriculum ?>"><?= $curriculum ?></a>
+        <a href="mostrar_cv.php?curriculums=<?= $cadenaCV ?>&dni=<?= $dni ?>"><?= $dni ?></a>
         <br>
     <?php
         $num++;
     }
     ?>
     <br>
+    <!-- Formulario para volver al menú principal -->
     <form action="menu_principal.php" method="get">
         <input type="hidden" name="curriculums" value="<?=$cadenaCV?>">
         <input type="submit" value="Volver a Menú">

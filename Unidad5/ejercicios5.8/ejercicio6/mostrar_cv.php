@@ -13,6 +13,7 @@
     $dni = $_GET["dni"];
 
     $cadenaCV = base64_encode(serialize($curriculums));
+    // Bucle para buscar el dni seleccionado y muestra todos los datos
     foreach ($curriculums as $curriculum => $datos) {
         if ($curriculum == $dni) {
             echo "DNI: $dni <br>";
@@ -23,6 +24,7 @@
     }
 
     ?>
+    <!-- Formulario para volver al menú principal-->
     <form action="listado_cv.php" method="get">
         <input type="hidden" name="curriculums" value="<?= $cadenaCV ?>">
         <input type="submit" value="Volver a listado">

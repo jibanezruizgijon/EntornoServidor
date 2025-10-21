@@ -16,11 +16,12 @@
         "Hamburguesa" => ["lechuga", "tomate", "queso"],
         "Perrito" => ["lechuga", "cebolla", "patata"]
     ];
-
+    // Si la variable comida no ha sido recibida 
     if (!isset($_GET['comida'])) {
         $pedido = [];
         $cantidad = 0;
     } else {
+        // Se recogen los datos en caso contrario
         $pedido = unserialize(base64_decode($_GET['pedido']));
         $comida = $_GET['comida'];
         $cantidad = ++$_GET['cantidad'];
@@ -29,7 +30,9 @@
     ?>
     <h3>Número de pedidos: <?= $cantidad ?></h3>
     <?php
-    print_r($pedido);
+    // Recorre cada comida para mostrarla 
+    // En el checkbox se seleciona que ingredientes llevará cada comida
+    // Tanto la comida como los ingredientes se almacenan en el mismo array
     foreach ($menu as $tipoComida => $ingredientes) {
     ?>
         <hr>
@@ -52,6 +55,7 @@
     <?php
     }
 
+    // Si se ha recibido comida se muestra la comida y los ingredientes seleccionados
     if (isset($_GET['pedido'])) {
         echo "<table>";
 
