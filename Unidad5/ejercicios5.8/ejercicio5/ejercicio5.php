@@ -13,7 +13,7 @@
     // Si no se ha recogido el dato nombre crea el array con los datos de una persona
     if (!isset($_POST['nombre'])) {
         $personas  = [
-            "Juan" =>  ["edad" => 22, "experiencia" => 10, "correo" => "juanutrera@gmail.com"]
+            "Juan" =>  ["edad" => 22, "experiencia" => 1, "correo" => "juan@gmail.com"]
         ];
     } else {
         //Recuperar los datos de cada persona
