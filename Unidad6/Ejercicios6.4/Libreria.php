@@ -9,91 +9,118 @@
 
 <body>
     <?php
-        function esCapicua ($n){
-            $esCapicua = true;
-            if($n != voltea($n)){
 
-            }
-            
-
-        }
-
-        function esPrimo ($n){
-            $esPrimo = true;
-            for ($i=2; $i < $n ; $i++) { 
-                if($n %$i == 0){
-                    $esPrimo = false;
+    // Rellena los huecos que haya vacío de un array con números random
+    function combinacion($array)
+    {
+        for ($i = 0; $i <= 6; $i++) {
+            if ($array[$i] == null) {
+                if ($i == 6) {
+                    $array[$i] = rand(1, 1000);
+                } else {
+                    $array[$i] = rand(1, 50);
                 }
             }
-            // El 0 y el 1 no se consideran primos 
-            if(($n == 0) ||($n == 1)){
+        }
+        return $array;
+    }
+
+    // Crea una tabla mostrando en una fila el titulo introducido o por defecto 
+    // En otra fila muestra cada número del array
+    function imprimeApuesta($array, $texto = "Combinación generada para la Primitiva")
+    {
+
+    ?>
+        <table border="2px solid">
+            <tr>
+                <td colspan="7" style="text-align: center;"><?= $texto ?></td>
+            </tr>
+            <tr>
+                <?php
+                foreach ($array as $numero) {
+                    echo "<td>$numero</td>";
+                }
+                ?>
+            </tr>
+        </table>
+    <?php
+    }
+
+    function esCapicua($n)
+    {
+        $esCapicua = true;
+        if ($n != voltea($n)) {
+        }
+    }
+
+    function esPrimo($n)
+    {
+        $esPrimo = true;
+        for ($i = 2; $i < $n; $i++) {
+            if ($n % $i == 0) {
                 $esPrimo = false;
             }
-            return $esPrimo;
         }
+        // El 0 y el 1 no se consideran primos 
+        if (($n == 0) || ($n == 1)) {
+            $esPrimo = false;
+        }
+        return $esPrimo;
+    }
 
 
-        function siguientePrimo ($n){
-            while (!esPrimo($n++)) {};
-            return $n;
-        }
+    function siguientePrimo($n)
+    {
+        while (!esPrimo($n++)) {
+        };
+        return $n;
+    }
 
-        function potencia ($base,$exponente){
-            $potencia = 1;
-            for ($i=0; $i < $exponente ; $i++) { 
-                $potencia *= $base;
-            }
-            return $potencia; 
+    function potencia($base, $exponente)
+    {
+        $potencia = 1;
+        for ($i = 0; $i < $exponente; $i++) {
+            $potencia *= $base;
         }
+        return $potencia;
+    }
 
-        function voltea ($n){
-            // $contador = digitos($n)
-            $volteado = 0;
-            // contador
-            while ($n > 0) {
-                $volteado = ($volteado*10)+($n%10);
-                $n/=10;
-                // $voltear =
-                // contador--;
-            }
-            return $volteado;
+    function voltea($n)
+    {
+        // $contador = digitos($n)
+        $volteado = 0;
+        // contador
+        while ($n > 0) {
+            $volteado = ($volteado * 10) + ($n % 10);
+            $n /= 10;
+            // $voltear =
+            // contador--;
         }
+        return $volteado;
+    }
 
-        function digitoN ($n, $digito){
-            $n = voltea($n);
-            while($digito-- > 0){
-                $n /= 10;
-            }    
-            return ($n %10);
+    function digitoN($n, $digito)
+    {
+        $n = voltea($n);
+        while ($digito-- > 0) {
+            $n /= 10;
         }
+        return ($n % 10);
+    }
 
-        function posiciónDeDigito ($n, $digito){
-            
-        }
+    function posiciónDeDigito($n, $digito) {}
 
-        function quitarPorDetras ($n, $digito){
-            
-        }
+    function quitarPorDetras($n, $digito) {}
 
-        function quitaPorDelante ($n, $digito){
-            
-        }
+    function quitaPorDelante($n, $digito) {}
 
-         function pegaPorDetras ($n1, $n2){
-            
-        }
+    function pegaPorDetras($n1, $n2) {}
 
-         function pegaPorDelante ($n1, $n2){
-            
-        }
+    function pegaPorDelante($n1, $n2) {}
 
-         function trozoDeNumero ($n, $nInicio, $nFin){
-            
-        }
+    function trozoDeNumero($n, $nInicio, $nFin) {}
 
-        function juntaNumeros ($n1, $n2){
-      
-        }
+    function juntaNumeros($n1, $n2) {}
 
     ?>
 </body>
