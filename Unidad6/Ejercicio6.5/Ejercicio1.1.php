@@ -12,7 +12,7 @@
     $numeros = isset($_GET['numeros']) ? $_GET['numeros'] : "";
     $titulo = isset($_GET['titulo']) ? $_GET['titulo'] : "";
 
-    include_once("../Libreria.php");
+    include_once("funcion1.php.php");
 
     $numeros = combinacion($numeros);
 
