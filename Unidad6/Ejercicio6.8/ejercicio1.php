@@ -7,6 +7,7 @@
 </head>
 <body>
     <?php
+    // Imprime carácter por carácter un string dado
         $palabra = "biblioteca";
         $array = str_split($palabra);
         echo "<h2>La palabra $palabra por carácteres</h2>";
