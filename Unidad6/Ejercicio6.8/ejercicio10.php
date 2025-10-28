@@ -11,13 +11,29 @@
     <?php
     if (isset($_GET['nombre'])) {
         $palabra =  ucfirst(trim($_GET['nombre']));
-        $contadorPrimero = strpos($palabra, " ");
-        $contadorUltimo = strrpos($palabra, " ");
-        $palabra1 =  ucfirst(substr($palabra, 0, $contadorPrimero));
-        $palabra2 =  ucfirst(substr($palabra, $contadorPrimero, -$contadorUltimo));
-        $palabra3 =  ucfirst(substr($palabra, $contadorUltimo));
-        $palabraMayus = $palabra1 . $palabra2 . $palabra3;
-        print_r($palabraMayus);
+        $array = str_split($palabra);
+
+        // Comprueba que sea la primera letra después de un espacio y la hace mayúsculas
+        for ($i = 1; $i < count($array); $i++) {
+            if ($array[$i - 1] == ' ' && $array[$i] != ' ') {
+                $array[$i] = strtoupper($array[$i]);
+            }
+        }
+        echo "<h2>";
+        foreach ($array as $letra) {
+            echo $letra;
+        }
+        echo "</h2>";
+        // Solo muestra las letras que vayan después de un espacio
+        //Muestra las iniciales
+        echo "<h2>";
+        echo $array[0];
+        for ($i = 1; $i < count($array); $i++) {
+            if ($array[$i - 1] == ' ' && $array[$i] != ' ') {
+                echo $array[$i];
+            }
+        }
+        echo "</h2>";
     }
 
     ?>
