@@ -14,7 +14,7 @@
     echo "<h2>$frase</h2>";
     if (isset($_GET['palabra'])) {
         $palabra = trim(strtolower($_GET['palabra']));
-        if (preg_match("/\b$palabra\b/i", $frase)) {
+        if (preg_match("/$palabra/", $frase)) {
             echo "La palabra $palabra si está en la frase";
         } else {
             echo "La palabra $palabra no está en la frase";

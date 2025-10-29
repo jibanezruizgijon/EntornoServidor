@@ -45,7 +45,9 @@
         for ($i = 0; $i < count($vocales) - 1; $i++) {
             echo "<br>La letra $vocales[$i] se repite: " . $contador[$i];
         }
+        $porcentaje = round((($contador[count($vocales) - 1])*100) / count($array));
         echo "<br>El espacio de palabras se repite: " . $contador[count($vocales) - 1];
+        echo "<br>El porcentaje de espacios en blanco: " . $porcentaje . "%";
         echo "<br>La cantidad de palabras con más de 10 letras es: " . $palabrasLargas;
     }
     ?>

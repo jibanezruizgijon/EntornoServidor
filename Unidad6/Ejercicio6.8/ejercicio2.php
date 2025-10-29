@@ -19,7 +19,7 @@
         echo "<p>Frase: " . $frase . "</p>";
     } else {
         $vocal = $_GET['vocal'];
-        echo "<p>" . str_replace(["a", "e", "i", "o", "u"], $vocal, $frase) . "</p>";
+        echo "<p>" . str_replace($vocales, $vocal, $frase) . "</p>";
     }
 
     ?>

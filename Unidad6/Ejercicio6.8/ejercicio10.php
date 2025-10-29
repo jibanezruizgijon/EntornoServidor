@@ -10,7 +10,7 @@
 <body>
     <?php
     if (isset($_GET['nombre'])) {
-        $palabra =  ucfirst(trim($_GET['nombre']));
+        $palabra =  ucfirst(strtolower(trim($_GET['nombre'])));
         $array = str_split($palabra);
 
         // Comprueba que sea la primera letra después de un espacio y la hace mayúsculas
