@@ -23,7 +23,7 @@
         echo "<h2>$nombre1 de $edad1 años</h2>";
         echo "<h2>$nombre2 de $edad2 años</h2>";
 
-        if ($fecha1 > $fecha2) {
+        if ($edad1 > $edad2) {
             echo "<h2>$nombre1 es la persona mayor</h2>";
         } else {
             echo "<h2>$nombre2 es la persona mayor</h2>";

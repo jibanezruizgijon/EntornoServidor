@@ -9,7 +9,6 @@
 
 <body>
     <?php
-
     function esCapicua($n)
     {
         $esCapicua = true;

@@ -13,24 +13,19 @@
 
     if (isset($_GET['opcion'])) {
         $dia = $_GET['opcion'];
-        $fecha = "$dia-10-2000";
-
-        $diaMas = date("d-m-Y", strtotime("$fecha + 1 days"));
-        $diaSiguiente = substr($diaMas, 0, 2);
-
-        echo "<h2>Día siguiente: $dias[$diaSiguiente]</h2>";
+        echo date("d-m-y", strtotime($dia));
     }
     ?>
 
     <form action="" method="get">
         <select name="opcion">
-            <option value="1">Lunes</option>
-            <option value="2">Martes</option>
-            <option value="3">Miércoles</option>
-            <option value="4">Jueves</option>
-            <option value="5">Viernes</option>
-            <option value="6">Sábado</option>
-            <option value="0">Domingo</option>
+            <option value="Monday">Lunes</option>
+            <option value="Tuesday">Martes</option>
+            <option value="Wednesday">Miércoles</option>
+            <option value="Thursday">Jueves</option>
+            <option value="Friday">Viernes</option>
+            <option value="Sathurday">Sábado</option>
+            <option value="Sunday">Domingo</option>
         </select>
         <input type="submit" value="Enviar">
     </form>

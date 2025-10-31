@@ -9,7 +9,7 @@
 
 <body>
     <?php
-    $dias = ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sábado"];
+    //$dias = ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sábado"];
 
     if (isset($_GET['dia']) || isset($_GET['mes']) || isset($_GET['anio'])) {
         $dia = $_GET['dia'];
@@ -17,10 +17,9 @@
         $anio = $_GET['anio'];
 
         $fechaFutura = strtotime("+$anio years +$mes months +$dia days");
-        $dia =  date("w", $fechaFutura);
-        $correspondiente = $dias[$dia];
+        $fecha =  date("d-m-y", $fechaFutura);
 
-        echo"<h3>$correspondiente</h3>";
+        echo"<h3>$fecha</h3>";
     }
     ?>
 

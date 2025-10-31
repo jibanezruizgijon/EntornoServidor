@@ -19,7 +19,12 @@
         $fecha = strtotime("$hora:$minutos:$segundos");
         $fecha2 =  date($opcion, $fecha);
 
-        echo "<h2>Fecha en formato $opcion=> $fecha2</h2>";
+        if($hora>=0 && $hora<=23 && $minutos>=0 && $minutos<=59 && $segundos>=0 && $segundos<=59){
+            echo "<h2>Fecha en formato $opcion=> $fecha2</h2>";
+        } else {
+            echo "<h2>Datos mal introducidos </h2>";
+        }
+        
     }
     ?>
     <h2>Introduce una hora</h2>

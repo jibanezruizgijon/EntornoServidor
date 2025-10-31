@@ -11,7 +11,7 @@
     <?php
     if (isset($_GET['fecha'])) {
         $fecha = $_GET['fecha'];
-        $dias = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+        $dias = ["Domingo","Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sábado"];
 
         $fecha2 = strtotime($fecha);
         $dia =  date("w", $fecha2);
@@ -19,7 +19,6 @@
         echo "<h2>$correspondiente</h2>";
     }
     ?>
-
     <form action="" method="get">
         <label>Introduce una fecha:</label>
         <input type="date" name="fecha">
