@@ -12,18 +12,34 @@ session_start();
 
 <body>
     <?php
+
+    if (!isset($_SESSION['suma'])) {
+        $_SESSION['suma'] = 0;
+        $_SESSION['contador'] = 0;
+    }
     if (isset($_REQUEST['num'])) {
-        $_SESSION['num'] = $_POST['num'];
-        // Inicia cunado se abre la página la primera vez
-        $_SESSION['suma'] = isset($_SESSION['suma']) ?  $_SESSION['suma'] : 0;
-        
+        $num = $_GET['num'];
+        if ($_SESSION['suma'] < 1000) {
+            $_SESSION['contador']++;
+            $_SESSION['suma'] += $num;
+        }
+        if ($_SESSION['suma'] > 1000) {
+            echo "<h2>El valor total acumulado es " . $_SESSION['suma'] . "</h2>";
+            echo "<h2>La cantidad de números introducidos es de " .  $_SESSION['contador'] . "</h2>";
+            echo "<h2>La media es de " . $_SESSION['suma'] / $_SESSION['contador'] . "</h2>";
+        }
+    }
+
+    if ($_SESSION['suma'] < 1000) {
+    ?>
+        <form action="" method="get">
+            <label>Introduce un número:</label>
+            <input type="number" name="num">
+            <input type="submit" value="Enviar">
+        </form>
+    <?php
     }
     ?>
-    <form action="" method="post">
-        <label>Introduce un número:</label>
-        <input type="number" name="num">
-        <input type="submit" value="Enviar">
-    </form>
 </body>
 
 </html>
