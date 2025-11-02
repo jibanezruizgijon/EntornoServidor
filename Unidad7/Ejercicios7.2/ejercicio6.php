@@ -1,8 +1,9 @@
 <?php
 session_start();
+// Si es la primera vez que se abre se inicia el array con los datos y el total 
 if (!isset($_SESSION['productos'])) {
     $_SESSION['productos'] = [
-        ['nombre' => 'Air Force 1', 'precio' => 80, 'img' => 'img/force1.jpg', 'descripcion' => 'Cómodas, duraderas y atemporales: son las número 1 por una razón. El diseño clásico de los 80 se combina con piel lisa y detalles llamativos para conseguir un estilo perfecto tanto en la cancha como fuera de ella.','unidades' => 0],
+        ['nombre' => 'Air Force 1', 'precio' => 80, 'img' => 'img/force1.jpg', 'descripcion' => 'Cómodas, duraderas y atemporales: son las número 1 por una razón. El diseño clásico de los 80 se combina con piel lisa y detalles llamativos para conseguir un estilo perfecto tanto en la cancha como fuera de ella.', 'unidades' => 0],
         ['nombre' => 'Air Max Plus', 'precio' => 189, 'img' => 'img/max_plus.jpg', 'descripcion' => "Deja que tu estilo se eleve con las Air Max Plus. La emblemática estructura añade estilo a tu look y la malla transpirable mantiene la frescura. La amortiguación visible te permite rendir homenaje a tu estilo desafiante con comodidad.", 'unidades' => 0],
         ['nombre' => 'Air Jordan 1', 'precio' => 140, 'img' => 'img/jordan1.png', 'descripcion' => "Inspirada en las AJ1 originales, esta edición de perfil medio mantiene el look icónico que más te gusta, y los colores elegidos y la piel impecable aportan una identidad distintiva.", 'unidades' => 0],
         ['nombre' => 'Pegasus 41', 'precio' => 150, 'img' => 'img/pegasus.jpg', 'descripcion' => "La amortiguación reactiva de las Pegasus ofrece una pisada enérgica para el running diario sobre asfalto", 'unidades' => 0],
@@ -10,6 +11,7 @@ if (!isset($_SESSION['productos'])) {
     ];
     $_SESSION['total'] = 0;
 } else {
+    //En caso de estar ya iniciada recibe el parámetro de compra o de eliminar el producto y lo modifica del carrito
     $compra = (isset($_POST['compra'])) ? $_POST['compra'] : " ";
     $eliminar = (isset($_POST['eliminar'])) ? $_POST['eliminar'] : " ";
     foreach ($_SESSION['productos'] as $productos => $datos) {
@@ -85,6 +87,8 @@ if (!isset($_SESSION['productos'])) {
             <h3>Productos</h3>
             <hr>
             <?php
+            // Muestra los datos del producto con la opción de compra
+            // Da la opción de mostrar detalles del producto específico
             foreach ($_SESSION['productos'] as $productos => $datos) {
                 echo "<img src=" . $datos["img"] . ">";
                 echo "<h3>" . $datos["nombre"] .  "</h3>";
@@ -108,6 +112,8 @@ if (!isset($_SESSION['productos'])) {
             <h3>Carrito</h3>
             <hr>
             <?php
+            // Muestra el carrito con las compras hechas en caso de que se haya comprado algo
+            // Con la opción de eliminar una unidad del producto en el carrito
             foreach ($_SESSION['productos'] as $productos => $datos) {
                 if ($datos["unidades"] != 0) {
                     echo "<img src=" . $datos["img"] . ">";

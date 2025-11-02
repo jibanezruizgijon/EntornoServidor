@@ -1,15 +1,18 @@
 <?php
 session_start();
 
+// En caso de que usuario no tenga valor se redirige a la pagina para introducirlo
 if (!isset($_SESSION['usuario'])) {
     header("Location: pagina_login.php");
 }
 
+// En caso de cerrar sesión se borran las sesiones y se recarga la página
 if (isset($_POST['cerrar'])) {
     session_destroy();
     header("refresh: 0;");
 }
 
+// Si recibe un número ejecuta el ejercicio
 if (isset($_REQUEST['num'])) {
     $_SESSION['num'] = $_POST['num'];
     // Inicia cunado se abre la página la primera vez

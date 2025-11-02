@@ -1,5 +1,6 @@
 <?php
 session_start();
+// Si es la primera vez que se abre se inicia el array con los datos y el total 
 if (!isset($_SESSION['productos'])) {
   $_SESSION['productos'] = [
     ['nombre' => 'Air Force 1', 'precio' => 80, 'img' => 'img/force1.jpg', 'unidades' => 0],
@@ -8,9 +9,9 @@ if (!isset($_SESSION['productos'])) {
     ['nombre' => 'Pegasus 41', 'precio' => 150, 'img' => 'img/pegasus.jpg', 'unidades' => 0],
     ['nombre' => 'Mercurial vapor 16', 'precio' => 260, 'img' => 'img/mercurial.png', 'unidades' => 0]
   ];
-
   $_SESSION['total'] = 0;
 } else {
+  //En caso de estar ya iniciada recibe el parámetro de compra o de eliminar el producto y lo modifica del carrito
   $compra = (isset($_POST['compra'])) ? $_POST['compra'] : " ";
   $eliminar = (isset($_POST['eliminar'])) ? $_POST['eliminar'] : " ";
   foreach ($_SESSION['productos'] as $productos => $datos) {
@@ -25,8 +26,6 @@ if (!isset($_SESSION['productos'])) {
     }
   }
 }
-
-
 
 ?>
 <!DOCTYPE html>
@@ -89,6 +88,7 @@ if (!isset($_SESSION['productos'])) {
       <h3>Productos</h3>
       <hr>
       <?php
+      // Muestra los datos del producto con la opción de compra
       foreach ($_SESSION['productos'] as $productos => $datos) {
         echo "<img src=" . $datos["img"] . ">";
         echo "<h3>" . $datos["nombre"] .  "</h3>";
@@ -110,6 +110,8 @@ if (!isset($_SESSION['productos'])) {
       <hr>
 
       <?php
+      // Muestra el carrito con las compras hechas en caso de que se haya comprado algo
+      // Con la opción de eliminar una unidad del producto en el carrito
       foreach ($_SESSION['productos'] as $productos => $datos) {
         if ($datos["unidades"] != 0) {
           echo "<img src=" . $datos["img"] . ">";
@@ -123,10 +125,11 @@ if (!isset($_SESSION['productos'])) {
             <input type="submit" value="eliminar">
           </form>
       <?php
-        } 
+        }
         echo "<br>";
       }
-       echo "<h3>Precio total: " . $_SESSION['total'] . "</h3>";
+      // Muestra el precio de todos los productos añadidos al carrito
+      echo "<h3>Precio total: " . $_SESSION['total'] . "</h3>";
       ?>
     </section>
   </div>

@@ -23,9 +23,10 @@ session_start();
         $_SESSION['num'] = $_POST['num'];
         
 
-        //En caso de negativo se hacec la media
+        //En caso de negativo se hace la media
         if ($_SESSION['num'] >= 0) {
             // Suma solo los impares para la media
+            // comprueba cuál es el mayor de los pares
             if ($_SESSION['num'] % 2 != 0) {
                 $_SESSION['suma'] += $_SESSION['num'];
                 $_SESSION['contadorImpar']++;
@@ -35,7 +36,7 @@ session_start();
                 }
             }
             $_SESSION['contador']++;
-
+            // El formulario se mostrará mientras no se introduzca un número negativo
     ?>
             <h3>Introduce un número negativo para terminar</h3>
             <form action="" method="post">
@@ -44,6 +45,7 @@ session_start();
                 <input type="submit" value="Enviar">
             </form>
         <?php
+        // Cuando se introduzca un número negativo muestra los resultados
         } else {
             $media = $_SESSION['suma'] / $_SESSION['contadorImpar'];
             echo "<h2>Media de los impares:" . $media . "</h2>";
@@ -51,7 +53,7 @@ session_start();
             echo "<h2>Número par más grande:" . $_SESSION['parMayor'] . "</h2>";
         }
     }
-
+    // Solo se muestra la primer vez porque no hay parámetros introducidos
     if (!isset($_SESSION['num'])) {
         ?>
         <h3>Introduce un número negativo para terminar</h3>

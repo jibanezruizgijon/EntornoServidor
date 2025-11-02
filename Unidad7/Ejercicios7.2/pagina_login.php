@@ -1,10 +1,11 @@
 <?php
 session_start();
-
+    // En caso de ya estar registrado se redirige a la página principal
 if (isset($_SESSION['usuario'])) {
     header("Location: ejercicio4.php");
 }
 
+// Si se han introducido los datos los guarda y se redirige a la página principal
 if (isset($_POST['usuario'])) {
     $_SESSION['usuario'] = $_POST['usuario'];
     $_SESSION['password'] = $_POST['password'];

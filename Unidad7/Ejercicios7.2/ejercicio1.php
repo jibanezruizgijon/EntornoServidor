@@ -2,7 +2,8 @@
 session_start();
 if (isset($_REQUEST['num'])) {
     $_SESSION['num'] = $_POST['num'];
-    // Inicia cunado se abre la página la primera vez
+    
+    // Inicia cuando se abre la página la primera vez
     $_SESSION['suma'] = isset($_SESSION['suma']) ?  $_SESSION['suma'] : 0;
     $_SESSION['contador'] = isset($_SESSION['contador']) ?  $_SESSION['contador'] : 0;
     //En caso de negativo se hacec la media
