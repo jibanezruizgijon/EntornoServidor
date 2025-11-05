@@ -7,7 +7,7 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 // En caso de cerrar sesión se borran las sesiones y se recarga la página
-if (isset($_POST['cerrar'])) {
+if (isset($_REQUEST['cerrar'])) {
     session_destroy();
     header("refresh: 0;");
 }
@@ -53,6 +53,7 @@ if (isset($_REQUEST['num'])) {
         <input type="hidden" name="cerrar">
         <input type="submit" value="Cerrar sesión">
     </form>
+    <!-- <a href="?cerrar=1">Cerrar sesión</a> -->
 </body>
 
 </html>

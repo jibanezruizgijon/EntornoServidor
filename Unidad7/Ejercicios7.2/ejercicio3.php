@@ -26,7 +26,7 @@ session_start();
             $_SESSION['suma'] += $num;
         }
         // Cuando llega a 1000 muestra los resultados
-        if ($_SESSION['suma'] > 1000) {
+        if ($_SESSION['suma'] > 1000) { 
             echo "<h2>El valor total acumulado es " . $_SESSION['suma'] . "</h2>";
             echo "<h2>La cantidad de números introducidos es de " .  $_SESSION['contador'] . "</h2>";
             echo "<h2>La media es de " . $_SESSION['suma'] / $_SESSION['contador'] . "</h2>";

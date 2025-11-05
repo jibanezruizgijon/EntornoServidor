@@ -1,19 +1,22 @@
 <?php
 session_start();
+
+// Inicia cuando se abre la página la primera vez
+if (!isset($_SESSION['suma'])) {
+    $_SESSION['suma'] = 0;
+    $_SESSION['contador'] = 0;
+}
 if (isset($_REQUEST['num'])) {
-    $_SESSION['num'] = $_POST['num'];
-    
-    // Inicia cuando se abre la página la primera vez
-    $_SESSION['suma'] = isset($_SESSION['suma']) ?  $_SESSION['suma'] : 0;
-    $_SESSION['contador'] = isset($_SESSION['contador']) ?  $_SESSION['contador'] : 0;
-    //En caso de negativo se hacec la media
-    if ($_SESSION['num'] < 0) {
+    $num = $_POST['num'];
+
+    //En caso de negativo se hace la media
+    if ($num < 0) {
         $media = $_SESSION['suma'] / $_SESSION['contador'];
         echo "<h2>Media:" . $media . "</h2>";
         // En caso positivo se suma con el resto de números
         // Cuenta un número más para la media
     } else {
-        $_SESSION['suma'] += $_SESSION['num'];
+        $_SESSION['suma'] += $num;
         $_SESSION['contador']++;
     }
     echo "<h2>Contador:" . $_SESSION['contador'] . "</h2>";

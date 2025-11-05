@@ -12,6 +12,7 @@ session_start();
 
 <body>
     <?php
+    $pedir = true;
 // Inicia cunado se abre la página la primera vez
     if (!isset($_SESSION['suma'])) {
         $_SESSION['suma'] = 0;
@@ -36,17 +37,10 @@ session_start();
                 }
             }
             $_SESSION['contador']++;
-            // El formulario se mostrará mientras no se introduzca un número negativo
-    ?>
-            <h3>Introduce un número negativo para terminar</h3>
-            <form action="" method="post">
-                <label>Introduce un número:</label>
-                <input type="number" name="num">
-                <input type="submit" value="Enviar">
-            </form>
-        <?php
+        
         // Cuando se introduzca un número negativo muestra los resultados
         } else {
+            $pedir = false;
             $media = $_SESSION['suma'] / $_SESSION['contadorImpar'];
             echo "<h2>Media de los impares:" . $media . "</h2>";
             echo "<h2>Números introducidos:" . $_SESSION['contador'] . "</h2>";
@@ -54,7 +48,7 @@ session_start();
         }
     }
     // Solo se muestra la primer vez porque no hay parámetros introducidos
-    if (!isset($_SESSION['num'])) {
+    if ($pedir) {
         ?>
         <h3>Introduce un número negativo para terminar</h3>
         <form action="" method="post">
