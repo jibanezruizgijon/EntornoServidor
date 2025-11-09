@@ -7,15 +7,19 @@
 </head>
 <body>
     <h2>Añade la palabra</h2>
-
-    <form action="ejercicio8.php" method="post">
+    <hr>
+    <form action="administrarPalabras.php" method="post">
         <label>Introduce la palabra en español</label>
-        <input type="text" name="spain" readonly value="">
+        <input type="text" name="spain" >
         <br><br>
         <label>Introduce la palabra en Inglés</label>
         <input type="text" name="english">
         <br><br>
         <input type="submit" value="Añadir">
+    </form>
+<br>
+     <form action="administrarPalabras.php" method="post">
+        <input type="submit" value="volver">
     </form>
 </body>
 </html>
