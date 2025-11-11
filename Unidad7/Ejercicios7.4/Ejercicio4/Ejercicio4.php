@@ -4,6 +4,7 @@ $fechaHoy = date("d/m/Y");
 
 if (!isset($_SESSION['libros'])) {
     $_SESSION['libros'] = [];
+    $_SESSION['sancion'] = 0;
 }
 
 if (isset($_POST['titulo'])) {
@@ -11,29 +12,34 @@ if (isset($_POST['titulo'])) {
     $fecha = $_POST['fecha'];
 
     $fechaDevolucion = strtotime("$fecha +7 days");
-    $fechaRestante = time()-$fechaDevolucion;
+    $fechaRestante = time() - $fechaDevolucion;
     $fechaFormato = strtotime($fecha);
 
     $fechaPrestamo = date("d/m/Y", $fechaFormato);
     $fechaDevolucion = date("d/m/Y", $fechaDevolucion);
-    $fechaRestante = date("d",  $fechaRestante );
-    
+    if ($fechaRestante < 0) {
+        $fechaRestante = "RETRASADO, sanción acumulada de 2€";
+        $_SESSION['sancion']+= 2;
+    } else {
+        $fechaRestante = date("d",  $fechaRestante);
+    }
+
+
     $_SESSION['libros'][] = [
-            "titulo" => $titulo,
-            "prestamo" => $fechaPrestamo,
-            "devolucion" => $fechaDevolucion,
-            "restante" => $fechaRestante ,
+        "titulo" => $titulo,
+        "prestamo" => $fechaPrestamo,
+        "devolucion" => $fechaDevolucion,
+        "restante" => $fechaRestante,
     ];
 }
 
 if (isset($_POST['devolver'])) {
     $libroDevuelto = $_POST['devolver'];
-    foreach ( $_SESSION['libros'] as $libro => $datos) {
-    if ( $datos['titulo'] == $libroDevuelto) {
+    foreach ($_SESSION['libros'] as $libro => $datos) {
+        if ($datos['titulo'] == $libroDevuelto) {
             unset($_SESSION['libros'][$libro]);
         }
     }
-
 }
 // Una cookie para el array de la tabla con los datos de los libros
 // Una cookie para la deuda por sanciones
@@ -60,8 +66,8 @@ if (isset($_POST['devolver'])) {
 
     <?php
     // CÓDIGO DE PRUEBAS
-    if (isset($_POST['titulo'])) {
-        print_r(time());
+    if ($_SESSION['sancion'] > 0) {
+        echo "<h2>Deuda por sanciones: " . ($_SESSION['sancion'])  .  "€</h2>";
     }
     ?>
 
@@ -84,17 +90,17 @@ if (isset($_POST['devolver'])) {
         <?php
         foreach ($_SESSION['libros'] as $libros => $datos) {
         ?>
-        <tr>
-            <td>
-                <form action="" method="post">
-                    <input type="hidden" name="devolver" value="<?= $datos['titulo'] ?>">
-                    <input type="submit"  value="DEVOLVER">
-                </form>
-            </td>
-            <td><?= $datos['titulo'] ?></td>
-            <td><?= $datos['prestamo'] ?></td>
-            <td><?= $datos['devolucion'] ?></td>
-            <td><?= $datos['restante'] ?></td>
+            <tr>
+                <td>
+                    <form action="" method="post">
+                        <input type="hidden" name="devolver" value="<?= $datos['titulo'] ?>">
+                        <input type="submit" value="DEVOLVER">
+                    </form>
+                </td>
+                <td><?= $datos['titulo'] ?></td>
+                <td><?= $datos['prestamo'] ?></td>
+                <td><?= $datos['devolucion'] ?></td>
+                <td <?= (strpos($datos['restante'], "RETRASADO") !== false) ? "style='color:red;'" : "style='color:black;'"; ?>><?= $datos['restante'] ?> días</td>
             </tr>
         <?php
         }
