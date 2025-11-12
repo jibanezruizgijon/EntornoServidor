@@ -1,48 +1,70 @@
 <?php
+
+use function PHPSTORM_META\type;
+
 if (session_status() == PHP_SESSION_NONE) session_start();
 $fechaHoy = date("d/m/Y");
+
+if (isset($_COOKIE['libros']) && !isset($_SESSION['libros']) && isset($_COOKIE['sancion'])) {
+    $_SESSION['sancion'] = unserialize(base64_decode($_COOKIE['sancion']));
+    $_SESSION['libros'] = unserialize(base64_decode($_COOKIE['libros']));
+}
 
 if (!isset($_SESSION['libros'])) {
     $_SESSION['libros'] = [];
     $_SESSION['sancion'] = 0;
+    setcookie("sancion", $_SESSION['sancion'], time() + 12 * 30 * 7 * 34 * 60 * 60);
 }
-
+$dias = 0;
+$sancion = 0;
 if (isset($_POST['titulo'])) {
     $titulo = $_POST['titulo'];
     $fecha = $_POST['fecha'];
-
     $fechaDevolucion = strtotime("$fecha +7 days");
-    $fechaRestante = time() - $fechaDevolucion;
+    $hoy = strtotime(date("m/d/Y"));
+    $fechaRestante = $hoy - $fechaDevolucion;
     $fechaFormato = strtotime($fecha);
-
     $fechaPrestamo = date("d/m/Y", $fechaFormato);
-    $fechaDevolucion = date("d/m/Y", $fechaDevolucion);
-    if ($fechaRestante < 0) {
-        $fechaRestante = "RETRASADO, sanción acumulada de 2€";
-        $_SESSION['sancion']+= 2;
-    } else {
-        $fechaRestante = date("d",  $fechaRestante);
-    }
+    $fechaDevolucion1 = date("d/m/Y", $fechaDevolucion);
 
+    if ($fechaRestante < 0) {
+        $dias = ($hoy - $fechaDevolucion) / (60 * 60 * 24);
+        $dias = abs($dias);
+        $sancion = 2 * $dias;
+        $fechaRestante = abs($fechaRestante);
+        $fechaRestante = date("d",  $fechaRestante);
+        $dineroAcumulado = $fechaRestante * 2;
+        $mensajeRestante = "RETRASADO, sanción acumulada de " . $dineroAcumulado . "€";
+    } else {
+        $mensajeRestante = date("d",  $fechaRestante);
+    }
 
     $_SESSION['libros'][] = [
         "titulo" => $titulo,
         "prestamo" => $fechaPrestamo,
-        "devolucion" => $fechaDevolucion,
-        "restante" => $fechaRestante,
+        "devolucion" => $fechaDevolucion1,
+        "restante" => $mensajeRestante,
     ];
+    $librosTxt = base64_encode(serialize($_SESSION['libros']));
+    setcookie("libros", $librosTxt, time() + 12 * 30 * 7 * 34 * 60 * 60);
 }
 
 if (isset($_POST['devolver'])) {
     $libroDevuelto = $_POST['devolver'];
     foreach ($_SESSION['libros'] as $libro => $datos) {
         if ($datos['titulo'] == $libroDevuelto) {
+            if (strpos($datos['restante'], "RETRASADO") !== false) {
+                $_SESSION['sancion'] += $sancion; //Añadir el numero de dias acumulados
+            }
             unset($_SESSION['libros'][$libro]);
         }
     }
+
+
+    $librosTxt = base64_encode(serialize($_SESSION['libros']));
+    setcookie("libros", $librosTxt, time() + 12 * 30 * 7 * 34 * 60 * 60);
+    setcookie("sancion", $_SESSION['sancion'], time() + 12 * 30 * 7 * 34 * 60 * 60);
 }
-// Una cookie para el array de la tabla con los datos de los libros
-// Una cookie para la deuda por sanciones
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -100,7 +122,7 @@ if (isset($_POST['devolver'])) {
                 <td><?= $datos['titulo'] ?></td>
                 <td><?= $datos['prestamo'] ?></td>
                 <td><?= $datos['devolucion'] ?></td>
-                <td <?= (strpos($datos['restante'], "RETRASADO") !== false) ? "style='color:red;'" : "style='color:black;'"; ?>><?= $datos['restante'] ?> días</td>
+                <td <?= (strpos($datos['restante'], "RETRASADO") !== false) ? "style='color:red;'" : "style='color:black;'"; ?>><?= $datos['restante'] ?> dias</td>
             </tr>
         <?php
         }

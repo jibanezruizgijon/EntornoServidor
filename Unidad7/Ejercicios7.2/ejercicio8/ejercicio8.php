@@ -18,9 +18,9 @@ if (!isset($_SESSION['diccionario'])) {
     setcookie("diccionario", $diccTexto, time() + 60 * 60);
 }
 
-
 if (isset($_POST['corregir'])) {
     $palabras = $_POST['palabra'];
+    
 } else {
     $_SESSION['PalabrasAzar'] = array_rand($_SESSION['diccionario'], 5);
 }
@@ -62,7 +62,17 @@ if (isset($_POST['corregir'])) {
     } else {
         if (isset($_POST['corregir'])) {
            for ($i=0; $i < count( $_SESSION['PalabrasAzar']) ; $i++) { 
-           echo "<p>" . $_SESSION["PalabrasAzar"][$i] . " - " .  $palabras[$i] . "</p>"; 
+            $palabraEsp = $_SESSION["PalabrasAzar"][$i];     
+        $traduccion = trim(strtolower($palabras[$i])); 
+        $traduccionCorrecta = strtolower($_SESSION['diccionario'][$palabraEsp]); 
+
+        echo "<p>$palabraEsp - $traduccion. ";
+
+        if ($traduccion === $traduccionCorrecta) {
+            echo "Correcto ";
+        } else {
+            echo "Incorrecto  (correcto: $traduccionCorrecta)";
+        }
            }
         }
     }

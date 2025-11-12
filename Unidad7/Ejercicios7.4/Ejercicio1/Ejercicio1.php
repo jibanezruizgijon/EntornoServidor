@@ -53,16 +53,8 @@ if (isset($_POST['borrar'])) {
 
 <body>
 
-
-  <?php
-  if (isset($_POST['add'])) {
-    print_r($_SESSION['paleta']);
-  }
-  ?>
-
   <form action="" method="post">
-    <input type="hidden" name="add">
-    <input type="submit" value="Añadir color">
+    <input type="submit" name="add" value="Añadir color">
   </form>
   <br><br>
   <form action="Ejercicio1.1.php" method="post">

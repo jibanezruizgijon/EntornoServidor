@@ -59,8 +59,7 @@ if (isset($_REQUEST['cambio'])) {
     </form>
     <br><br>
     <form action="Ejercicio1.php" method="post">
-        <input type="hidden" name="borrar">
-        <input type="submit" value="Eliminar paleta">
+        <input type="submit" name="borrar" value="Eliminar paleta">
     </form>
 </body>
 
