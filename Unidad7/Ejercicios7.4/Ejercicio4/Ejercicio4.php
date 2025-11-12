@@ -1,69 +1,82 @@
 <?php
-
-use function PHPSTORM_META\type;
-
 if (session_status() == PHP_SESSION_NONE) session_start();
 $fechaHoy = date("d/m/Y");
 
-if (isset($_COOKIE['libros']) && !isset($_SESSION['libros']) && isset($_COOKIE['sancion'])) {
-    $_SESSION['sancion'] = unserialize(base64_decode($_COOKIE['sancion']));
+// Inicializar o recuperar datos de sesión/cookies
+if (isset($_COOKIE['libros']) && !isset($_SESSION['libros'])) {
     $_SESSION['libros'] = unserialize(base64_decode($_COOKIE['libros']));
+}
+if (isset($_COOKIE['sancion']) && !isset($_SESSION['sancion'])) {
+    $_SESSION['sancion'] = (float)$_COOKIE['sancion'];
 }
 
 if (!isset($_SESSION['libros'])) {
     $_SESSION['libros'] = [];
-    $_SESSION['sancion'] = 0;
-    setcookie("sancion", $_SESSION['sancion'], time() + 12 * 30 * 7 * 34 * 60 * 60);
 }
-$dias = 0;
-$sancion = 0;
+if (!isset($_SESSION['sancion'])) {
+    $_SESSION['sancion'] = 0;
+}
+
+// Procesar nuevo préstamo
 if (isset($_POST['titulo'])) {
     $titulo = $_POST['titulo'];
     $fecha = $_POST['fecha'];
+    
+    // Convertir fechas a timestamp para cálculos
+    $fechaPrestamo = strtotime($fecha);
     $fechaDevolucion = strtotime("$fecha +7 days");
-    $hoy = strtotime(date("m/d/Y"));
-    $fechaRestante = $hoy - $fechaDevolucion;
-    $fechaFormato = strtotime($fecha);
-    $fechaPrestamo = date("d/m/Y", $fechaFormato);
-    $fechaDevolucion1 = date("d/m/Y", $fechaDevolucion);
-
-    if ($fechaRestante < 0) {
-        $dias = ($hoy - $fechaDevolucion) / (60 * 60 * 24);
-        $dias = abs($dias);
-        $sancion = 2 * $dias;
-        $fechaRestante = abs($fechaRestante);
-        $fechaRestante = date("d",  $fechaRestante);
-        $dineroAcumulado = $fechaRestante * 2;
-        $mensajeRestante = "RETRASADO, sanción acumulada de " . $dineroAcumulado . "€";
+    $hoy = strtotime(date("Y-m-d"));
+    
+    // Formatear fechas para mostrar
+    $fechaPrestamoFormato = date("d/m/Y", $fechaPrestamo);
+    $fechaDevolucionFormato = date("d/m/Y", $fechaDevolucion);
+    
+    // Calcular días restantes y sanción
+    $mensajeRestante = "";
+    
+    if ($hoy > $fechaDevolucion) {
+        // Libro retrasado
+        $diasRetraso = floor(($hoy - $fechaDevolucion) / (60 * 60 * 24));
+        $sancion = 2 * $diasRetraso;
+        $mensajeRestante = "RETRASADO, sanción acumulada de " . $sancion . "€";
     } else {
-        $mensajeRestante = date("d",  $fechaRestante);
+        // Libro en plazo
+        $diasRestantes = floor(($fechaDevolucion - $hoy) / (60 * 60 * 24));
+        $mensajeRestante = $diasRestantes . " días restantes";
     }
-
+    
     $_SESSION['libros'][] = [
         "titulo" => $titulo,
-        "prestamo" => $fechaPrestamo,
-        "devolucion" => $fechaDevolucion1,
+        "prestamo" => $fechaPrestamoFormato,
+        "devolucion" => $fechaDevolucionFormato,
         "restante" => $mensajeRestante,
+        "dias_retraso" => isset($diasRetraso) ? $diasRetraso : 0 // Solo guardamos los días de retraso
     ];
+    
+    // Guardar en cookies
     $librosTxt = base64_encode(serialize($_SESSION['libros']));
-    setcookie("libros", $librosTxt, time() + 12 * 30 * 7 * 34 * 60 * 60);
+    setcookie("libros", $librosTxt, time() + (365 * 24 * 60 * 60));
 }
 
+// Procesar devolución
 if (isset($_POST['devolver'])) {
     $libroDevuelto = $_POST['devolver'];
-    foreach ($_SESSION['libros'] as $libro => $datos) {
+    foreach ($_SESSION['libros'] as $indice => $datos) {
         if ($datos['titulo'] == $libroDevuelto) {
+            // Sumar sanción si el libro estaba retrasado
             if (strpos($datos['restante'], "RETRASADO") !== false) {
-                $_SESSION['sancion'] += $sancion; //Añadir el numero de dias acumulados
+                $sancionLibro = 2 * $datos['dias_retraso'];
+                $_SESSION['sancion'] += $sancionLibro;
             }
-            unset($_SESSION['libros'][$libro]);
+            unset($_SESSION['libros'][$indice]);
+            break;
         }
     }
-
-
+    
+    // Guardar en cookies
     $librosTxt = base64_encode(serialize($_SESSION['libros']));
-    setcookie("libros", $librosTxt, time() + 12 * 30 * 7 * 34 * 60 * 60);
-    setcookie("sancion", $_SESSION['sancion'], time() + 12 * 30 * 7 * 34 * 60 * 60);
+    setcookie("libros", $librosTxt, time() + (365 * 24 * 60 * 60));
+    setcookie("sancion", $_SESSION['sancion'], time() + (365 * 24 * 60 * 60));
 }
 ?>
 <!DOCTYPE html>
@@ -74,24 +87,22 @@ if (isset($_POST['devolver'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ejercicio4</title>
     <style>
-        table,
-        th,
-        tr,
-        td {
+        table, th, tr, td {
             border: 1px solid;
+        }
+        .retrasado {
+            color: red;
+            font-weight: bold;
         }
     </style>
 </head>
 
 <body>
-    <h1>Control de libros prestados. Hoy es <?= $fechaHoy  ?></h1>
+    <h1>Control de libros prestados. Hoy es <?= $fechaHoy ?></h1>
 
-    <?php
-    // CÓDIGO DE PRUEBAS
-    if ($_SESSION['sancion'] > 0) {
-        echo "<h2>Deuda por sanciones: " . ($_SESSION['sancion'])  .  "€</h2>";
-    }
-    ?>
+    <?php if ($_SESSION['sancion'] > 0): ?>
+        <h2>Deuda por sanciones: <?= $_SESSION['sancion'] ?>€</h2>
+    <?php endif; ?>
 
     <form action="" method="post">
         <label>Título:</label>
@@ -100,18 +111,18 @@ if (isset($_POST['devolver'])) {
         <input type="date" name="fecha" required>
         <input type="submit" value="Realizar préstamo">
     </form>
+    
     <hr>
+    
     <table>
         <tr>
             <th>Devolver</th>
             <th>Título</th>
             <th>Préstamo</th>
             <th>Devolución</th>
-            <th>Días restantes</th>
+            <th>Estado</th>
         </tr>
-        <?php
-        foreach ($_SESSION['libros'] as $libros => $datos) {
-        ?>
+        <?php foreach ($_SESSION['libros'] as $datos): ?>
             <tr>
                 <td>
                     <form action="" method="post">
@@ -119,16 +130,14 @@ if (isset($_POST['devolver'])) {
                         <input type="submit" value="DEVOLVER">
                     </form>
                 </td>
-                <td><?= $datos['titulo'] ?></td>
+                <td><?= htmlspecialchars($datos['titulo']) ?></td>
                 <td><?= $datos['prestamo'] ?></td>
                 <td><?= $datos['devolucion'] ?></td>
-                <td <?= (strpos($datos['restante'], "RETRASADO") !== false) ? "style='color:red;'" : "style='color:black;'"; ?>><?= $datos['restante'] ?> dias</td>
+                <td class="<?= (strpos($datos['restante'], 'RETRASADO') !== false) ? 'retrasado' : '' ?>">
+                    <?= $datos['restante'] ?>
+                </td>
             </tr>
-        <?php
-        }
-        ?>
-
+        <?php endforeach; ?>
     </table>
 </body>
-
 </html>
