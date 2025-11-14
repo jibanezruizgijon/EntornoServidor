@@ -16,6 +16,8 @@ if (isset($_POST['nombre'])) {
         "edad" => $edad
     ];
 }
+$fechaHoy =  date("d-m-Y", time());
+$fecha = "#" . $fechaHoy . "#";
 
 if (isset($_POST['grabar'])) {
     $existeFecha = mirarFecha($fecha);
@@ -24,27 +26,24 @@ if (isset($_POST['grabar'])) {
         fwrite($archivo, $fecha . PHP_EOL);
     }
     foreach ($_SESSION['mascotas'] as $mascota => $datos) {
-        fwrite($archivo, $datos['nombre'] . "." . $datos['animal'] . "-" . $datos['edad'] . PHP_EOL);
+        fwrite($archivo, $datos['nombre'] . "-" . $datos['animal'] . "-" . $datos['edad'] . PHP_EOL);
     }
-    fclose($fp);
+    fclose($archivo);
     session_destroy();
-    exit();
+    header("refresh: 0");
 }
-
-$fechaHoy =  date("d-m-Y", time());
-$fecha = "#" . $fechaHoy . "#";
-
 
 function mirarFecha($fechaHoy)
 {
-    $file = fopen($archivo, "a");
-    do {
-        //Comprobar fecha
+    if(!file_exists("mascotas.txt")) return false;
 
+    $file = fopen("mascotas.txt", "r");
+    do {
         $linea = trim(fgets($file));
+        return true;
     } while ($linea != $fecha);
-    // falta una condiciondentro del while
     fclose($file);
+    return false;
 }
 ?>
 
@@ -106,12 +105,6 @@ function mirarFecha($fechaHoy)
         <label>Grabar las mascotas en el fichero:</label>
         <input type="submit" name="grabar" value="Grabar">
     </form>
-
-    <?php
-    if (isset($_SESSION['mascotas'])) {
-        print_r($_SESSION['mascotas']);
-    }
-    ?>
 </body>
 
 </html>
