@@ -24,7 +24,7 @@ if (isset($_POST['grabar'])) {
         fwrite($archivo, $fecha . PHP_EOL);
     }
     foreach ($_SESSION['mascotas'] as $mascota => $datos) {
-        fwrite($archivo, $datos['nombre']. ".". $datos['animal'] . "-" . $datos['edad']. PHP_EOL);
+        fwrite($archivo, $datos['nombre'] . "." . $datos['animal'] . "-" . $datos['edad'] . PHP_EOL);
     }
     fclose($fp);
     session_destroy();
@@ -35,14 +35,16 @@ $fechaHoy =  date("d-m-Y", time());
 $fecha = "#" . $fechaHoy . "#";
 
 
-function mirarFecha($fechaHoy) {
-    $archivo = fopen($archivo, "a");
+function mirarFecha($fechaHoy)
+{
+    $file = fopen($archivo, "a");
     do {
         //Comprobar fecha
 
-        $linea = trim(fgets($archivo));
-    } while ($linea != $fecha && );
-    fclose($archivo)
+        $linea = trim(fgets($file));
+    } while ($linea != $fecha);
+    // falta una condiciondentro del while
+    fclose($file);
 }
 ?>
 
