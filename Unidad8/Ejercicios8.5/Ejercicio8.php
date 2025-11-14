@@ -1,21 +1,21 @@
 <?php
-
 $nombre_archivo = "Archivo.txt";
 
-
-// Aqui se guarda el texto recibido en el textarea al fichero
-if (isset($_POST['guardar'])) {
-    $manejador = fopen($nombre_archivo, "w");
-    fputs($manejador, "Prueba de escritura aprenderaprogramar.com" . PHP_EOL);
-    fclose($manejador);
+// Guardar línea en el fichero
+if (isset($_POST['texto'])) {
+    $texto = $_POST['texto'];
+    $archivo = fopen($nombre_archivo, "a");
+    fputs($archivo, $texto . PHP_EOL);
+    fclose($archivo);
 }
 
-// if (isset($_POST['terminar'])) {
-// }
-
-// Aquí se borra el fichero
+// Reiniciar fichero
 if (isset($_POST['reiniciar'])) {
+    if (file_exists($nombre_archivo)) {
+        unlink($nombre_archivo);
+    }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -33,27 +33,37 @@ if (isset($_POST['reiniciar'])) {
     <form action="" method="post">
         <label>Escribe una línea para el fichero</label>
         <br>
-        <textarea name="texto"></textarea>
+        <textarea name="texto" required autofocus></textarea>
         <br>
-        <input type="submit" name="guardar" value="Guardar">
+        <input type="submit" value="Guardar">
     </form>
     <br><br>
+
     <form action="" method="post">
         <input type="submit" name="terminar" value="Terminar">
     </form>
     <br>
 
     <?php
+    // Mostrar fichero
     if (isset($_POST['terminar'])) {
+        if (file_exists($nombre_archivo)) {
+            echo "<p>Contenido del fichero:</p>";
+            $fp = fopen($nombre_archivo, "r");
+            while (!feof($fp)) {
+                $linea = fgets($fp);
+                echo $linea . "<br />";
+            }
+            fclose($fp);
     ?>
-        <p>Contenido del fichero:</p>
-        <?php
-        // Aqui se tiene que mostrar el contenido del fichero
-        ?>
-        <form action="" method="post">
-            <input type="button" name="reiniciar" value="Reiniciar Fichero">
-        </form>
+            <a href="<?= $nombre_archivo ?>">Mostrar archivo</a>
+            <form action="" method="post">
+                <input type="submit" name="reiniciar" value="Reiniciar Fichero">
+            </form>
     <?php
+        } else{
+            echo "<h3>No hay archivos</h3>";
+        }
     }
     ?>
 </body>
