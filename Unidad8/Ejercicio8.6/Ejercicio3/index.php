@@ -10,14 +10,16 @@ if (!isset($_SESSION['productos'])) {
     $fp = fopen("productos.txt", "r");
 
     while (!feof($fp)) {
-
         $linea = fgets($fp);
-        $arrayDatos = explode("-", $linea);
+        $lineaLimpia = trim($linea);
+        if (empty($lineaLimpia)) continue;
+
+        $arrayDatos = explode("-", $lineaLimpia);
         $_SESSION['productos'][] = [
-            "nombre" => $arrayDatos[0],
-            "precio" => $arrayDatos[1],
-            "img"   => $arrayDatos[2],
-            "descripcion"   => $arrayDatos[3]
+            "nombre" => $arrayDatos[0] ,
+            "precio" => $arrayDatos[1] ,
+            "img"   => $arrayDatos[2] ,
+            "descripcion"  => $arrayDatos[3],
         ];
     }
     fclose($fp);
@@ -26,6 +28,7 @@ if (!isset($_SESSION['productos'])) {
 if (!isset($_SESSION['carro'])) {
     $_SESSION['carro'] = [];
 }
+
 // Cuenta la cantidad de productos que hay en la cesta
 $suma = 0;
 foreach ($_SESSION['carro'] as $producto => $cantidad) {
@@ -33,16 +36,18 @@ foreach ($_SESSION['carro'] as $producto => $cantidad) {
 }
 
 
-
+// Para crear un nuevo producto
 if (isset($_POST['insertar'])) {
     $nombre =  $_POST['nombre'];
     $precio =  $_POST['precio'];
+    $descripcion =  $_POST['descripcion'];
     $imagen = "img/" . $_FILES["imagen"]["name"];
 
     if (move_uploaded_file($_FILES["imagen"]["tmp_name"], $imagen)) {
         $fp = fopen("productos.txt", "a");
 
-        fwrite($fp, $nombre . "-" . $precio . "-" . $imagen . PHP_EOL);
+        fwrite($fp, $nombre . "-" . $precio . "-" . $imagen  . "-" . $descripcion . PHP_EOL);
+        
 
         fclose($fp);
     }
@@ -51,23 +56,37 @@ if (isset($_POST['insertar'])) {
         "nombre" => $nombre,
         "precio" => $precio,
         "img"   => $imagen,
+        "descripcion" => $descripcion
     ];
 }
 
+// Para borrar un producto
 if (isset($_POST['borrar'])) {
     $nombre =  $_POST['borrar'];
-
-
     foreach ($_SESSION['productos'] as $producto => $datos) {
         if ($datos['nombre'] == $nombre) {
             unset($_SESSION['productos'][$producto]);
         }
     }
-    $fp = fopen("productos.txt", "w");
-    while (!feof($archivo)) {
-       fwrite($fp, $datos["nombre"] . "-" . $datos["precio"] . "-" . $datos["img"] . PHP_EOL);
-    }
 
+    $ProductosLimpio = [];
+    foreach ($_SESSION['productos'] as $productos => $datos) {
+        if (!empty($datos['nombre'])) {
+            $ProductosLimpio[] = [
+                "nombre" => $datos['nombre'],
+                "precio" => $datos['precio'],
+                "img"   => $datos['img'],
+                "descripcion" => $datos['descripcion']
+            ];
+        }
+    }
+    $fp = fopen("productos.txt", "w");
+
+    foreach ($_SESSION['productos'] as $datos) {
+        if (!empty($datos['nombre'])) {
+            fwrite($fp, $datos["nombre"] . "-" . $datos["precio"] . "-" . $datos["img"]  . "-" . $datos["descripcion"] . PHP_EOL);
+        }
+    }
     fclose($fp);
 }
 ?>
@@ -95,7 +114,11 @@ if (isset($_POST['borrar'])) {
         </tr>
         <tr>
             <form enctype="multipart/form-data" action="" method="post">
-                <td><input type="text" name="nombre" required></td>
+                <td>
+                    <label>Nombre:</label><input type="text" name="nombre" required>
+                    <br><br>
+                    <label>Descripción:</label><input type="text" name="descripcion" required>
+                </td>
                 <td><input type="Number" name="precio" required></td>
                 <td><input type="file" name="imagen" required></td>
                 <td><input type="submit" name="insertar" value="insertar"></td>
@@ -113,7 +136,7 @@ if (isset($_POST['borrar'])) {
                     <input type="hidden" name="seleccionado" value="<?= $datos["nombre"] ?>">
                     <input type="submit" value="Comprar">
                 </form>
-                <form action="meteCarro.php" method="post">
+                <form action="" method="post">
                     <input type="hidden" name="borrar" value="<?= $datos["nombre"] ?>">
                     <br>
                     <input type="submit" value="Eliminar">
