@@ -38,10 +38,13 @@ function mirarFecha($fechaHoy)
     if(!file_exists("mascotas.txt")) return false;
 
     $file = fopen("mascotas.txt", "r");
-    do {
-        $linea = trim(fgets($file));
-        return true;
-    } while ($linea != $fecha);
+
+    while (($linea = fgets($file)) !== false) {
+        if (trim($linea) === $fechaHoy) {
+            fclose($file);
+            return true;
+        }
+    }
     fclose($file);
     return false;
 }

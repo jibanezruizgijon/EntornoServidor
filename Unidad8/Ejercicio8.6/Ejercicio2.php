@@ -83,11 +83,6 @@ if (isset($_POST['fecha'])) {
     }
     ?>
 
-
-
-
-
-
     <form action="" method="post">
         <label>Selecciona una fecha:</label>
         <select name="fecha" value="Selecciona" required>
