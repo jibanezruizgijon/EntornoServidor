@@ -1,4 +1,0 @@
-frase1 archivo1
-frase2 archivo1
-frase3 archivo1
-frase4 archivo1

@@ -12,19 +12,20 @@ if (isset($_POST['fecha'])) {
 
 
         if (str_starts_with($linea, "#")) {
-            $fechaLinea = substr($linea, 1, 10); 
+            $fechaLinea = substr($linea, 1, 10);
             $fechaEncontrada = ($fechaLinea == $fechaRecogida);
-            continue;
         }
 
-        if ($fechaEncontrada && strpos($linea, "-") !== false) {
+        if ($fechaEncontrada && str_starts_with($linea, "#") == false) {
 
-            $arrayDatos = explode("-", $linea);
-            $_SESSION['mascotas'][] = [
-                "nombre" => $arrayDatos[0],
-                "animal" => $arrayDatos[1],
-                "edad"   => $arrayDatos[2]
-            ];
+            if (!empty($linea)) {
+                $arrayDatos = explode("-", $linea);
+                $_SESSION['mascotas'][] = [
+                    "nombre" => $arrayDatos[0],
+                    "animal" => $arrayDatos[1],
+                    "edad"   => $arrayDatos[2],
+                ];
+            }
         }
     }
     fclose($archivo);
@@ -73,7 +74,7 @@ if (isset($_POST['fecha'])) {
                     <td><?= $datos["nombre"] ?></td>
                     <td><?= $datos["animal"] ?></td>
                     <td><?= $datos["edad"] ?></td>
-                
+
                 </tr>
             <?php
             }

@@ -1,11 +1,13 @@
 <?php
 
 if (isset($_POST['add'])) {
-  $archivo1 = $_FILES['archivo1']['tmp_name'];
-  $archivo2 = $_FILES['archivo2']['tmp_name'];
+  move_uploaded_file($_FILES['archivo1']['tmp_name'], "ficheros/". $_FILES['archivo1']['name']);
+  move_uploaded_file($_FILES['archivo2']['tmp_name'], "ficheros/". $_FILES['archivo2']['name']);
+  // $archivo1 = $_FILES['archivo1']['tmp_name'];
+  // $archivo2 = $_FILES['archivo2']['tmp_name'];
   $destino = $_POST['ubicacion'] . ".txt";
-  $fp1 = fopen($archivo1, "r");
-  $fp2 = fopen($archivo2, "r");
+  $fp1 = fopen($_FILES['archivo1']['name'], "r");
+  $fp2 = fopen($_FILES['archivo2']['name'], "r");
   $fpDestino = fopen($destino, "w");
 
 
@@ -13,12 +15,16 @@ if (isset($_POST['add'])) {
 
     if (!feof($fp1)) {
       $linea1 = fgets($fp1);
-
-      fwrite($fpDestino, $linea1 . PHP_EOL);
+      if ($linea1 != false) {
+        fwrite($fpDestino, $linea1 . PHP_EOL);
+      }
+      
     }
 
     if (!feof($fp2)) {
+      if ($linea2 != false) {
       $linea2 = fgets($fp2);
+      }
 
       fwrite($fpDestino, $linea2 . PHP_EOL);
     }

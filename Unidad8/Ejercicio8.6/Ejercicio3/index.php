@@ -48,7 +48,6 @@ if (isset($_POST['insertar'])) {
 
         fwrite($fp, $nombre . "-" . $precio . "-" . $imagen  . "-" . $descripcion . PHP_EOL);
         
-
         fclose($fp);
     }
 
