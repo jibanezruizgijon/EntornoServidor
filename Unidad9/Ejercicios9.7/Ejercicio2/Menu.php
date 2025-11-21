@@ -1,16 +1,23 @@
 <?php
 class Menu
 {
-    private $titulo = [];
-    private $enlace = [];
+    private $nombre;
+    private $titulo;
+    private $enlace;
 
-    public function __construct($titulo, $enlace)
+    public function __construct($nombre)
     {
-        $this->titulo[] =  $titulo;
-        $this->enlace[] =  $enlace;
+        $this->titulo = [];
+        $this->enlace = [];
+        $this->nombre = $nombre;
     }
 
 
+    function añadirElemento($titulo, $enlace){
+        $this->titulo[]=$titulo;
+        $this->enlace[]=$enlace;
+    }
+        
 
     /**
      * Get the value of titulo
@@ -27,7 +34,7 @@ class Menu
      */
     public function setTitulo($titulo)
     {
-        $this->titulo[] += $titulo;
+        $this->titulo = $titulo;
 
         return $this;
     }
@@ -47,19 +54,46 @@ class Menu
      */
     public function setEnlace($enlace)
     {
-        $this->enlace[] += $enlace;
+        $this->enlace = $enlace;
 
         return $this;
     }
 
     public function mostrarHorizontal()
     {
-        echo "<div>";
-        for ($i=0; $i < count($this->titulo) ; $i++) { 
-           echo "<a href='" .$this->enlace[$i]. "'>" .$this->titulo[$i]. "</a>";
+        $menu =  "<div>";
+        for ($i = 0; $i < count($this->titulo); $i++) {
+            $menu .= "-<a href='" . $this->enlace[$i] . "'>" . $this->titulo[$i] . "</a>- ";
         }
-        echo "</div>";
+        return $menu . "</div>";
     }
 
-    public function mostrarVertical() {}
+    public function mostrarVertical() {
+        $menu =  "<div>";
+        for ($i = 0; $i < count($this->titulo); $i++) {
+            $menu .= "<a href='" . $this->enlace[$i] . "'>" . $this->titulo[$i] . "</a><br>";
+        }
+        return $menu . "</div>";
+
+    }
+
+    /**
+     * Get the value of nombre
+     */ 
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set the value of nombre
+     *
+     * @return  self
+     */ 
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
 }

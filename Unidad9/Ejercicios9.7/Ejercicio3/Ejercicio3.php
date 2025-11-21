@@ -1,5 +1,13 @@
 <?php
 include_once "cubo.php";
+
+if (!isset($_SESSION['cubos'])) {
+    $_SESSION['cubos'] = [];
+
+}
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,13 +41,8 @@ include_once "cubo.php";
         if ($cantidad > $capacidad) {
             echo "La cantidad no puede ser mayor que la capacidad";
         } else {
-            $cubo1 = new cubo(10, $cantidad);
-            echo $cubo1->getContenidoActual();
-
-            $cubo2 = new cubo(10, $cantidad);
-            echo $cubo1->getContenidoActual();
-
-            $cubo1->verter(4, $cubo2);
+            $_SESSION['cubos'][] =new cubo($capacidad, $cantidad) ;
+            print_r($_SESSION['cubos']);
         }
     }
 
