@@ -13,11 +13,13 @@ class Factura
         $this->ImporteBase = $ImpBase;
         $this->fecha = $fecha;
         $this->estado = $estado;
-        $this->productos = $productos;
-        $this->iva = 21;
+        $this->productos[] = $productos;
+        $this->iva = 1.21;
     }
 
     public function AñadeProductos(){
+
+
 
     }
 

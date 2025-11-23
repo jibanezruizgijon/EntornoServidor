@@ -12,7 +12,7 @@ class cubo
 
     public function verter($cantidad, $cubo2)
     {
-        $resultado = "Cantidad vertida correctamente";
+       
         if ($cubo2->getCapacidad() == $cubo2->getContenidoActual()) {
             return "El cubo está ya lleno";
         }
