@@ -7,7 +7,7 @@ abstract class Animal
     private $peso;
 
     public function __construct($s = "macho", $ed, $pe)
-    {
+    { 
         $this->edad = $ed;
         $this->peso = $pe;
         $this->sexo = $s;

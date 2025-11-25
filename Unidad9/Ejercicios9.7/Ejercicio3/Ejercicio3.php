@@ -47,23 +47,55 @@ if (!isset($_SESSION['cubos'])) {
     }
     ?>
 
-    <hr>
+
     <?php
     if (count($_SESSION['cubos']) > 1) {
     ?>
+        <hr>
+        <h2>Verter Cubo</h2>
         <form action="" method="post">
             <label for="">Introduce el nombre del cubo que vierte(cubo1, cubo2...)</label>
-            <input type="text" name="cubo1" required>
+            <select name="cubo1">
+                <?php
+                foreach ($_SESSION['cubos'] as $cubos => $datos) {
+                    echo "<option value='$cubos'>$cubos</option>";
+                }
+                ?>
+            </select>
             <br><br>
             <label for="">Introduce el cubo a llenar</label>
-            <input type="text" name="cubo2" required>
+            <select name="cubo2">
+                <?php
+                foreach ($_SESSION['cubos'] as $cubos => $datos) {
+                    echo "<option value='$cubos'>$cubos</option>";
+                }
+                ?>
+            </select>
             <br><br>
             <label for="">Cantiad a verter:</label>
             <input type="number" name="cantidad" required>
             <br><br>
             <input type="submit" value="Verter">
         </form>
+        <hr>
+        <h2>Mostrar Cubo</h2>
+        <form action="" method="post">
+            <label>Mostrar Cantidad y Capacidad:</label>
+            <select name="mostrarCubo">
+                <?php
+                foreach ($_SESSION['cubos'] as $cubos => $datos) {
+                    echo "<option value='$cubos'>$cubos</option>";
+                }
+                ?>
+            </select>
+            <input type="submit" value="Mostrar">
+        </form>
     <?php
+    if (isset($_POST['mostrarCubo'])) {
+      
+         echo $_SESSION['cubos'][$_POST['mostrarCubo']];
+       
+    }
         if (isset($_POST['cubo1'])) {
             $cubo2 = $_SESSION['cubos'][$_POST['cubo2']];
             echo  $_SESSION['cubos'][$_POST['cubo1']]->verter($_POST['cantidad'], $cubo2);

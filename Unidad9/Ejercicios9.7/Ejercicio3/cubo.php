@@ -75,4 +75,9 @@ class cubo
 
         return $this;
     }
+
+    function __toString()
+    {
+       return "Capacidad: $this->capacidad, Contenido: $this->contenidoActual";
+    }
 }
