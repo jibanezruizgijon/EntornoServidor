@@ -1,9 +1,14 @@
 <?php
+if (session_status() == PHP_SESSION_NONE) session_start();
+// atributo de clase  
+if (!isset($_SESSION['KmTotales'])) {
+    $_SESSION['KmTotales'] = 0;
+}
 class Vehiculo
 {
- 
-    private static $KmTotales = 0;
-    private static $vehiculosCreados = 0;
+
+   
+    // private static $vehiculosCreados = 0;
     private  $KmRecorridos = 0;
     private $marca;
 
@@ -11,18 +16,22 @@ class Vehiculo
     public function __construct($mar)
     {
         $this->marca = $mar;
-        Vehiculo:: $vehiculosCreados++;
     }
 
-     public function recorrer($km)
+     public static function getKilometrajeTotal()
+    {
+        return $_SESSION['KmTotales'];
+    }
+    public function recorrer($km)
     {
         $this->KmRecorridos += $km;
-        Vehiculo::$KmTotales += $km;
+        $_SESSION['KmTotales'] += $km;
+        return "Has recorrido $km km";
     }
 
     public static function getKmTotales()
     {
-        return Vehiculo::$KmTotales;
+        return  "Has recorrido: " . $_SESSION['KmTotales']. " km totales";
     }
 
     public function getKilometraje()
@@ -47,26 +56,6 @@ class Vehiculo
     public function setMarca($marca)
     {
         $this->marca = $marca;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of vehiculosCreados
-     */ 
-    public static function getVehiculosCreados()
-    {
-        return Vehiculo::  $vehiculosCreados;
-    }
-
-    /**
-     * Set the value of vehiculosCreados
-     *
-     * @return  self
-     */ 
-    public function setVehiculosCreados($vehiculosCreados)
-    {
-        $this->vehiculosCreados = $vehiculosCreados;
 
         return $this;
     }

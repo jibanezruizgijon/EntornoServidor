@@ -25,15 +25,29 @@ if (isset($_POST['vehiculoAccion'])) {
         if (isset($_POST['quemarRueda'])) {
 
             $resultado_accion = $vehiculo_activo->quemarRueda();
-        } elseif (isset($_POST['hacerCaballito'])) {
+        }
+        if (isset($_POST['hacerCaballito'])) {
 
             $resultado_accion = $vehiculo_activo->hacerCaballito();
-        } elseif (isset($_POST['recorrer']) && is_numeric($_POST['km_recorrer'])) {
+        }
+        if (isset($_POST['recorrer']) && is_numeric($_POST['km_recorrer'])) {
             $km = (int)$_POST['km_recorrer'];
 
             $resultado_accion = $vehiculo_activo->recorrer($km);
+            $_SESSION['vehiculos'][$indice] = $vehiculo_activo;
+        }
+        if (isset($_POST['mostrarKmBici'])) {
+            $resultado_accion = $vehiculo_activo->getKilometraje() . "km";
+        }
+
+        if (isset($_POST['mostrarKmCoche'])) {
+            $resultado_accion = $vehiculo_activo->getKilometraje() . "km";
         }
     }
+}
+
+if (isset($_POST['kmtotales'])) {
+    $resultado_accion = $_SESSION['kilometrajeTotal'];
 }
 ?>
 
@@ -106,10 +120,16 @@ if (isset($_POST['vehiculoAccion'])) {
     <?php
     }
 
-if ($resultado_accion) {
-    echo "<h3>Resultado:" . $resultado_accion . "</h3>";
-}
-
+    if ($resultado_accion) {
+        echo "<h3>Resultado:" . $resultado_accion . "</h3>";
+    }
+    ?>
+    <br>
+    <form action="" method="post">
+        <input type="submit" name="kmtotales" value="Kilometros Totales">
+    </form>
+    <br>
+    <?php
     // Comprobar si se ha elegido un coche o bici y muestra las opciones
     if (isset($_POST['seleccionado'])) {
         $indiceSelec = (int)$_POST['seleccionado'];
@@ -117,26 +137,38 @@ if ($resultado_accion) {
 
     ?>
         <form action="" method="post">
-            <input type="hidden" name="vehiculoAccion" value="<?=$indiceSelec?>">
+            <input type="hidden" name="vehiculoAccion" value="<?= $indiceSelec ?>">
             <label>Kilómetros a recorrer:</label>
             <input type="number" name="km_recorrer" min="1" required>
             <input type="submit" name="recorrer" value="Recorrer">
         </form>
+        <br>
+
         <?php
-        if ($vehiculoSelec instanceof Coche) {
+        if (get_class($vehiculoSelec) == "Coche") {
         ?>
             <h2>Acciones con el coche</h2>
             <form action="" method="post">
-                <input type="hidden" name="vehiculoAccion" value="<?=$indiceSelec?>">
+                <input type="hidden" name="vehiculoAccion" value="<?= $indiceSelec ?>">
                 <input type="submit" name="quemarRueda" value="quemar rueda">
+            </form>
+            <br>
+            <form action="" method="post">
+                <input type="hidden" name="vehiculoAccion" value="<?= $indiceSelec ?>">
+                <input type="submit" name="mostrarKmCoche" value="Mostrar Kilómetros">
             </form>
         <?php
         } else {
         ?>
             <h2>Acciones con la Bicicleta</h2>
             <form action="" method="post">
-                <input type="hidden" name="vehiculoAccion" value="<?=$indiceSelec?>">
+                <input type="hidden" name="vehiculoAccion" value="<?= $indiceSelec ?>">
                 <input type="submit" name="hacerCaballito" value="hacer caballito">
+            </form>
+            <br>
+            <form action="" method="post">
+                <input type="hidden" name="vehiculoAccion" value="<?= $indiceSelec ?>">
+                <input type="submit" name="mostrarKmBici" value="Mostrar Kilómetros">
             </form>
     <?php
         }
