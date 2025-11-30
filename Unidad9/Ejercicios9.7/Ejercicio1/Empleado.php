@@ -54,4 +54,9 @@ class Empleado
 
         return $this;
     }
+
+    function __toString()
+    {
+       return "Nombre: $this->nombre, sueldo: $this->sueldo";
+    }
 }

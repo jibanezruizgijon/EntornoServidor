@@ -27,6 +27,8 @@ include_once "Empleado.php";
         $empleado1 = new Empleado($_POST['nombre'], $_POST['sueldo']);
         echo $empleado1->impuestos();
         echo "<br>";
+        echo $empleado1;
+        echo "<br>";
         $empleado1->asigna($_POST['nombre'], 2000);
         echo $empleado1->impuestos();
     }
