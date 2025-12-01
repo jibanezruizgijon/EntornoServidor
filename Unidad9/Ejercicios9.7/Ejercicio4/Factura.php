@@ -1,7 +1,7 @@
 <?php
 class Factura
 {
-    private static $iva = 21;
+    private static $iva = 0.21;
     private $ImporteBase;
     private $fecha;
     private $estado;
@@ -18,7 +18,7 @@ class Factura
 
     public function AñadeProducto($nombre, $precio, $cantidad)
     {
-        $precio = (float)$precio;
+        $precio = (double)$precio;
         $cantidad = (int)$cantidad;
         $this->productos[] = [$nombre, $precio, $cantidad];
         $this->ImporteBase += $precio * $cantidad;
@@ -41,8 +41,8 @@ class Factura
             $suma += $datos[1] * $datos[2];
         }
         $factura .= "<tr><td colspan='2'>Subtotal</td><td>$suma</td></tr>";
-        $factura .= "<tr><td colspan='2'>IVA 21%</td><td>" . ($suma * 0.21) . "</td></tr>";
-        $factura .= "<tr><td colspan='2'>TOTAL</td><td>" . ($suma * 1.21) . "</td></tr>";
+        $factura .= "<tr><td colspan='2'>IVA 21%</td><td>" . ($suma * Factura::getIva()) . "</td></tr>";
+        $factura .= "<tr><td colspan='2'>TOTAL</td><td>" . ($suma * (1+Factura::getIva())) . "</td></tr>";
         $factura .= "</table>";
         return $factura;
     }

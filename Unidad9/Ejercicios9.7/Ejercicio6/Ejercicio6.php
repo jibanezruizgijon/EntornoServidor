@@ -1,5 +1,4 @@
 <?php
-include_once "Vehiculo.php";
 include_once "Coche.php";
 include_once "Bicicleta.php";
 
@@ -162,7 +161,7 @@ if (isset($_POST['kmtotales'])) {
 
     <br>
     <form action="" method="post">
-        <input type="submit" name="kmtotales" value="Ver Kilómetros Totales Globales">
+        <input type="submit" name="kmtotales" value="Ver kilómetros totales">
     </form>
     <br>
 
