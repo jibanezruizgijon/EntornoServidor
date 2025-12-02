@@ -23,7 +23,7 @@
     }
     ?>
 
-    <h2>Introduce el timepo que pasará desde el actual</h2>
+    <h2>Introduce el tiempo que pasará desde el actual</h2>
     <form action="" method="get">
         <label>Día:</label>
         <input type="number" name="dia">

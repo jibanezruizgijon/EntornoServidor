@@ -15,7 +15,7 @@
         $frase = trim($_GET['frase']);
         $arrayFrase = str_split($frase);
         $contador = 1;
-        for ($i = 0; $i < count($arrayFrase); $i++) {
+        for ($i = 0; $i < count($arrayFrase); $i++) {   
             if ($arrayFrase[$i] == ' ' && $arrayFrase[$i+1] != ' ') {
                 $contador++;
             }

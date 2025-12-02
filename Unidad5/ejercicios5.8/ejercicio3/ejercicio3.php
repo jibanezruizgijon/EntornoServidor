@@ -66,7 +66,6 @@
                 <?php
 
                 for ($i = 1; $i <= 100; $i++) {
-
                     // Comprueba en el array si es 0 o 1 para darle transparencia
                     $estilo = $numeros[$i] == 1 ? "rgba(0, 0, 0, 0)" : "rgba(0,0,0,1)";
                 ?>

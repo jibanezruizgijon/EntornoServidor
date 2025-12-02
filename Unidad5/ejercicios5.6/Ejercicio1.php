@@ -19,7 +19,7 @@
     }
     //Se muestra
     echo "normal:";
-    foreach ($numero as  $value) {
+    foreach ($numero as $value) {
         echo "$value - ";
     }
     // Se multiplica por el mismo valor 2 veces para dar el resultado al cuadrado
