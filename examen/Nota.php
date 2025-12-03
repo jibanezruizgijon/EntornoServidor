@@ -19,9 +19,9 @@ class Nota
     {
         $this->titulo = $titu;
         $this->texto = $text;
-        $this->creacion = date("d/m/Y-G:i:s", time());
+        $this->creacion = time();
         $_SESSION['ultima'] = $titu;
-        $_SESSION['fecha'] = date("d/m/Y-G:i:s", time());
+        $_SESSION['fecha'] =  time();
 
     }
 

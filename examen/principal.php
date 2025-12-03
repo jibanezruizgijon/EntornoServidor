@@ -9,12 +9,7 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-// En caso de cerrar Sesión
-if (isset($_POST['cerrar'])) {
-    session_destroy();
-    header("Location:login.php");
-    exit();
-}
+
 
 if (!isset($_SESSION['notas'])) {
     $_SESSION['notas'] = [];
@@ -28,10 +23,6 @@ if (isset($_POST['titulo'])) {
     $notaNueva = new Nota($titulo, $texto);
     $_SESSION['notas'][$_SESSION['user']][] = base64_encode(serialize($notaNueva));
 
-
-    foreach ($_SESSION['notas'] as $user => $notas) {
-        $NotasGuardadas[] = unserialize(base64_decode($user));
-    }
 }
 ?>
 
@@ -51,7 +42,7 @@ if (isset($_POST['titulo'])) {
     <p><strong>Última nota creada:</strong>
         <?php
         if ($_SESSION['ultima'] != "") {
-            echo $_SESSION['ultima'];
+            echo Nota::getUltima();
         } else {
         ?>
             Ninguna nota registrada
@@ -61,7 +52,7 @@ if (isset($_POST['titulo'])) {
     <p><strong>Fecha:</strong>
         <?php
         if ($_SESSION['fecha'] != "") {
-            echo $_SESSION['fecha'];
+            echo date("d/m/Y-G:i:s",Nota::getFecha());
         } else {
             echo  date("d/m/Y-G:i:s");
         }
@@ -79,11 +70,11 @@ if (isset($_POST['titulo'])) {
 
                     <?php
 
-                    foreach ($NotasGuardadas as $nota => $datos) {
-                        $contadorNota = 0;
+                    foreach ($_SESSION['notas'][$_SESSION['usuario']] as $i => $nota) {
+                        $nota = unserialize($nota);
                         $arrayFecha = explode("-", $datos->getCreacion());
                         echo "<tr>";
-                        echo "<td><a href='?contador=$contadorNota'>" . $datos->getTitulo() . "</a></td>";
+                        echo "<td><a href='?numNota=$i'>" . $datos->getTitulo() . "</a></td>";
                         echo "<td>" . $arrayFecha[0] . "</td>";
                         echo "<td>" . $arrayFecha[1] . "</td>";
                         echo "</tr>";
@@ -95,11 +86,12 @@ if (isset($_POST['titulo'])) {
             </td>
 
             <?php
-            if (isset($_GET['contador'])) {
+            if (isset($_REQUEST['numNota'])) {
+                $nota = unserialize(base64_decode($_SESSION['notas'][$_SESSION['usuario']][$_REQUEST['numNota']]))
             ?>
                 <td>
-                    <h2>Titulo</h2>
-                    <p>Texto</p>
+                    <h2><?= $nota->getTitulo()?></h2>
+                    <p><?= $nota->getTexto()?></p>
                 </td>
             <?php
 
@@ -120,7 +112,7 @@ if (isset($_POST['titulo'])) {
         <input type="submit" value="AÑADIR">
     </form>
     <hr>
-    <form action="" method="post">
+    <form action="login.php" method="post">
         <input type="submit" name="cerrar" value="CERRAR SESIÓN">
     </form>
 </body>

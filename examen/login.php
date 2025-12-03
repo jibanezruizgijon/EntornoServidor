@@ -3,7 +3,9 @@
 if (session_status() == PHP_SESSION_NONE) session_start();
 
 
-if (!isset($_SESSION['usuarios'])) {
+// En caso de cerrar Sesión
+if (isset($_POST['cerrar'])) {
+    unset($_SESSION['user']);
 }
 
 if (isset($_POST['user'])) {
@@ -33,8 +35,8 @@ if (isset($_POST['user'])) {
             // Recorar si se pulsa el checbox
             if (isset($_POST['recordar'])) {
                 $recordar = $_POST['recordar'];
-                setcookie("password", $password, time() + 30 + 24 + 60 + 60);
-                setcookie("user", $user, time() + 30 + 24 + 60 + 60);
+                setcookie("password", $password, strtotime("+1 month"));
+                setcookie("user", $user,  strtotime("+1 month"));
             } else {
                 setcookie("password", "", -1);
                 setcookie("user",  "", -1);
@@ -71,25 +73,28 @@ if (isset($_POST['user'])) {
         <h3>Inicie sesión para acceder a su panel de notas</h3>
         <form action="" method="post">
             <label for="user">USUARIO:</label>
-            <input type="text" name="user" <?php
-                                            if (isset($_COOKIE['user'])) {
-                                            ?>
+            <input type="text" name="user"
+                <?php
+                $recordar = "";
+                if (isset($_COOKIE['user'])) {
+                ?>
                 value="<?= $_COOKIE['user'] ?>"
                 <?php
-                                            }
+                }
                 ?> required>
             <br><br>
             <label for="password">CONTRASEÑA:</label>
-            <input type="password" name="password" <?php
-                                                    if (isset($_COOKIE['password'])) {
-                                                    ?>
+            <input type="password" name="password"
+                <?php
+                if (isset($_COOKIE['password'])) {
+                ?>
                 value="<?= $_COOKIE['password'] ?>"
                 <?php
-                                                    }
+                }
                 ?> required>
             <br><br>
             <label for="recordar">Recordar contraseña</label>
-            <input type="checkbox" name="recordar">
+            <input type="checkbox" name="recordar" value="<?= $recordar ?>">
             <br><br>
             <input type="submit" value="ACEPTAR">
         </form>
