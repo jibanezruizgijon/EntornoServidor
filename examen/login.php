@@ -23,7 +23,6 @@ if (isset($_POST['user'])) {
 
         if ($linea != false) {
             $usuario = $array[0];
-
             $contraseña = $array[1];
         }
 

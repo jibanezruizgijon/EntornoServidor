@@ -14,15 +14,21 @@ if (!isset($_SESSION['user'])) {
 if (!isset($_SESSION['notas'])) {
     $_SESSION['notas'] = [];
 }
+
+// Así se crea la sesión notas usando de índice cada nombre de ussuario
+// Dentro del índice se guardan las notas
+if (!isset($_SESSION['notas'][$_SESSION['user']])) {
+    $_SESSION['notas'][$_SESSION['user']] = [];
+}
+
+
 $NotasGuardadas = [];
 
 if (isset($_POST['titulo'])) {
     $titulo = $_POST['titulo'];
     $texto =  $_POST['texto'];
-
     $notaNueva = new Nota($titulo, $texto);
     $_SESSION['notas'][$_SESSION['user']][] = base64_encode(serialize($notaNueva));
-
 }
 ?>
 
@@ -52,7 +58,7 @@ if (isset($_POST['titulo'])) {
     <p><strong>Fecha:</strong>
         <?php
         if ($_SESSION['fecha'] != "") {
-            echo date("d/m/Y-G:i:s",Nota::getFecha());
+            echo date("d/m/Y-G:i:s", Nota::getFecha());
         } else {
             echo  date("d/m/Y-G:i:s");
         }
@@ -70,15 +76,15 @@ if (isset($_POST['titulo'])) {
 
                     <?php
 
-                    foreach ($_SESSION['notas'][$_SESSION['usuario']] as $i => $nota) {
-                        $nota = unserialize($nota);
-                        $arrayFecha = explode("-", $datos->getCreacion());
+                    foreach ($_SESSION['notas'][$_SESSION['user']] as $i => $nota) {
+                        $nota = unserialize(base64_decode($nota));
+                        $fechaFormateada = date("d/m/Y|H:i:s", $nota->getCreacion());
+                        $arrayFecha = explode("|", $fechaFormateada);
                         echo "<tr>";
-                        echo "<td><a href='?numNota=$i'>" . $datos->getTitulo() . "</a></td>";
+                        echo "<td><a href='?numNota=$i'>" . $nota->getTitulo() . "</a></td>";
                         echo "<td>" . $arrayFecha[0] . "</td>";
                         echo "<td>" . $arrayFecha[1] . "</td>";
                         echo "</tr>";
-                        $contadorNota++;
                     }
                     ?>
                     </tbody>
@@ -87,11 +93,11 @@ if (isset($_POST['titulo'])) {
 
             <?php
             if (isset($_REQUEST['numNota'])) {
-                $nota = unserialize(base64_decode($_SESSION['notas'][$_SESSION['usuario']][$_REQUEST['numNota']]))
+                $nota = unserialize(base64_decode($_SESSION['notas'][$_SESSION['user']][$_REQUEST['numNota']]))
             ?>
                 <td>
-                    <h2><?= $nota->getTitulo()?></h2>
-                    <p><?= $nota->getTexto()?></p>
+                    <h2><?= $nota->getTitulo() ?></h2>
+                    <p><?= $nota->getTexto() ?></p>
                 </td>
             <?php
 
