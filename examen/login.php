@@ -7,7 +7,7 @@ if (session_status() == PHP_SESSION_NONE) session_start();
 if (isset($_POST['cerrar'])) {
     unset($_SESSION['user']);
 }
-
+$recordar = "";
 if (isset($_POST['user'])) {
     // Se recoge del formulario
     $user = trim($_POST['user']);
@@ -31,9 +31,9 @@ if (isset($_POST['user'])) {
             fclose($fp);
             $_SESSION['user'] = $user;
 
-            // Recorar si se pulsa el checbox
+            // Recordar si se pulsa el checkbox
             if (isset($_POST['recordar'])) {
-                $recordar = $_POST['recordar'];
+
                 setcookie("password", $password, strtotime("+1 month"));
                 setcookie("user", $user,  strtotime("+1 month"));
             } else {
@@ -74,7 +74,7 @@ if (isset($_POST['user'])) {
             <label for="user">USUARIO:</label>
             <input type="text" name="user"
                 <?php
-                $recordar = "";
+
                 if (isset($_COOKIE['user'])) {
                 ?>
                 value="<?= $_COOKIE['user'] ?>"
@@ -86,6 +86,7 @@ if (isset($_POST['user'])) {
             <input type="password" name="password"
                 <?php
                 if (isset($_COOKIE['password'])) {
+                    $recordar = "checked";
                 ?>
                 value="<?= $_COOKIE['password'] ?>"
                 <?php
@@ -93,7 +94,7 @@ if (isset($_POST['user'])) {
                 ?> required>
             <br><br>
             <label for="recordar">Recordar contraseña</label>
-            <input type="checkbox" name="recordar" value="<?= $recordar ?>">
+            <input type="checkbox" name="recordar" <?= $recordar ?>>
             <br><br>
             <input type="submit" value="ACEPTAR">
         </form>

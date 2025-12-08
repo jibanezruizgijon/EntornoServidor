@@ -12,7 +12,14 @@ if (isset($_POST['user'])) {
     header("Location: login.php");
     exit();
 }
+
+// Para pasar una fecha recogida a otro formato 
+// date("d-m-Y", strtotime("$fecha + 1 days"));
+// date coge una fecha y la pasa a string dandole  un formato
+// strtotime pasa un string a fecha en entero
+// time devuelve en entero la fecha actual 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
