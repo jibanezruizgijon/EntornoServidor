@@ -1,0 +1,6 @@
+BA-84-faf,dfafaf,Baja,dadas
+ME-19-ine,tienda online,Media,tebas,luycia
+ME-96-ine,tienda online,Media,tebas,luycia
+AL-49-che,Coche,Alta,luciia,luis,raul,pepe
+BA-6-eba,Prueba,Baja,deded
+BA-7-ba2,Prueba2,Baja,dasdsa
