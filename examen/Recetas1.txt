@@ -1,0 +1,3 @@
+041225165604TOS,Chanquetes fritos,entrante,Sal,Aceite,Chanquetes
+041225165638AGE,Potage,principal,Sal,Aceite,Tomate,Garbanzos,Patata
+041225165707ESO,Tarta de queso,postre,Aceite,Crema de queso,Mermelada de fresa
