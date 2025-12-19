@@ -1,0 +1,41 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+a {
+    margin-left: 10px;
+}
+
+.botones {
+    display: flex;
+    justify-content: space-around;
+}
+
+.eliminar,
+.modificar,
+.enviar {
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 4px;
+
+}
+
+.eliminar {
+    background-color: red;
+}
+
+.modificar {
+    background-color: orange;
+}
+
+.enviar {
+    background-color: green;
+}
+
+.fila__titulo {
+    background-color: gray;
+}
