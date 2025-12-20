@@ -1,3 +1,17 @@
+<?php
+if (isset($_POST['dniC'])) {
+    $dni = $_POST['dniC'];
+    $nombre = $_POST['nombreC'];
+    $direccion = $_POST['direccionC'];
+    $telefono = $_POST['telefonoC'];
+} else {
+    $dni = "";
+    $nombre = "";
+    $direccion = "";
+    $telefono = "";
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,7 +57,7 @@
             }
 
             $inicio = ($paginaActual - 1) * 5;
-            $fin = ($inicio+5);
+            $fin = ($inicio + 5);
             $consulta2 = $conexion->query("SELECT * FROM cliente LIMIT $inicio , $fin");
             while ($cliente = $consulta2->fetchObject()) {
             ?>
@@ -66,11 +80,11 @@
             }
             ?>
             <tr>
-                <form action="altaCliente2.php" method="post" onsubmit="return confirm('¿Estás seguro de que deseas dar de alta a este cliente?');">
-                    <td><input type="text" name="dni" minlength="9" maxlength="9"></td>
-                    <td><input type="text" name="nombre" required></td>
-                    <td><input type="text" name="direccion" required></td>
-                    <td><input type="number" name="telefono" required>
+                <form action="confirmar.php" method="post">
+                    <td><input type="text" name="dni" minlength="9" maxlength="9" value="<?= $dni ?>" required></td>
+                    <td><input type="text" name="nombre" value="<?= $nombre ?>" required></td>
+                    <td><input type="text" name="direccion" value="<?= $direccion ?>" required></td>
+                    <td><input type="number" name="telefono" value="<?= $telefono ?>" required>
                         <input type="submit" value="Nuevo cliente" class="enviar">
                     </td>
                 </form>
