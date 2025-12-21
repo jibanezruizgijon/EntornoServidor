@@ -24,7 +24,7 @@ if (isset($_POST['salidaStock']) || isset($_POST['entradaStock'])) {
     $actualizar = "UPDATE articulo SET stock='{$totalStock}' WHERE codigo='{$_POST['codigo']}'";
     $conexion->exec($actualizar);
     $conexion = null;
-    header("location: Ejercicio4.php");
+    header("location: Ejercicio5.php");
         exit();
 }
 ?>
@@ -78,7 +78,7 @@ if (isset($_POST['salidaStock']) || isset($_POST['entradaStock'])) {
     $conexion = null;
     ?>
 
-<a href="Ejercicio4.php">Volver</a>
+<a href="Ejercicio5.php">Volver</a>
 </body>
 
 </html>

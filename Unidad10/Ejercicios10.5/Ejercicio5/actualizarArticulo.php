@@ -10,7 +10,7 @@ if (isset($_POST['codigo']) && isset($_POST['stock'])) {
     $actualizar = "UPDATE articulo SET descripcion='{$_POST['descripcion']}', precioCompra='{$_POST['precioCompra']}', precioVenta='{$_POST['precioVenta']}', stock='{$_POST['stock']}' WHERE codigo='{$_POST['codigo']}'";
     $conexion->exec($actualizar);
     $conexion = null;
-    header("location: Ejercicio4.php");
+    header("location: Ejercicio5.php");
     exit();
 }
 ?>
@@ -64,7 +64,7 @@ if (isset($_POST['codigo']) && isset($_POST['stock'])) {
             <input type="submit" value="Confirmar Cambios" class="btn-submit">
         </form>
         
-        <a href="Ejercicio4.php" class="btn-back">Volver al listado</a>
+        <a href="Ejercicio5.php" class="btn-back">Volver al listado</a>
     <?php
     }
     $conexion = null;

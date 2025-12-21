@@ -22,6 +22,13 @@
             display: flex;
             gap: 30px;
         }
+
+        .confirmar{
+            background-color: green;
+        }
+        .cancelar{
+            background-color: red;
+        }
     </style>
 </head>
 
@@ -35,7 +42,7 @@
             <input type="hidden" name="nombre" value="<?= $_POST['nombre'] ?>">
             <input type="hidden" name="direccion" value="<?= $_POST['direccion'] ?>">
             <input type="hidden" name="telefono" value="<?= $_POST['telefono'] ?>">
-            <input type="submit" value="CONFIRMAR" class="boton">
+            <input type="submit" value="CONFIRMAR" class="boton confirmar">
         </form>
 
         <form action="Ejercicio2.php" method="post">
@@ -43,7 +50,7 @@
             <input type="hidden" name="nombreC" value="<?= $_POST['nombre'] ?>">
             <input type="hidden" name="direccionC" value="<?= $_POST['direccion'] ?>">
             <input type="hidden" name="telefonoC" value="<?= $_POST['telefono'] ?>">
-            <input type="submit" value="Cancelar" class="boton">
+            <input type="submit" value="Cancelar" class="boton cancelar">
         </form>
     </div>
 
