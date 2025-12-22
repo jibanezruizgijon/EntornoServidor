@@ -29,7 +29,8 @@ if (isset($_POST['dni']) && isset($_POST['nombre'])) {
 
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>ActualizarCliente</title>
+    <link rel="stylesheet" href="actualizarCliente.css">
 </head>
 
 <body>
@@ -49,6 +50,7 @@ if (isset($_POST['dni']) && isset($_POST['nombre'])) {
         $consulta = $conexion->query("SELECT dni, nombre, direccion, telefono FROM cliente WHERE id='" . $_POST['id'] . "'");
         $cliente = $consulta->fetchObject();
     ?>
+    <h1>Modificar Cliente: <?= $cliente->nombre?></h1>
         <form action="" method="post">
             <input type="hidden" name="id" value="<?= $_POST['id'] ?>">
             <input type="text" name="dni" value="<?= $cliente->dni ?>" required>

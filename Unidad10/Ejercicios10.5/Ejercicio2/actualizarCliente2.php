@@ -29,7 +29,8 @@ if (isset($_POST['dni']) && isset($_POST['nombre'])) {
 
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>ActualizarCliente</title>
+    <link rel="stylesheet" href="actualizarCliente2.css">
 </head>
 
 <body>
@@ -49,12 +50,27 @@ if (isset($_POST['dni']) && isset($_POST['nombre'])) {
         $consulta = $conexion->query("SELECT dni, nombre, direccion, telefono FROM cliente WHERE id='" . $_POST['id'] . "'");
         $cliente = $consulta->fetchObject();
     ?>
+    <h1>Actualizar Cliente: <?= $cliente->nombre ?></h1>
         <form action="" method="post">
             <input type="hidden" name="id" value="<?= $_POST['id'] ?>">
-            <input type="text" name="dni" value="<?= $cliente->dni ?>" required>
-            <input type="text" name="nombre" value="<?= $cliente->nombre ?>" required>
-            <input type="text" name="direccion" value="<?= $cliente->direccion ?>" required>
-            <input type="text" name="telefono" value="<?= $cliente->telefono ?>" required>
+            <div>
+                <label for="dni">DNI</label>
+                <input type="text" name="dni" value="<?= $cliente->dni ?>" required>
+            </div>
+
+            <div>
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" value="<?= $cliente->nombre ?>" required>
+            </div>
+
+            <div>
+                <label for="direccion">Dirección</label>
+                <input type="text" name="direccion" value="<?= $cliente->direccion ?>" required>
+            </div>
+
+            <div> <label for="telefono">Teléfono</label>
+                <input type="text" name="telefono" value="<?= $cliente->telefono ?>" required>
+            </div>
             <input type="submit" value="Confirmar">
         </form>
         <a href="Ejercicio2.php">Volver</a>

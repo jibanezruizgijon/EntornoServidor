@@ -1,17 +1,26 @@
 <?php
 session_start();
-// Recoge el nombre del producto para identificarlo 
-$_SESSION['detalle'] = (isset($_POST['detalle'])) ? $_POST['detalle'] : $_SESSION['detalle'];
-$compra = (isset($_POST['compra'])) ? $_POST['compra'] : " ";
 
-// Añade al carrito el producto que se detalla
-foreach ($_SESSION['productos'] as $productos => $datos) {
-    if ($compra == $datos['nombre']) {
-        $_SESSION['productos'][$productos]["unidades"]++;
-        $_SESSION['total'] += $datos["precio"];
-    }
+try {
+    $conexion = new PDO(
+        "mysql:host=localhost;dbname=gestimal;charset=utf8",
+        "root",
+        "toor"
+    );
+} catch (PDOException $e) {
+    echo "No se ha podido establecer conexión con el servidor de bases de datos.<br>";
+    die("Error: " . $e->getMessage());
 }
 
+if (isset($_POST['compra'])) {
+        $consulta = $conexion->query("SELECT * FROM tiendaZapatos WHERE id='" . $_POST['id'] . "'");
+        $zapato = $consulta->fetchObject();
+        if (!isset($_SESSION['carrito'][$zapato->id]["unidades"])) {
+            $_SESSION['carrito'][$zapato->id]["unidades"] = 0;
+        }
+        $_SESSION['carrito'][$zapato->id]["unidades"]++;
+        $_SESSION['total'] += $zapato->precio;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -41,27 +50,26 @@ foreach ($_SESSION['productos'] as $productos => $datos) {
 </head>
 
 <body>
-    <h2>Detalles del producto: <?= $_SESSION['detalle']  ?></h2>
     <?php
-    // Muestra solo el producto seleccionado con más datos
-    // Existe la opción de volver a la página principal o de comprar el producto 
-    foreach ($_SESSION['productos'] as $productos => $datos) {
-        if ($_SESSION['detalle']  ==  $datos['nombre']) {
-            echo "<img src=" . $datos["img"] . ">";
-            echo "<h3>" . $datos["nombre"] .  "</h3>";
-            echo "<p>" . $datos["descripcion"] .  "</p>";
-            echo "<h3> Precio:" . $datos["precio"] .  "€</h3>";
-        }
-    }
+    $consulta = $conexion->query("SELECT * FROM tiendaZapatos WHERE id='" . $_POST['id'] . "'");
+    $zapato = $consulta->fetchObject();
+    echo "<h2>Detalles del producto:$zapato->nombre</h2>";
+    echo "<img src=" . $zapato->imagen . ">";
+    echo "<h3>" . $zapato->nombre .  "</h3>";
+    echo "<p>" . $zapato->descripcion .  "</p>";
+    echo "<h3> Precio:" . $zapato->precio .  "€</h3>";
+
+
     ?>
     <form action="" method="post">
-        <input type="hidden" name="compra" value="<?= $_SESSION['detalle'] ?>">
-        <input type="submit" value="comprar">
+        <input type="hidden" name="id" value="<?= $zapato->id ?>">
+        <input type="submit" name="compra" value="comprar">
     </form>
     <br>
-    <form action="ejercicio3.php" method="post">
+    <form action="Ejercicio3.php" method="post">
         <input type="submit" value="Volver">
     </form>
+    <?php $conexion = null; ?>
 </body>
 
 </html>

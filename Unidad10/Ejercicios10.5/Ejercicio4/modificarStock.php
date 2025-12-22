@@ -16,6 +16,9 @@ if (isset($_POST['salidaStock']) || isset($_POST['entradaStock'])) {
 
     if (isset($_POST['salidaStock'])) {
         $totalStock =  $articulo->stock - $nuevoStock;
+        if ($totalStock <= 0) {
+            $totalStock = 0;
+        }
     }
     if (isset($_POST['entradaStock'])) {
         $totalStock =  $articulo->stock + $nuevoStock;
@@ -25,7 +28,7 @@ if (isset($_POST['salidaStock']) || isset($_POST['entradaStock'])) {
     $conexion->exec($actualizar);
     $conexion = null;
     header("location: Ejercicio4.php");
-        exit();
+    exit();
 }
 ?>
 
@@ -78,7 +81,7 @@ if (isset($_POST['salidaStock']) || isset($_POST['entradaStock'])) {
     $conexion = null;
     ?>
 
-<a href="Ejercicio4.php">Volver</a>
+    <a href="Ejercicio4.php">Volver</a>
 </body>
 
 </html>
