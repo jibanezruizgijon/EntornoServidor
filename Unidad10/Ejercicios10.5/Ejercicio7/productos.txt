@@ -1,0 +1,3 @@
+teclado-15-img/teclado.avif-Se utiliza principalmente para introducir texto, datos y comandos específicos en la computadora
+monitor-100-img/monitor.jpg-Su función es mostrar de forma visual la información y los datos procesados por la computadora
+dualsense-80-img/dualsense.jpg-Es el mando inalámbrico oficial de la consola PlayStation 5

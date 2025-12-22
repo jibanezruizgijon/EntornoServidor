@@ -153,9 +153,6 @@ if (isset($_POST['comprar'])) {
             </tr>
         </tbody>
     </table>
-    <?php
-   
-    ?>
     <?php $conexion = null; ?>
 </body>
 
