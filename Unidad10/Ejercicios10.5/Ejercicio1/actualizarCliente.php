@@ -1,6 +1,4 @@
 <?php
-// $actualizar = "UPDATE cliente SET dni ='" .$_POST['dni'] ."', nombre ='" .$_POST['nombre'] ."', direccion ='" .$_POST['direccion'] ."', telefono ='" .$_POST['telefono'] ."' WHERE dni='" . $_POST['dni'] . "'";
-
 
 if (isset($_POST['dni']) && isset($_POST['nombre'])) {
 

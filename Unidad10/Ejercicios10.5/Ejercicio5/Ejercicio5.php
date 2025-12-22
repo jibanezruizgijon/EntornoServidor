@@ -1,3 +1,32 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) session_start();
+
+try {
+    $conexion = new PDO("mysql:host=localhost;dbname=gestimal;charset=utf8", "root", "toor");
+} catch (PDOException $e) {
+    echo "No se ha podido establecer conexión con el servidor de bases de datos.<br>";
+    die("Error: " . $e->getMessage());
+}
+
+if (!isset($_SESSION['carrito'])) {
+    $_SESSION['carrito'] = [];
+    $_SESSION['total'] = 0;
+}
+
+
+if (isset($_POST['comprar'])) {
+    $consulta = $conexion->query("SELECT * FROM articulo WHERE codigo='" . $_POST['codigo'] . "'");
+    $articulo = $consulta->fetchObject();
+    if (!isset($_SESSION['carrito'][$articulo->codigo]["unidades"])) {
+        $_SESSION['carrito'][$articulo->codigo]["unidades"] = 0;
+    }
+    $_SESSION['carrito'][$articulo->codigo]["unidades"]++;
+    $_SESSION['total'] += $articulo->precioVenta;
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,14 +41,8 @@
 <body>
     <h1>GESTISIMAL</h1>
     <?php
-    // Conexión a la base de datos
-    try {
-        $conexion = new PDO("mysql:host=localhost;dbname=gestimal;charset=utf8", "root", "toor");
-    } catch (PDOException $e) {
-        echo "No se ha podido establecer conexión con el servidor de bases de datos.<br>";
-        die("Error: " . $e->getMessage());
-    }
-    $consulta = $conexion->query("SELECT codigo, descripcion, precioCompra, precioVenta, margen, stock FROM articulo");
+
+    $consulta = $conexion->query("SELECT * FROM articulo");
     ?>
     <table>
         <thead>
@@ -30,6 +53,7 @@
                 <th><b>Precio de Venta</b></th>
                 <th><b>Margen</b></th>
                 <th><b>Stock</b></th>
+                <th><b><a href="verCarrito.php">Carrito</a></b></th>
             </tr>
         </thead>
         <tbody>
@@ -67,6 +91,10 @@
                     <td><?= $articulo->margen ?></td>
                     <td><?= $articulo->stock ?></td>
                     <td class="botones">
+                        <form action="" method="post">
+                            <input type="hidden" name="codigo" value="<?= $articulo->codigo ?>">
+                            <input type="submit" name="comprar" class="enviar" value="Comprar">
+                        </form>
                         <form action="eliminarArticulo.php" method="post">
                             <input type="hidden" name="codigo" value="<?= $articulo->codigo ?>">
                             <input type="submit" name="eliminar" class="eliminar" value="Eliminar">
@@ -125,6 +153,9 @@
             </tr>
         </tbody>
     </table>
+    <?php
+   
+    ?>
     <?php $conexion = null; ?>
 </body>
 

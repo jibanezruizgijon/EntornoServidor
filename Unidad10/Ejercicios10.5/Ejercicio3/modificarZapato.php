@@ -1,11 +1,67 @@
+<?php
+
+if (isset($_POST['nombre'])) {
+
+    try {
+        $conexion = new PDO(
+            "mysql:host=localhost;dbname=gestimal;charset=utf8",
+            "root",
+            "toor"
+        );
+    } catch (PDOException $e) {
+        echo "No se ha podido establecer conexión con el servidor de bases de datos.<br>";
+        die("Error: " . $e->getMessage());
+    }
+
+    $actualizar = "UPDATE tiendaZapatos SET nombre='{$_POST['nombre']}', precio='{$_POST['precio']}', imagen='{$_POST['imagen']}', descripcion='{$_POST['descripcion']}' WHERE id='{$_POST['id']}'";
+    $conexion->exec($actualizar);
+    $conexion = null;
+
+    header("location: actualizarZapato.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=, initial-scale=1.0">
-    <title>Document</title>
+    <title>Actualizar Zapato</title>
+    <link rel="stylesheet" href="modificarZapato.css">
 </head>
+
 <body>
-    
+    <?php
+    // Conexión a la base de datos
+    try {
+        $conexion = new PDO(
+            "mysql:host=localhost;dbname=gestimal;charset=utf8",
+            "root",
+            "toor"
+        );
+    } catch (PDOException $e) {
+        echo "No se ha podido establecer conexión con el servidor de bases de datos.<br>";
+        die("Error: " . $e->getMessage());
+    }
+    if (isset($_POST['id']) && !isset($_POST['nombre'])) {
+        $consulta = $conexion->query("SELECT * FROM tiendaZapatos WHERE id='" . $_POST['id'] . "'");
+        $zapato = $consulta->fetchObject();
+    ?>
+    <h1>Modificar Zapato: <?= $zapato->nombre?></h1>
+        <form action="" method="post">
+            <input type="hidden" name="id" value="<?= $_POST['id'] ?>">
+            <input type="text" name="nombre" value="<?= $zapato->nombre ?>" required>
+            <input type="text" name="precio" value="<?= $zapato->precio ?>" required>
+            <input type="text" name="imagen" value="<?= $zapato->imagen ?>" required>
+            <input type="text" name="descripcion" value="<?= $zapato->descripcion ?>" required>
+            <input type="submit" value="Confirmar">
+        </form>
+        <a href="actualizarZapato.php">Volver</a>
+    <?php
+    }
+    $conexion = null;
+    ?>
 </body>
+
 </html>

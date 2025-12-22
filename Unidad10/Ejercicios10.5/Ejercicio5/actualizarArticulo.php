@@ -65,6 +65,8 @@ if (isset($_POST['codigo']) && isset($_POST['stock'])) {
         </form>
         
         <a href="Ejercicio5.php" class="btn-back">Volver al listado</a>
+
+        
     <?php
     }
     $conexion = null;

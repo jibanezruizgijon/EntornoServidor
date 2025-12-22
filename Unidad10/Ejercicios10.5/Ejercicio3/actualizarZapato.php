@@ -119,7 +119,7 @@ $conexion = null;
                             <input type="hidden" name="id" value="<?= $zapato->id ?>">
                             <input type="submit" name="eliminar" class="eliminar" value="Eliminar">
                         </form>
-                        <form action="modificarZapato" method="post">
+                        <form action="modificarZapato.php" method="post">
                             <input type="hidden" name="id" value="<?= $zapato->id ?>">
                             <input type="submit" name="modificar" class="modificar" value="Modificar">
                         </form>
