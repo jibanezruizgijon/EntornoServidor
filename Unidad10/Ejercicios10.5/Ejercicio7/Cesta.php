@@ -1,19 +1,36 @@
 <?php
 if (session_status() == PHP_SESSION_NONE) session_start();
+
+try {
+    $conexion = new PDO("mysql:host=localhost;dbname=gestimal;charset=utf8", "root", "toor");
+} catch (PDOException $e) {
+    echo "No se ha podido establecer conexión con el servidor de bases de datos.<br>";
+    die("Error: " . $e->getMessage());
+}
+
 // Cuenta la cantidad de productos que hay en la cesta
 $suma = 0;
 foreach ($_SESSION['carro'] as $producto => $cantidad) {
-    $suma += $cantidad;
+    $suma += $cantidad['unidades'];
 }
+
+
 // Cuenta los euros totales que cuestan los productos de la cesta
 $total = 0;
-foreach ($_SESSION['productos'] as $producto => $datos) {
-    foreach ($_SESSION['carro'] as $nombre => $cantidad) {
-        if ($nombre == $datos["nombre"]) {
-            $total += $cantidad*$datos['precio'];
-        }
+
+foreach ($_SESSION['carro'] as $id => $datos) {
+    $consulta = $conexion->query("SELECT * FROM tienda7 WHERE id='" . $id . "'");
+    $articulo = $consulta->fetchObject();
+    // En caso de que se elimine de la base de datos
+    if ($articulo == false) {
+       unset($_SESSION['carro'][$id]);
+       continue;
+    }
+    if ($datos["unidades"] != 0) {
+        $total += $articulo->precio * $datos['unidades'];
     }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,23 +49,24 @@ foreach ($_SESSION['productos'] as $producto => $datos) {
             <td class="titulos" colspan="4">Productos de la cesta</td>
         </tr>
         <?php
-        foreach ($_SESSION['productos'] as $producto => $datos) {
-            foreach ($_SESSION['carro'] as $nombre => $cantidad) {
-                if ($nombre == $datos["nombre"]) {
-                    echo "<tr>";
-                    echo "<td>" .  $nombre . "</td>";
-                    echo "<td>" .  $cantidad . "</td>";
-                    echo "<td><a href='detalle.php?producto=" . $datos["nombre"] . "'><img src='" .  $datos["img"] . "'></a> <p>" . $datos['precio'] . " euros</p></td>";
+
+        foreach ($_SESSION['carro'] as $id => $datos) {
+            $consulta = $conexion->query("SELECT * FROM tienda7 WHERE id='" . $id . "'");
+            $articulo = $consulta->fetchObject();
+             if ($datos["unidades"] != 0) {
+                echo "<tr>";
+                echo "<td>" .  $articulo->nombre . "</td>";
+                echo "<td>" .  $articulo->precio . "</td>";
+                echo "<td><a href='detalle.php?id=" . $articulo->id . "'><img src='" .  $articulo->imagen . "'></a> <p>" . $articulo->precio . " euros</p></td>";
         ?>
-                    <td class="botonComprar">
-                        <form action="QuitaCarro.php" method="post">
-                            <input type="hidden" name="seleccionado" value="<?= $datos["nombre"] ?>">
-                            <input type="submit" value="Eliminar">
-                        </form>
-                    </td>
-                    </tr>
+                <td class="botonComprar">
+                    <form action="QuitaCarro.php" method="post">
+                        <input type="hidden" name="id" value="<?= $articulo->id ?>">
+                        <input type="submit" value="Eliminar">
+                    </form>
+                </td>
+                </tr>
         <?php
-                }
             }
         }
         ?>
@@ -64,6 +82,7 @@ foreach ($_SESSION['productos'] as $producto => $datos) {
             <td colspan="4"><a href="index.php" class="volver">Volver al la tienda</a></td>
         </tr>
     </table>
+    <?php $conexion = null; ?>
 </body>
 
 </html>

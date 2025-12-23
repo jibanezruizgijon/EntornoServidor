@@ -1,12 +1,3 @@
-<?php
-if (session_status() == PHP_SESSION_NONE) session_start();
-
-if (isset($_GET['producto'])) {
-    $_SESSION['producto'] = $_GET['producto'];
-}
-
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,13 +28,14 @@ if (isset($_GET['producto'])) {
             border: 1px solid;
 
         }
-        h1{
+
+        h1 {
             text-align: center;
             font-size: 3em;
             margin: 0;
         }
 
-        .botonCompra{
+        .botonCompra {
             padding: 10px;
         }
     </style>
@@ -51,26 +43,29 @@ if (isset($_GET['producto'])) {
 
 <body>
     <?php
-    foreach ($_SESSION['productos'] as $productos => $datos) {
-        if ($datos['nombre'] == $_SESSION['producto']) {
-    ?>
-            
-            <div class="container">
-                <h1>Detalle</h1>
-                <img src="<?= $datos['img'] ?>" alt="">
-                <h2>Producto: <?= $datos['nombre'] ?></h2>
-                <p><strong>Precio:</strong> <?= $datos['precio'] ?></p>
-                <p><strong>Descripción:</strong><?= $datos['descripcion'] ?></p>
-                <form action="meteCarro.php" method="post">
-                    <input type="hidden" name="seleccionado1" value="<?= $datos["nombre"] ?>">
-                    <input type="submit" class="botonCompra" value="Comprar" >
-                </form>
-                <a href="index.php">Volver a la tienda</a>
-            </div>
-    <?php
-        }
+    try {
+        $conexion = new PDO("mysql:host=localhost;dbname=gestimal;charset=utf8", "root", "toor");
+    } catch (PDOException $e) {
+        echo "No se ha podido establecer conexión con el servidor de bases de datos.<br>";
+        die("Error: " . $e->getMessage());
     }
+    $consulta = $conexion->query("SELECT * FROM tienda7 WHERE id='" . $_REQUEST['id'] . "'");
+    $articulo = $consulta->fetchObject();
     ?>
+
+    <div class="container">
+        <h1>Detalle</h1>
+        <img src="<?= $articulo->imagen ?>" alt="">
+        <h2>Producto: <?= $articulo->nombre ?></h2>
+        <p><strong>Precio:</strong> <?= $articulo->precio ?></p>
+        <p><strong>Descripción:</strong><?= $articulo->descripcion ?></p>
+        <form action="meteCarro.php" method="post">
+            <input type="hidden" name="id" value="<?= $articulo->id ?>">
+            <input type="submit" name="seleccionado1" class="botonCompra" value="Comprar">
+        </form>
+        <a href="index.php">Volver a la tienda</a>
+    </div>
+    <?php $conexion = null; ?>
 </body>
 
 </html>

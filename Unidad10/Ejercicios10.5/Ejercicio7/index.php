@@ -12,97 +12,44 @@ try {
     die("Error: " . $e->getMessage());
 }
 
-// // Cuando se inicia por primera vez
-// if (!isset($_SESSION['productos'])) {
-
-//     $fp = fopen("productos.txt", "r");
-
-//     while (!feof($fp)) {
-//         $linea = fgets($fp);
-//         $lineaLimpia = trim($linea);
-//         if (empty($lineaLimpia)) continue;
-
-//         $arrayDatos = explode("-", $lineaLimpia);
-//         $_SESSION['productos'][] = [
-//             "nombre" => $arrayDatos[0],
-//             "precio" => $arrayDatos[1],
-//             "img"   => $arrayDatos[2],
-//             "descripcion"  => $arrayDatos[3],
-//         ];
-//     }
-//     fclose($fp);
-// }
-
 if (!isset($_SESSION['carro'])) {
     $_SESSION['carro'] = [];
+    $_SESSION['total'] = 0;
 }
 
 // Cuenta la cantidad de productos que hay en la cesta
 $suma = 0;
 foreach ($_SESSION['carro'] as $producto => $cantidad) {
-    $suma += $cantidad;
+    $suma += $cantidad['unidades'];
 }
 
 
 // Para crear un nuevo producto
 if (isset($_POST['insertar'])) {
-    $nombre =  $_POST['nombre'];
-    $precio =  $_POST['precio'];
-    $descripcion =  $_POST['descripcion'];
     $imagen = "img/" . $_FILES["imagen"]["name"];
 
-    if (move_uploaded_file($_FILES["imagen"]["tmp_name"], $imagen)) {
-        $fp = fopen("productos.txt", "a");
+    $insercion = "INSERT INTO tienda7 (nombre, descripcion, precio, imagen) VALUES
+('$_POST[nombre]','$_POST[descripcion]','$_POST[precio]','$imagen')";
 
-        fwrite($fp, $nombre . "-" . $precio . "-" . $imagen  . "-" . $descripcion . PHP_EOL);
-
-        fclose($fp);
-    }
-
-    $_SESSION['productos'][] = [
-        "nombre" => $nombre,
-        "precio" => $precio,
-        "img"   => $imagen,
-        "descripcion" => $descripcion
-    ];
+    $conexion->exec($insercion);
+    move_uploaded_file($_FILES["imagen"]["tmp_name"], $imagen);
 }
 
 
 
 
 // Para borrar un producto
-if (isset($_POST['borrar'])) {
-    $nombre =  $_POST['borrar'];
-    foreach ($_SESSION['productos'] as $producto => $datos) {
-        if ($datos['nombre'] == $nombre) {
-            $rutaImagen = $datos['img'];
-            if (file_exists($rutaImagen)) {
-                // Borramos la imagen física
-                unlink($rutaImagen);
-            }
-            unset($_SESSION['productos'][$producto]);
-        }
-    }
+if (isset($_POST['eliminar'])) {
+    $nombre =  $_POST['eliminar'];
 
-    $ProductosLimpio = [];
-    foreach ($_SESSION['productos'] as $productos => $datos) {
-        if (!empty($datos['nombre'])) {
-            $ProductosLimpio[] = [
-                "nombre" => $datos['nombre'],
-                "precio" => $datos['precio'],
-                "img"   => $datos['img'],
-                "descripcion" => $datos['descripcion']
-            ];
-        }
+    $consulta = $conexion->query("SELECT * FROM tienda7 WHERE id='" . $_POST['id'] . "'");
+    $articulo = $consulta->fetchObject();
+    $rutaImagen = $articulo->imagen;
+    if (file_exists($rutaImagen)) {
+        unlink($rutaImagen);
     }
-    $fp = fopen("productos.txt", "w");
-
-    foreach ($_SESSION['productos'] as $datos) {
-        if (!empty($datos['nombre'])) {
-            fwrite($fp, $datos["nombre"] . "-" . $datos["precio"] . "-" . $datos["img"]  . "-" . $datos["descripcion"] . PHP_EOL);
-        }
-    }
-    fclose($fp);
+    $delete = "DELETE FROM tienda7 WHERE id='" . $_POST['id'] . "'";
+    $conexion->exec($delete);
 }
 $conexion = null;
 ?>
@@ -144,7 +91,7 @@ $conexion = null;
                     <br><br>
                     <label>Descripción:</label><input type="text" name="descripcion" required>
                 </td>
-                <td><input type="Number" name="precio" required></td>
+                <td><input type="Number" step="any" name="precio" required></td>
                 <td><input type="file" name="imagen" required></td>
                 <td><input type="submit" name="insertar" value="insertar"></td>
             </form>
@@ -154,18 +101,18 @@ $conexion = null;
         while ($articulo = $consulta->fetchObject()) {
             echo "<tr>";
             echo "<td>" .  $articulo->nombre . "</td>";
-            echo "<td>" .  $articulo->precio. "</td>";
-            echo "<td><a href='detalle.php?producto=" . $articulo->id . "'><img src='" .  $articulo->imagen . "'></a></td>";
+            echo "<td>" .  $articulo->precio . "</td>";
+            echo "<td><a href='detalle.php?id=" . $articulo->id . "'><img src='" .  $articulo->imagen . "'></a></td>";
         ?>
             <td class="botonComprar">
                 <form action="meteCarro.php" method="post">
-                    <input type="hidden" name="seleccionado" value="<?= $articulo->id ?>">
-                    <input type="submit" value="Comprar">
+                    <input type="hidden" name="id"  value="<?= $articulo->id ?>">
+                    <input type="submit" name="seleccionado" value="Comprar">
                 </form>
                 <form action="" method="post">
-                    <input type="hidden" name="borrar" value="<?= $articulo->id ?>">
+                    <input type="hidden" name="id" value="<?= $articulo->id ?>">
                     <br>
-                    <input type="submit" value="Eliminar">
+                    <input type="submit" name="eliminar" value="Eliminar">
                 </form>
             </td>
         <?php
