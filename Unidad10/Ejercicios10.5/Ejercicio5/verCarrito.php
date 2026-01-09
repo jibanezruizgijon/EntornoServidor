@@ -29,10 +29,15 @@ if (isset($_POST['procesar'])) {
             $consulta = $conexion->query("SELECT * FROM articulo WHERE codigo='" . $productos . "'");
             $articulo = $consulta->fetchObject();
             fwrite($fp, $articulo->codigo . "," . $articulo->descripcion . "," . $articulo->precioVenta * 1.21 . PHP_EOL);
+            $stockNuevo = $articulo->stock - $datos["unidades"];
+            $actualizar = "UPDATE articulo SET stock='$stockNuevo' WHERE codigo='" . $productos . "'";
+            $conexion->exec($actualizar);
         }
     }
     fwrite($fp, "Total:" . $_SESSION['total'] * 1.21  . PHP_EOL);
     fclose($fp);
+    $_SESSION['carrito'] = [];
+     $_SESSION['total'] = 0;
 }
 
 ?>

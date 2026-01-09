@@ -30,7 +30,7 @@
     } else {
         $insercion = "INSERT INTO cliente (dni, nombre, direccion, telefono) VALUES
 ('$_POST[dni]','$_POST[nombre]','$_POST[direccion]','$_POST[telefono]')";
-        //echo $insercion;
+        
         $conexion->exec($insercion);
         $conexion = null;
         header("location: Ejercicio1.php");

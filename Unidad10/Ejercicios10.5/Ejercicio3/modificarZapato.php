@@ -13,7 +13,15 @@ if (isset($_POST['nombre'])) {
         die("Error: " . $e->getMessage());
     }
 
-    $actualizar = "UPDATE tiendaZapatos SET nombre='{$_POST['nombre']}', precio='{$_POST['precio']}', imagen='{$_POST['imagen']}', descripcion='{$_POST['descripcion']}' WHERE id='{$_POST['id']}'";
+    if ($_FILES["imagen"]["name"] != "") {
+        $imagen = "img/" .  $_FILES["imagen"]["name"];
+        move_uploaded_file($_FILES["imagen"]["tmp_name"], $imagen);
+        unlink("img/". $_REQUEST["imagenActual"]);
+    } else {
+        $imagen = $_REQUEST["imagenActual"];
+    }
+
+    $actualizar = "UPDATE tiendaZapatos SET nombre='{$_POST['nombre']}', precio='{$_POST['precio']}', imagen='$imagen', descripcion='{$_POST['descripcion']}' WHERE id='{$_POST['id']}'";
     $conexion->exec($actualizar);
     $conexion = null;
 
@@ -48,12 +56,14 @@ if (isset($_POST['nombre'])) {
         $consulta = $conexion->query("SELECT * FROM tiendaZapatos WHERE id='" . $_POST['id'] . "'");
         $zapato = $consulta->fetchObject();
     ?>
-    <h1>Modificar Zapato: <?= $zapato->nombre?></h1>
-        <form action="" method="post">
+        <h1>Modificar Zapato: <?= $zapato->nombre ?></h1>
+        <form enctype="multipart/form-data" action="" method="post">
             <input type="hidden" name="id" value="<?= $_POST['id'] ?>">
             <input type="text" name="nombre" value="<?= $zapato->nombre ?>" required>
             <input type="text" name="precio" value="<?= $zapato->precio ?>" required>
-            <input type="text" name="imagen" value="<?= $zapato->imagen ?>" required>
+            <input type="hidden" name="imagenActual" value="<?= $zapato->imagen ?>" >
+            <img src="<?= $zapato->imagen ?>">
+            <input type="file" name="imagen">
             <input type="text" name="descripcion" value="<?= $zapato->descripcion ?>" required>
             <input type="submit" value="Confirmar">
         </form>

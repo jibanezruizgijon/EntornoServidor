@@ -1,3 +1,21 @@
 hr89,silla ergonómica de oficina,302.5
 Ep87,estuche de camuflaje pequeño,6.05
 Total:308.55
+kd93,monitor 4k,423.5
+Total:847
+kd93,monitor 4k,423.5
+Total:847
+kd93,monitor 4k,423.5
+Total:847
+Ep87,estuche de camuflaje pequeño,6.05
+Total:12.1
+Lgg4,Altavoces 5.1 sonido envolvente,217.8
+Total:217.8
+Ep87,estuche de camuflaje pequeño,6.05
+Total:12.1
+g60i,cascos gaming con luces led y micrófono,60.5
+Total:133.1
+hr89,silla ergonómica de oficina,302.5
+Total:907.5
+Lgg4,Altavoces 5.1 sonido envolvente,217.8
+Total:435.6

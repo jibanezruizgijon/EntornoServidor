@@ -55,7 +55,7 @@
 
             $inicio = ($paginaActual - 1) * $cantidadMostrada;
             $fin = ($inicio + $cantidadMostrada);
-            $consulta2 = $conexion->query("SELECT * FROM articulo LIMIT $inicio , $fin");
+            $consulta2 = $conexion->query("SELECT * FROM articulo LIMIT $inicio , $cantidadMostrada");
             while ($articulo = $consulta2->fetchObject()) {
             ?>
 

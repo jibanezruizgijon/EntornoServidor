@@ -20,8 +20,11 @@ if (isset($_POST['comprar'])) {
     if (!isset($_SESSION['carrito'][$articulo->codigo]["unidades"])) {
         $_SESSION['carrito'][$articulo->codigo]["unidades"] = 0;
     }
-    $_SESSION['carrito'][$articulo->codigo]["unidades"]++;
-    $_SESSION['total'] += $articulo->precioVenta;
+    if ($articulo->stock <=  $_SESSION['carrito'][$articulo->codigo]["unidades"]) {
+    } else {
+        $_SESSION['carrito'][$articulo->codigo]["unidades"]++;
+        $_SESSION['total'] += $articulo->precioVenta;
+    }
 }
 
 
@@ -79,8 +82,16 @@ if (isset($_POST['comprar'])) {
 
             $inicio = ($paginaActual - 1) * $cantidadMostrada;
             $fin = ($inicio + $cantidadMostrada);
-            $consulta2 = $conexion->query("SELECT * FROM articulo LIMIT $inicio , $fin");
+            $consulta2 = $conexion->query("SELECT * FROM articulo LIMIT $inicio , $cantidadMostrada");
             while ($articulo = $consulta2->fetchObject()) {
+                // Para no comprar más opciones de las disponibles
+                if (isset($_SESSION['carrito'][$articulo->codigo]["unidades"])) {
+                    $stock =  $articulo->stock - $_SESSION['carrito'][$articulo->codigo]["unidades"];
+                } else {
+                    $stock = $articulo->stock;
+                }
+                // Para deshabilitar la opcion de compra
+                $valor = ($stock == 0)? "disabled" : "enabled";
             ?>
 
                 <tr>
@@ -89,11 +100,11 @@ if (isset($_POST['comprar'])) {
                     <td><?= $articulo->precioCompra ?></td>
                     <td><?= $articulo->precioVenta ?></td>
                     <td><?= $articulo->margen ?></td>
-                    <td><?= $articulo->stock ?></td>
+                    <td><?= $stock ?></td>
                     <td class="botones">
                         <form action="" method="post">
                             <input type="hidden" name="codigo" value="<?= $articulo->codigo ?>">
-                            <input type="submit" name="comprar" class="enviar" value="Comprar">
+                            <input type="submit" name="comprar" class="enviar" <?=$valor ?>  value="Comprar">
                         </form>
                         <form action="eliminarArticulo.php" method="post">
                             <input type="hidden" name="codigo" value="<?= $articulo->codigo ?>">
