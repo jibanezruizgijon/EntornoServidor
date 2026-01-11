@@ -17,7 +17,7 @@ if (!isset($_SESSION['carrito'])) {
     $_SESSION['total'] = 0;
 } else {
 
-
+    //Añade una unidad del producto al carrito
     if (isset($_POST['compra'])) {
         $consulta = $conexion->query("SELECT id, nombre, precio FROM tiendaZapatos WHERE id='" . $_POST['id'] . "'");
         $zapato = $consulta->fetchObject();
@@ -28,7 +28,7 @@ if (!isset($_SESSION['carrito'])) {
         $_SESSION['total'] += $zapato->precio;
     }
 
-
+    // Elimina una unidad del producto seleccionado
     if (isset($_POST['eliminar'])) {
         $consulta = $conexion->query("SELECT id, nombre, precio FROM tiendaZapatos WHERE id='" . $_POST['id'] . "'");
         $zapato = $consulta->fetchObject();
