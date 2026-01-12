@@ -1,8 +1,8 @@
 <?php
-abstract class PizzeriaDB
+  abstract class BlogDB
 {
     private static $server = 'localhost';
-    private static $db = 'pizzeria';
+    private static $db = 'blogDB';
     private static $user = 'root';
     private static $password = 'toor';
     public static function connectDB()
@@ -15,5 +15,5 @@ abstract class PizzeriaDB
         }
         return $connection;
     }
-}
+}  
 ?>
