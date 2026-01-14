@@ -7,8 +7,8 @@
 </head>
 
 <body>
-    <h1>Blog con articulos</h1>
-    <a href="../Controller/nuevoArticulo.php">Nueva Artículo</a>
+    <h1>Blog con artículos</h1>
+    <a href="../Controller/nuevoArticulo.php">Nuevo artículo</a>
     <hr>
     <?php
     foreach ($data['articulos'] as $articulo) {

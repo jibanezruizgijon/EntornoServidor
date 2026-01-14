@@ -1,8 +1,8 @@
 <?php
-  abstract class BlogDB
+  abstract class Escuela
 {
     private static $server = 'localhost';
-    private static $db = 'blogDB';
+    private static $db = 'escuela';
     private static $user = 'root';
     private static $password = 'toor';
     public static function connectDB()

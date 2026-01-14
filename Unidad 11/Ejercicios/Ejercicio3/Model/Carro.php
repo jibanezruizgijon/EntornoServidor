@@ -1,5 +1,5 @@
 <?php
-  abstract class BlogDB
+  abstract class Carrito
 {
     private static $server = 'localhost';
     private static $db = 'carrito';
