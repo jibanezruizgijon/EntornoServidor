@@ -1,5 +1,5 @@
 <?php
-require_once 'BlogDB.php';
+require_once 'escuela.php';
 
 class Alumno
 {
@@ -30,11 +30,11 @@ class Alumno
     return $Alumnos;
   }
 
-  // Para crear artículos 
+  // Para crear Alumnos 
   public function insert()
   {
     $conexion = Escuela::connectDB();
-    $insercion = "INSERT INTO articulo (matricula, nombre, apellidos, curso) VALUES ('$this->matricula', '$this->nombre','$this->apellidos','$this->curso')";
+    $insercion = "INSERT INTO alumno (matricula, nombre, apellidos, curso) VALUES ('$this->matricula', '$this->nombre','$this->apellidos','$this->curso')";
     $conexion->exec($insercion);
     $conexion = null;
   }
@@ -43,7 +43,7 @@ class Alumno
   public function delete()
   {
     $conexion = Escuela::connectDB();
-    $borrado = "DELETE FROM articulo WHERE matricula='$this->matricula'";
+    $borrado = "DELETE FROM alumno WHERE matricula='$this->matricula'";
     $conexion->exec($borrado);
     $conexion = null;
   }

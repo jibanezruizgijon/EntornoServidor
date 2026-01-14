@@ -35,19 +35,19 @@ class Producto
     $conexion = Carrito::connectDB();
     $seleccion = "SELECT * FROM productos";
     $consulta = $conexion->query($seleccion);
-    $Articulos = [];
+    $Productos = [];
     while ($registro = $consulta->fetchObject()) {
       $Productos[] = new Producto($registro->codigo, $registro->nombre, $registro->precio, $registro->stock);
     }
     $conexion = null;
-    return $Articulos;
+    return $Productos;
   }
 
   // Para crear productos 
   public function insert()
   {
     $conexion = Carrito::connectDB();
-    $insercion = "INSERT INTO productos (nombre, precio, stock) VALUES ('$this->codigo', '$this->nombre','$this->precio','$this->stock')";
+    $insercion = "INSERT INTO productos (codigo, nombre, precio, stock) VALUES ('$this->codigo', '$this->nombre','$this->precio','$this->stock')";
     $conexion->exec($insercion);
     $conexion = null;
   }

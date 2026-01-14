@@ -7,19 +7,23 @@
 </head>
 
 <body>
-    <h1>Blog con articulos</h1>
-    <a href="../Controller/nuevoArticulo.php">Nueva Artículo</a>
+    <h1>Listado de alumnos</h1>
     <hr>
-    <?php
-    foreach ($data['articulos'] as $articulo) {
-    ?>
-        <h3><?= $articulo->getTitulo() ?></h3>
-        <p><?= $articulo->getFecha() ?></p><br>
-        <p><?= $articulo->getContenido() ?></p><br>
-        <a href="../Controller/borraArticulo.php?= $articulo->getId() ?>">Borrar</a>
-    <?php
-    }
-    ?>
+    <table>
+        <?php
+        foreach ($data['alumnos'] as $alumno) {
+        ?>
+        <tr>
+            <td><?= $alumno->getMatricula() ?></td>
+            <td><?= $alumno->getnombre() ?></td>
+            <td><?= $alumno->getContenido() ?></td>
+        </tr>
+            <a href="../Controller/borraArticulo.php?= $articulo->getId() ?>">Borrar</a>
+        <?php
+        }
+        ?>
+    </table>
+    <a href="../Controller/nuevoAlumno.php">Añadir alumno</a>
 </body>
 
 </html>
