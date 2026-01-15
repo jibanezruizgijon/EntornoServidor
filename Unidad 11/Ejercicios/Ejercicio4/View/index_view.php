@@ -16,9 +16,10 @@
         <tr>
             <td><?= $alumno->getMatricula() ?></td>
             <td><?= $alumno->getnombre() ?></td>
-            <td><?= $alumno->getContenido() ?></td>
+            <td><?= $alumno->getApellidos() ?></td>
+            <td><?= $alumno->getCurso() ?></td>
         </tr>
-            <a href="../Controller/borraArticulo.php?= $articulo->getId() ?>">Borrar</a>
+            <a href="../Controller/borraAlumno.php?matricula=<?=$alumno->getMatricula()?>">Borrar</a>
         <?php
         }
         ?>

@@ -17,6 +17,7 @@
         <img src="../View/images/<?= $oferta->getImagen() ?>" width="400"><br>
         <p><?= $oferta->getDescripcion() ?></p><br>
         <a href="../Controller/borraOferta.php?id=<?= $oferta->getId() ?>">Borrar</a>
+        <a href="../Controller/actualizaOferta.php?id=<?= $oferta->getId() ?>">Modificar</a>
     <?php
     }
     ?>

@@ -1,0 +1,70 @@
+<?php
+require_once 'escuela.php';
+
+class Codigo_Asignatura
+{
+  private $matricula;
+  private $codigo_asignatura;
+ 
+  function __construct($matricula = "", $codigo_asignatura = "")
+  {
+    $this->matricula = $matricula;
+    $this->codigo_asignatura = $codigo_asignatura;
+  }
+
+  public static function getAsignaturas()
+  {
+    $conexion = Escuela::connectDB();
+    $seleccion = "SELECT * FROM alumno_asignatura";
+    $consulta = $conexion->query($seleccion);
+    $Asignaturas = [];
+    while ($registro = $consulta->fetchObject()) {
+      $Asignaturas[] = new Codigo_Asignatura($registro->matricula, $registro->codigo_asignatua);
+    }
+    $conexion = null;
+    return $Asignaturas;
+  }
+
+  public function insert()
+  {
+    $conexion = Escuela::connectDB();
+    $insercion = "INSERT INTO alumno_asignatura (matricula, codigo_asignatura) VALUES ('$this->matricula', '$this->codigo_asignatura')";
+    $conexion->exec($insercion);
+    $conexion = null;
+  }
+
+ 
+  public function delete()
+  {
+    $conexion = Escuela::connectDB();
+    $borrado = "DELETE FROM alumno_asignatura WHERE matricula='$this->matricula'";
+    $conexion->exec($borrado);
+    $conexion = null;
+  }
+
+
+  public function getMatricula()
+  {
+    return $this->matricula;
+  }
+
+
+  public function setMatricula($matricula)
+  {
+    $this->matricula = $matricula;
+
+    return $this;
+  }
+
+  public function getCodigo_asignatura()
+  {
+    return $this->codigo_asignatura;
+  }
+
+  public function setCodigo_asignatura($codigo_asignatura)
+  {
+    $this->codigo_asignatura = $codigo_asignatura;
+
+    return $this;
+  }
+}

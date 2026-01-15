@@ -7,7 +7,7 @@ class Articulo
   private $titulo;
   private $fecha;
   private $contenido;
-  function __construct($id = "",$titulo = "", $fecha= "", $contenido = "")
+  function __construct($id = "", $titulo = "", $fecha = "", $contenido = "")
   {
     $this->id = $id;
     $this->titulo = $titulo;
@@ -56,7 +56,7 @@ class Articulo
     $consulta = $conexion->query($seleccion);
     $Articulos = [];
     while ($registro = $consulta->fetchObject()) {
-      $Articulos[] = new Articulo($registro->id, $registro->titulo,$registro->fecha, $registro->contenido);
+      $Articulos[] = new Articulo($registro->id, $registro->titulo, $registro->fecha, $registro->contenido);
     }
     $conexion = null;
     return $Articulos;
@@ -78,5 +78,28 @@ class Articulo
     $borrado = "DELETE FROM articulo WHERE id='$this->id'";
     $conexion->exec($borrado);
     $conexion = null;
+  }
+
+  public function update()
+  {
+    $conexion = BlogDB::connectDB();
+    $actualiza = "UPDATE articulo SET titulo='$this->titulo', fecha='$this->fecha', contenido='$this->contenido' WHERE id='$this->id'";
+    $conexion->exec($actualiza);
+    $conexion = null;
+  }
+  public static function getArticuloById($id)
+  {
+    $conexion = BlogDB::connectDB();
+    $seleccion = "SELECT * FROM articulo WHERE id=$id";
+    $consulta = $conexion->query($seleccion);
+    if ($consulta->rowCount() > 0) {
+      $registro = $consulta->fetchObject();
+      $articulo = new Articulo($registro->id, $registro->titulo, $registro->fecha, $registro->contenido);
+      $conexion = null;
+      return $articulo;
+    } else {
+      $conexion = null;
+      return false;
+    }
   }
 }
