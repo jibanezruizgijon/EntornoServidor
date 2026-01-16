@@ -14,7 +14,7 @@
     foreach ($data['ofertas'] as $oferta) {
     ?>
         <h3><?= $oferta->getTitulo() ?></h3>
-        <img src="../View/images/<?= $oferta->getImagen() ?>" width="400"><br>
+        <img src="../View/images/<?= $oferta->getImgUrl() ?>" width="400"><br>
         <p><?= $oferta->getDescripcion() ?></p><br>
         <a href="../Controller/borraOferta.php?id=<?= $oferta->getId() ?>">Borrar</a>
         <a href="../Controller/actualizaOferta.php?id=<?= $oferta->getId() ?>">Modificar</a>

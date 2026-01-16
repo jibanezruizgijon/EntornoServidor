@@ -3,31 +3,23 @@ require_once 'Carro.php';
 
 class Producto
 {
-  private $codigo;
+  private $id;
   private $nombre;
   private $precio;
-  private $stock;
+  private $imgUrl;
+  private $descripcion;
 
-  function __construct($codigo = "",$nombre = "", $precio= "", $stock = "")
+  function __construct($id = "",$nombre = "", $precio= "",$imgUrl = "", $descripcion = "")
   {
-    $this->codigo = $codigo;
+    $this->id = $id;
     $this->nombre = $nombre;
     $this->precio = $precio;
-    $this->stock = $stock;
+    $this->imgUrl = $imgUrl;
+    $this->descripcion = $descripcion;
   }
 
 
-  public function getStock()
-  {
-    return $this->stock;
-  }
 
-  public function setContenido($stock)
-  {
-    $this->stock = $stock;
-
-    return $this;
-  }
 
   // Para obtener todos los productos
   public static function getProductos()
@@ -37,7 +29,7 @@ class Producto
     $consulta = $conexion->query($seleccion);
     $Productos = [];
     while ($registro = $consulta->fetchObject()) {
-      $Productos[] = new Producto($registro->codigo, $registro->nombre, $registro->precio, $registro->stock);
+      $Productos[] = new Producto($registro->id, $registro->nombre, $registro->precio, $registro->imgUrl, $registro->descripcion);
     }
     $conexion = null;
     return $Productos;
@@ -47,7 +39,7 @@ class Producto
   public function insert()
   {
     $conexion = Carrito::connectDB();
-    $insercion = "INSERT INTO productos (codigo, nombre, precio, stock) VALUES ('$this->codigo', '$this->nombre','$this->precio','$this->stock')";
+    $insercion = "INSERT INTO productos (nombre, precio, imgUrl, descripcion) VALUES ('$this->nombre','$this->precio','$this->imgUrl','$this->descripcion')";
     $conexion->exec($insercion);
     $conexion = null;
   }
@@ -56,19 +48,19 @@ class Producto
   public function delete()
   {
     $conexion = Carrito::connectDB();
-    $borrado = "DELETE FROM productos WHERE codigo='$this->codigo'";
+    $borrado = "DELETE FROM productos WHERE id='$this->id'";
     $conexion->exec($borrado);
     $conexion = null;
   }
  
-  public function getCodigo()
+  public function getId()
   {
-    return $this->codigo;
+    return $this->id;
   }
 
-  public function setCodigo($codigo)
+  public function setId($id)
   {
-    $this->codigo = $codigo;
+    $this->id = $id;
 
     return $this;
   }
@@ -93,6 +85,31 @@ class Producto
   public function setPrecio($precio)
   {
     $this->precio = $precio;
+
+    return $this;
+  }
+
+  public function getDescripcion()
+  {
+    return $this->descripcion;
+  }
+
+  public function setDescripcion($descripcion)
+  {
+    $this->descripcion = $descripcion;
+
+    return $this;
+  }
+
+  public function getImgUrl()
+  {
+    return $this->imgUrl;
+  }
+
+
+  public function setImgUrl($imgUrl)
+  {
+    $this->imgUrl = $imgUrl;
 
     return $this;
   }
