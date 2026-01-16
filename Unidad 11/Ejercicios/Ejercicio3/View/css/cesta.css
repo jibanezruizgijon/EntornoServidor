@@ -1,10 +1,11 @@
+
         * {
             font-family: sans-serif;
         }
 
         a {
             text-decoration: none;
-
+            
         }
 
         table,
@@ -31,26 +32,19 @@
             width: 150px;
             height: 100px;
         }
-
-        .headerTabla {
+         .headerTabla{
             background-color: rgb(119, 136, 153);
         }
-
-        .titulos,
-        a {
+        .titulos{
             color: white;
             text-shadow: 1px 1px red;
         }
 
-        .tienda {
-            color: white;
-            text-shadow: 1px 1px 1px black;
+        .volver{
+            color: black;
+            padding: 10px 20px;
+            border: 1px solid;
         }
-
         .botonComprar {
             padding: 60px;
-        }
-
-        .suma{
-            margin: 0;
         }

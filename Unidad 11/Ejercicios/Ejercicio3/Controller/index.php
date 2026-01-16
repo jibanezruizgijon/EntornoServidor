@@ -1,5 +1,5 @@
-<?php require_once '../Model/Articulo.php';
- // Obtiene todas las ofertas
-$data['articulos'] = Articulo::getArticulos();
+<?php require_once '../Model/Producto.php';
+ // Obtiene todos los productos
+$data['productos'] = Producto::getProductos();
  // Carga la vista de listado 
 include '../View/index_view.php';
