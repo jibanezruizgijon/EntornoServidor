@@ -7,5 +7,7 @@ if (!isset($_SESSION['carrito'])) {
 
 $data['productos'] = Producto::getProductos();
 
+
+
 // Carga la vista de listado 
 include '../View/index_view.php';

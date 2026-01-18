@@ -19,18 +19,16 @@ if (session_status() == PHP_SESSION_NONE) session_start();
         <thead>
             <tr class="fila__titulo">
                 <th><b>Código</b></th>
-                <th><b>Descripción</b></th>
-                <th><b>Precio de Compra</b></th>
-                <th><b>Precio de Venta</b></th>
-                <th><b>Margen</b></th>
+                <th><b>Nombre</b></th>
+                <th><b>Precio</b></th>
                 <th><b>Stock</b></th>
                 <th><b><a href="verCarrito.php">Carrito</a></b></th>
             </tr>
         </thead>
         <tbody>
             <?php
-            $consulta = $conexion->query("SELECT * FROM articulo");
-            $total = $consulta->rowCount();
+           
+            $total =  count($data['productos']);
             $cantidadMostrada = 3;
             $paginas = ceil($total / $cantidadMostrada);
 
@@ -51,43 +49,41 @@ if (session_status() == PHP_SESSION_NONE) session_start();
             $inicio = ($paginaActual - 1) * $cantidadMostrada;
             $fin = ($inicio + $cantidadMostrada);
             $consulta2 = $conexion->query("SELECT * FROM articulo LIMIT $inicio , $cantidadMostrada");
-            while ($articulo = $consulta2->fetchObject()) {
+             foreach ($data['productos'] as $producto) {
                 // Para no comprar más opciones de las disponibles
-                if (isset($_SESSION['carrito'][$articulo->codigo]["unidades"])) {
-                    $stock =  $articulo->stock - $_SESSION['carrito'][$articulo->codigo]["unidades"];
+                if (isset($_SESSION['carrito'][$producto->codigo]["unidades"])) {
+                    $stock =  $producto->stock - $_SESSION['carrito'][$producto->codigo]["unidades"];
                 } else {
-                    $stock = $articulo->stock;
+                    $stock = $producto->stock;
                 }
                 // Para deshabilitar la opcion de compra
                 $valor = ($stock == 0)? "disabled" : "enabled";
             ?>
 
                 <tr>
-                    <td><?= $articulo->codigo ?></td>
-                    <td><?= $articulo->descripcion ?></td>
-                    <td><?= $articulo->precioCompra ?></td>
-                    <td><?= $articulo->precioVenta ?></td>
-                    <td><?= $articulo->margen ?></td>
+                    <td><?= $producto->codigo ?></td>
+                    <td><?= $producto->nombre ?></td>
+                    <td><?= $producto->precio?></td>
                     <td><?= $stock ?></td>
                     <td class="botones">
                         <form action="" method="post">
-                            <input type="hidden" name="codigo" value="<?= $articulo->codigo ?>">
+                            <input type="hidden" name="codigo" value="<?= $producto->codigo ?>">
                             <input type="submit" name="comprar" class="enviar" <?=$valor ?>  value="Comprar">
                         </form>
-                        <form action="eliminarArticulo.php" method="post">
-                            <input type="hidden" name="codigo" value="<?= $articulo->codigo ?>">
+                        <form action="../Controller/eliminarProducto.php" method="post">
+                            <input type="hidden" name="codigo" value="<?= $artiproductoculo->codigo ?>">
                             <input type="submit" name="eliminar" class="eliminar" value="Eliminar">
                         </form>
-                        <form action="actualizarArticulo.php" method="post">
-                            <input type="hidden" name="codigo" value="<?= $articulo->codigo ?>">
+                        <form action="../Controller/actualizarProducto.php" method="post">
+                            <input type="hidden" name="codigo" value="<?= $producto->codigo ?>">
                             <input type="submit" name="modificar" class="modificar" value="Modificar">
                         </form>
                         <form action="modificarStock.php" method="post">
-                            <input type="hidden" name="codigo" value="<?= $articulo->codigo ?>">
+                            <input type="hidden" name="codigo" value="<?= $producto->codigo ?>">
                             <input type="submit" name="entrada" class="stock" value="Entrada">
                         </form>
                         <form action="modificarStock.php" method="post">
-                            <input type="hidden" name="codigo" value="<?= $articulo->codigo ?>">
+                            <input type="hidden" name="codigo" value="<?= $producto->codigo ?>">
                             <input type="submit" name="salida" class="stock" value="Salida">
                         </form>
                     </td>
@@ -113,10 +109,8 @@ if (session_status() == PHP_SESSION_NONE) session_start();
             </tr>
             <tr class="titulo__nuevo">
                 <td><b>código</b></td>
-                <td><b>Descripción</b></td>
-                <td><b>precioCompra</b></td>
-                <td><b>precioVenta</b></td>
-                <td><b>margen</b></td>
+                <td><b>nombre</b></td>
+                <td><b>precio</b></td>
                 <td><b>stock</b></td>
             </tr>
             <tr>

@@ -1,0 +1,100 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    background-color: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 600px;
+}
+
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.label {
+    margin-bottom: 8px;
+    margin-top: 20px;
+    font-size: 1.3rem;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.label:first-child {
+    margin-top: 0;
+}
+
+.titulo, 
+.textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: inherit;
+
+    background-color: #fafafa;
+}
+
+.titulo:focus, 
+.textarea:focus {
+    border-color: #3498db;
+    outline: none;
+    background-color: white;
+}
+
+.textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+/* Botón de acción principal (Submit) */
+.btn__enviar {
+    margin-top: 30px;
+    padding: 12px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+}
+
+.btn__enviar:hover {
+    background-color: #2980b9;
+}
+
+
+.btn__volver {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #7f8c8d;
+    text-decoration: none;
+    
+}
+
+.btn__volver:hover {
+    color: #2c3e50;
+    text-decoration: underline;
+}

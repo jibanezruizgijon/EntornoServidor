@@ -21,7 +21,7 @@ class Producto
   public static function getProductos()
   {
     $conexion = Almacen::connectDB();
-    $seleccion = "SELECT * FROM productos";
+    $seleccion = "SELECT * FROM productos_1";
     $consulta = $conexion->query($seleccion);
     $Productos = [];
     while ($registro = $consulta->fetchObject()) {
