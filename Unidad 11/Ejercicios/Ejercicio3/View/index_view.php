@@ -16,7 +16,7 @@
         </tr>
         <tr class="headerTabla">
             <td class="titulos">Producto</td>
-            <td class="titulos">Precio</td>
+            <td class="titulos">Precio</td> 
             <td class="titulos">Imagen</td>
             <td></td>
         </tr>

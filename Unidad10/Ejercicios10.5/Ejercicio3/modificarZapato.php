@@ -36,7 +36,7 @@ if (isset($_POST['nombre'])) {
 <head>
     <meta charset="UTF-8">
     <title>Actualizar Zapato</title>
-    <link rel="stylesheet" href="modificarZapato.css">
+    <link rel="stylesheet" href="css/modificarZapato.css">
 </head>
 
 <body>

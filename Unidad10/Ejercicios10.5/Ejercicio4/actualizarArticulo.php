@@ -20,7 +20,7 @@ if (isset($_POST['codigo']) && isset($_POST['stock'])) {
 <head>
     <meta charset="UTF-8">
     <title>Modificar Artículo</title>
-    <link rel="stylesheet" href="actualizar.css">
+    <link rel="stylesheet" href="css/actualizar.css">
 </head>
 <body>
 

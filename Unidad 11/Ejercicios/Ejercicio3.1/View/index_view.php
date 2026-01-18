@@ -1,32 +1,5 @@
 <?php
 if (session_status() == PHP_SESSION_NONE) session_start();
-
-try {
-    $conexion = new PDO("mysql:host=localhost;dbname=gestimal;charset=utf8", "root", "toor");
-} catch (PDOException $e) {
-    echo "No se ha podido establecer conexión con el servidor de bases de datos.<br>";
-    die("Error: " . $e->getMessage());
-}
-
-if (!isset($_SESSION['carrito'])) {
-    $_SESSION['carrito'] = [];
-    $_SESSION['total'] = 0;
-}
-
-if (isset($_POST['comprar'])) {
-    $consulta = $conexion->query("SELECT * FROM articulo WHERE codigo='" . $_POST['codigo'] . "'");
-    $articulo = $consulta->fetchObject();
-    if (!isset($_SESSION['carrito'][$articulo->codigo]["unidades"])) {
-        $_SESSION['carrito'][$articulo->codigo]["unidades"] = 0;
-    }
-    if ($articulo->stock <=  $_SESSION['carrito'][$articulo->codigo]["unidades"]) {
-    } else {
-        $_SESSION['carrito'][$articulo->codigo]["unidades"]++;
-        $_SESSION['total'] += $articulo->precioVenta;
-    }
-}
-
-
 ?>
 
 <!DOCTYPE html>

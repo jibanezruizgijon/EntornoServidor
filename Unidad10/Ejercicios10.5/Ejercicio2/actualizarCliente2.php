@@ -30,7 +30,7 @@ if (isset($_POST['dni']) && isset($_POST['nombre'])) {
 <head>
     <meta charset="UTF-8">
     <title>ActualizarCliente</title>
-    <link rel="stylesheet" href="actualizarCliente2.css">
+    <link rel="stylesheet" href="css/actualizarCliente2.css">
 </head>
 
 <body>
