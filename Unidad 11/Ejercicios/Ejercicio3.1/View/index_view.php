@@ -78,11 +78,11 @@ if (session_status() == PHP_SESSION_NONE) session_start();
                             <input type="hidden" name="codigo" value="<?= $producto->codigo ?>">
                             <input type="submit" name="modificar" class="modificar" value="Modificar">
                         </form>
-                        <form action="modificarStock.php" method="post">
+                        <form action="../Controller/nuevoStock.php" method="post">
                             <input type="hidden" name="codigo" value="<?= $producto->codigo ?>">
                             <input type="submit" name="entrada" class="stock" value="Entrada">
                         </form>
-                        <form action="modificarStock.php" method="post">
+                        <form action="../Controller/nuevoStock.php" method="post">
                             <input type="hidden" name="codigo" value="<?= $producto->codigo ?>">
                             <input type="submit" name="salida" class="stock" value="Salida">
                         </form>

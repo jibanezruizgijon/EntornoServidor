@@ -7,9 +7,9 @@ class Producto
   private $nombre;
   private $precio;
   private $stock;
-  
 
-  function __construct($codigo = "",$nombre = "", $precio= "",$stock = "")
+
+  function __construct($codigo = "", $nombre = "", $precio = "", $stock = "")
   {
     $this->codigo = $codigo;
     $this->nombre = $nombre;
@@ -58,7 +58,7 @@ class Producto
     $conexion = null;
   }
 
-  
+
 
   // Para borrar productos 
   public function delete()
@@ -68,8 +68,17 @@ class Producto
     $conexion->exec($borrado);
     $conexion = null;
   }
- 
-  
+
+  public function limitar()
+  {
+    $conexion = Almacen::connectDB();
+
+
+    $numProductos = "SELECT * FROM productos_1 LIMIT $inicio , $cantidadMostrada";
+    $conexion->exec($numProductos);
+    $conexion = null;
+  }
+
   public function getNombre()
   {
     return $this->nombre;
