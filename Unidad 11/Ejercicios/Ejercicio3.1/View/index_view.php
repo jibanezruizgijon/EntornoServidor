@@ -48,7 +48,7 @@ if (session_status() == PHP_SESSION_NONE) session_start();
 
             $inicio = ($paginaActual - 1) * $cantidadMostrada;
             $fin = ($inicio + $cantidadMostrada);
-            $consulta2 = $conexion->query("SELECT * FROM articulo LIMIT $inicio , $cantidadMostrada");
+            $consulta2 = $conexion->query("SELECT * FROM productos_1 LIMIT $inicio , $cantidadMostrada");
              foreach ($data['productos'] as $producto) {
                 // Para no comprar más opciones de las disponibles
                 if (isset($_SESSION['carrito'][$producto->codigo]["unidades"])) {

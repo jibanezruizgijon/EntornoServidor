@@ -72,11 +72,6 @@ class Producto
   public function limitar()
   {
     $conexion = Almacen::connectDB();
-
-
-    $numProductos = "SELECT * FROM productos_1 LIMIT $inicio , $cantidadMostrada";
-    $conexion->exec($numProductos);
-    $conexion = null;
   }
 
   public function getNombre()
