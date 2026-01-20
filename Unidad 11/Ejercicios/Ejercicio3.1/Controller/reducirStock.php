@@ -1,23 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+require_once '../Model/Producto.php';
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Añadir Stock</title>
-</head>
+$producto = Producto::getProductoByCodigo($_POST['codigo']);
 
-<body>
-    <h1>Modificar Stock del producto: <?= $producto->nombre  ?></h1>
+$nuevoStock = $producto->getStock() - $_POST['reducido'];
+$producto->setStock($nuevoStock);
 
-    <form action="../Controller/reducirStock.php" method="post">
-        <input type="hidden" name="codigo" value="<?= $producto->codigo ?>">
-        <input type="hidden" name="salidaStock">
-        <label for="stock">Introduce la salida de stock</label>
-        <input type="number" name="stock">
-        <br>
-        <input type="submit" value="Enviar">
-    </form>
-</body>
-
-</html>
+$producto->reponer();
+header("Location: ../Controller/index.php");

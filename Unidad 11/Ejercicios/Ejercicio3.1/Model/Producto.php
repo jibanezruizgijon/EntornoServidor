@@ -35,7 +35,7 @@ class Producto
   public function insert()
   {
     $conexion = Almacen::connectDB();
-    $insercion = "INSERT INTO productos_1 (nombre, precio, imgUrl, descripcion) VALUES ('$this->nombre','$this->precio','$this->imgUrl','$this->descripcion')";
+    $insercion = "INSERT INTO productos_1 (nombre, precio, stock) VALUES ('$this->nombre','$this->precio','$this->stock')";
     $conexion->exec($insercion);
     $conexion = null;
   }
@@ -44,7 +44,7 @@ class Producto
   public function reponer()
   {
     $conexion = Almacen::connectDB();
-    $reponer = "UPDATE productos_1 SET stock='$this->stock'";
+    $reponer = "UPDATE productos_1 SET stock='$this->stock' WHERE codigo='$this->codigo'";
     $conexion->exec($reponer);
     $conexion = null;
   }
@@ -53,7 +53,7 @@ class Producto
   public function vender()
   {
     $conexion = Almacen::connectDB();
-    $reponer = "UPDATE productos_1 SET stock='$this->stock'";
+    $reponer = "UPDATE productos_1 SET stock='$this->stock' WHERE codigo='$this->codigo' ";
     $conexion->exec($reponer);
     $conexion = null;
   }
@@ -68,10 +68,20 @@ class Producto
     $conexion->exec($borrado);
     $conexion = null;
   }
-
-  public function limitar()
+  public static function getProductoByCodigo($codigo)
   {
     $conexion = Almacen::connectDB();
+    $seleccion = "SELECT * FROM productos_1 WHERE codigo=$codigo";
+    $consulta = $conexion->query($seleccion);
+    if ($consulta->rowCount() > 0) {
+      $registro = $consulta->fetchObject();
+      $producto = new Producto($registro->codigo, $registro->nombre, $registro->precio, $registro->stock);
+      $conexion = null;
+      return $producto;
+    } else {
+      $conexion = null;
+      return false;
+    }
   }
 
   public function getNombre()

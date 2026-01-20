@@ -8,13 +8,12 @@
 </head>
 
 <body>
-    <h1>Modificar Stock del producto: <?= $producto->nombre  ?></h1>
+    <h1>Modificar Stock del producto: <?= $data['producto']->getNombre()  ?></h1>
 
     <form action="../Controller/añadirStock.php" method="post">
-        <input type="hidden" name="codigo" value="<?= $producto->codigo ?>">
-        <input type="hidden" name="entradaStock">
+        <input type="hidden" name="codigo" value="<?= $data['producto']->getCodigo() ?>">
         <label for="stock">Introduce la entrada de stock</label>
-        <input type="number" name="stock">
+        <input type="number" name="añadido">
         <br>
         <input type="submit" value="Enviar">
     </form>
