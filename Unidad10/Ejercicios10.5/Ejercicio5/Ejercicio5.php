@@ -10,7 +10,7 @@ try {
 
 if (!isset($_SESSION['carrito'])) {
     $_SESSION['carrito'] = [];
-    $_SESSION['total'] = 0;
+
 }
 
 if (isset($_POST['comprar'])) {
@@ -22,7 +22,7 @@ if (isset($_POST['comprar'])) {
     if ($articulo->stock <=  $_SESSION['carrito'][$articulo->codigo]["unidades"]) {
     } else {
         $_SESSION['carrito'][$articulo->codigo]["unidades"]++;
-        $_SESSION['total'] += $articulo->precioVenta;
+
     }
 }
 

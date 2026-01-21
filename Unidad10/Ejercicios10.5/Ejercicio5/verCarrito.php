@@ -17,7 +17,6 @@ if (isset($_POST['eliminar'])) {
     $consulta = $conexion->query("SELECT*FROM articulo WHERE codigo='" . $_POST['codigo'] . "'");
     $articulo = $consulta->fetchObject();
     $_SESSION['carrito'][$articulo->codigo]["unidades"]--;
-    $_SESSION['total'] -= $articulo->precioVenta;
 }
 
 
@@ -37,7 +36,6 @@ if (isset($_POST['procesar'])) {
     fwrite($fp, "Total:" . $_SESSION['total'] * 1.21  . PHP_EOL);
     fclose($fp);
     $_SESSION['carrito'] = [];
-     $_SESSION['total'] = 0;
 }
 
 ?>
@@ -75,15 +73,22 @@ if (isset($_POST['procesar'])) {
         </thead>
         <tbody>
             <?php
+            $total = 0;
             foreach ($_SESSION['carrito'] as $productos => $datos) {
-                if ($datos["unidades"] != 0) {
+                if ($datos["unidades"] > 0) {
                     $consulta = $conexion->query("SELECT * FROM articulo WHERE codigo='" . $productos . "'");
                     $articulo = $consulta->fetchObject();
+
+                    $precio = $articulo->precioVenta;
+                    $cantidad = $datos['unidades'];
+                    $subtotal = $precio * $cantidad;
+
+                    $total += $subtotal;
 
                     echo "<tr>";
                     echo "<td>$articulo->codigo</td>";
                     echo "<td>$articulo->descripcion</td>";
-                    echo "<td>" . $datos['unidades'] . "</td>";
+                    echo "<td> $cantidad </td>";
                     echo "<td>$articulo->precioVenta</td>";
             ?>
                     <td>
@@ -103,7 +108,7 @@ if (isset($_POST['procesar'])) {
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>Total: <?= $_SESSION['total'] ?></td>
+                <td>Total: <?= $total ?></td>
             </tr>
         </tbody>
     </table>
@@ -120,7 +125,6 @@ if (isset($_POST['procesar'])) {
     <?php
     }
     ?>
-
     <?php $conexion = null; ?>
 </body>
 

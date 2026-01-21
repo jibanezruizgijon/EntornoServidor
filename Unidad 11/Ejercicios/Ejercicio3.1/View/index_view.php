@@ -28,7 +28,7 @@
                 } else {
                     $stockVisual = $producto->getStock();
                 }
-                $estadoBoton = ($stockVisual == 0) ? "disabled" : "enabled";
+                $estadoBoton = ($stockVisual == 0) ? "disabled style='background-color: gray;'" : "enabled";
             ?>
 
                 <tr>
@@ -40,7 +40,7 @@
                         <form action="../Controller/comprarProducto.php" method="post">
                             <input type="hidden" name="codigo" value="<?= $producto->getCodigo() ?>">
                             <input type="hidden" name="stock" value="<?= $stockVisual ?>">
-                            <input type="submit" name="comprar" class="enviar" <?= $estadoBoton ?> value="Comprar">
+                            <input type="submit" name="comprar" class="enviar"  <?= $estadoBoton ?> value="Comprar">
                         </form>
                         <form action="../Controller/eliminarProducto.php" method="post">
                             <input type="hidden" name="codigo" value="<?= $producto->getCodigo() ?>">

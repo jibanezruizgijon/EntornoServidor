@@ -17,6 +17,7 @@
         <br>
         <input type="submit" value="Enviar">
     </form>
+    <a href="../Controller/index.php" class="btn__volver">Volver</a>
 </body>
 
 </html>

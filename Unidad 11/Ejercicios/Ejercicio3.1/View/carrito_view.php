@@ -24,43 +24,51 @@
     <table>
         <thead class="titulos">
             <tr>
-                <th>Código</th>
-                <th>Descripción</th>
-                <th> Cantidad</th>
+                <th>Nombre</th>
                 <th>Precio</th>
+                <th>Cantidad</th>
             </tr>
         </thead>
         <tbody>
             <?php
-            foreach ($data['productos'] as $producto => $datos) {
-                if ($datos["unidades"] != 0) {
-                    echo "<tr>";
-                    echo "<td>$datos->nombre</td>";
-                    echo "<td>$datos->precio</td>";
-                    echo "<td>$datos->stock</td>";
+            $total = 0;
+            foreach ($data['productos'] as $producto) {
+                $codigo = $producto->getCodigo();
+                if (isset($_SESSION['carrito'][$codigo]) && $_SESSION['carrito'][$codigo]['unidades'] > 0) {
+                    $unidades = $_SESSION['carrito'][$codigo]['unidades'];
+                    $precio = $producto->getPrecio();
+                    $subtotal = $precio * $unidades;
+                    $total += $subtotal;
             ?>
-                    <td>
-                        <form action="../Controller/eliminiarProductoCarrito.php" method="post">
-                            <input type="hidden" name="codigo" value="<?= $articulo->codigo ?>">
-                            <input type="submit" name="eliminar" class="eliminar" value="Eliminar">
-                        </form>
-                    </td>
+                    <tr>
+                        <td><?= $producto->getNombre()  ?></td>
+                        <td><?= $producto->getPrecio() ?></td>
+                        <td><?= $unidades ?></td>
 
-            <?php
+                        <td>
+                            <form action="../Controller/eliminarProductoCarrito.php" method="post">
+                                <input type="hidden" name="codigo" value="<?= $codigo ?>">
+                                <input type="submit" name="eliminar" class="eliminar" value="Eliminar">
+                            </form>
+                        </td>
+
+                <?php
 
                     echo "</tr>";
                 }
             }
-            ?>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>Total: <?= $total?></td>
-            </tr>
+                ?>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Total: <?= $total ?></td>
+                    </tr>
         </tbody>
     </table>
     <a href="../Controller/index.php">Volver</a>
+    <br>
+    <a href="../Controller/vaciarCesta.php">Vaciar Cesta</a>
     <br>
     <form action="" method="post">
         <input type="submit" name="procesar" value="Procesar pedido">
@@ -73,8 +81,6 @@
     <?php
     }
     ?>
-
-    <?php $conexion = null; ?>
 </body>
 
 </html>
