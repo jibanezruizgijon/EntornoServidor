@@ -34,17 +34,13 @@
             <?php
             foreach ($data['productos'] as $producto => $datos) {
                 if ($datos["unidades"] != 0) {
-                    $consulta = $conexion->query("SELECT * FROM articulo WHERE codigo='" . $productos . "'");
-                    $articulo = $consulta->fetchObject();
-
                     echo "<tr>";
-                    echo "<td>$articulo->codigo</td>";
-                    echo "<td>$articulo->descripcion</td>";
-                    echo "<td>" . $datos['unidades'] . "</td>";
-                    echo "<td>$articulo->precioVenta</td>";
+                    echo "<td>$datos->nombre</td>";
+                    echo "<td>$datos->precio</td>";
+                    echo "<td>$datos->stock</td>";
             ?>
                     <td>
-                        <form action="" method="post">
+                        <form action="../Controller/eliminiarProductoCarrito.php" method="post">
                             <input type="hidden" name="codigo" value="<?= $articulo->codigo ?>">
                             <input type="submit" name="eliminar" class="eliminar" value="Eliminar">
                         </form>
