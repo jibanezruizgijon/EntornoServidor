@@ -1,3 +1,6 @@
+<?php
+  if (session_status() == PHP_SESSION_NONE) session_start();  
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -64,6 +67,11 @@
     echo "</div>";
     ?>
     <br>
+    <form action="../Controller/index.php" method="post">
+        <label for="">Registros/páginas:</label>
+        <input type="number" name="cantidad">
+        <input type="submit" value="Actualizar">
+    </form>
     Número de clientes: <?= $total ?>
 </body>
 

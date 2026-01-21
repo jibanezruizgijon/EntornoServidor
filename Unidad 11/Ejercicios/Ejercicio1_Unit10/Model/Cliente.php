@@ -65,6 +65,29 @@ class Cliente
         }
     }
 
+    public static function numeroClientes()
+    {
+        $conexion = BancoDB::connectDB();
+        $seleccion = "SELECT COUNT(*) as total FROM cliente";
+        $consulta = $conexion->query($seleccion);
+        $total = $consulta->fetchColumn();
+        $conexion = null;
+        return $total ;
+    }
+
+    public static function clientesPagina($inicio, $cantidadMostrada)
+    {
+        $conexion = BancoDB::connectDB();
+        $seleccion = "SELECT * FROM cliente LIMIT $inicio , $cantidadMostrada";
+        $consulta = $conexion->query($seleccion);
+        $clientes = [];
+        while ($registro = $consulta->fetchObject()) {
+            $clientes[] = new Cliente($registro->id, $registro->dni, $registro->nombre, $registro->direccion, $registro->telefono);
+        }
+        $conexion = null;
+        return $clientes;
+    }
+
     public function getId()
     {
         return $this->id;

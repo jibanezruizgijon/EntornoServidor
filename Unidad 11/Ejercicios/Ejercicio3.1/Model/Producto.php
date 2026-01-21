@@ -92,6 +92,29 @@ class Producto
     }
   }
 
+      public static function numeroProductos()
+    {
+        $conexion = Almacen::connectDB();
+        $seleccion = "SELECT COUNT(*) as total FROM productos_1";
+        $consulta = $conexion->query($seleccion);
+        $total = $consulta->fetchColumn();
+        $conexion = null;
+        return $total ;
+    }
+
+    public static function productosPagina($inicio, $cantidadMostrada)
+    {
+        $conexion = Almacen::connectDB();
+        $seleccion = "SELECT * FROM productos_1 LIMIT $inicio , $cantidadMostrada";
+        $consulta = $conexion->query($seleccion);
+        $clientes = [];
+        while ($registro = $consulta->fetchObject()) {
+            $clientes[] = new Producto($registro->codigo, $registro->nombre, $registro->precio, $registro->stock);
+        }
+        $conexion = null;
+        return $clientes;
+    }
+
   public function getNombre()
   {
     return $this->nombre;

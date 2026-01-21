@@ -6,11 +6,17 @@ if (!isset($_SESSION['carrito'])) {
     $_SESSION['carrito'] = [];
 }
 
-$productos = Producto::getProductos();
+$totalProductos = Producto::numeroProductos();
 
-$totalProductos = count($productos);
-$cantidadMostrada = 3;
-$paginas = ceil($totalProductos / $cantidadMostrada);
+if (!isset($_SESSION['cantidadMostrada'])) {
+    $_SESSION['cantidadMostrada'] = 3;
+}
+
+if (isset($_POST['cantidad'])) {
+    $_SESSION['cantidadMostrada'] = $_POST['cantidad'];
+} 
+
+$paginas = ceil($totalProductos / $_SESSION['cantidadMostrada']);
 
 // Validar página actual
 if (isset($_GET['pagina'])) {
@@ -26,14 +32,10 @@ if (isset($_GET['pagina'])) {
 }
 
 
-$inicio = ($paginaActual - 1) * $cantidadMostrada;
+$inicio = ($paginaActual - 1) * $_SESSION['cantidadMostrada'];
 
 // Limita la cantidad de clientes que se muestran
-if ($totalProductos > 0) {
-    $data['productos'] = array_slice($productos, $inicio, $cantidadMostrada);
-} else {
-    $data['productos'] = [];
-}
+  $data['productos'] = Producto::productosPagina($inicio, $_SESSION['cantidadMostrada']);
 
  // Desactiva el enlace de primera página y página anterior
  // en caso de que ya esté en la primera

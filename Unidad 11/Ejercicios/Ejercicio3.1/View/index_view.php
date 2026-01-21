@@ -22,9 +22,7 @@
         </thead>
         <tbody>
             <?php
-            // La vista solo itera los datos que le manda el controlador
             foreach ($data['productos'] as $producto) {
-                // Pequeña lógica visual (puede ir aquí o en el controlador, pero aquí es aceptable para clases CSS/atributos)
                 if (isset($_SESSION['carrito'][$producto->getCodigo()]["unidades"])) {
                     $stockVisual = $producto->getStock() - $_SESSION['carrito'][$producto->getCodigo()]["unidades"];
                 } else {
@@ -39,8 +37,9 @@
                     <td><?= $producto->getPrecio() ?></td>
                     <td><?= $stockVisual ?></td>
                     <td class="botones">
-                        <form action="" method="post">
+                        <form action="../Controller/comprarProducto.php" method="post">
                             <input type="hidden" name="codigo" value="<?= $producto->getCodigo() ?>">
+                            <input type="hidden" name="stock" value="<?= $stockVisual ?>">
                             <input type="submit" name="comprar" class="enviar" <?= $estadoBoton ?> value="Comprar">
                         </form>
                         <form action="../Controller/eliminarProducto.php" method="post">
