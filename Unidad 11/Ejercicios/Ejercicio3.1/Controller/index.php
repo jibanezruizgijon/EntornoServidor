@@ -4,9 +4,7 @@ if (session_status() == PHP_SESSION_NONE) session_start();
 
 if (!isset($_SESSION['carrito'])) {
     $_SESSION['carrito'] = [];
-    $_SESSION['total'] = 0;
 }
-
 
 $productos = Producto::getProductos();
 
@@ -30,12 +28,25 @@ if (isset($_GET['pagina'])) {
 
 $inicio = ($paginaActual - 1) * $cantidadMostrada;
 
+// Limita la cantidad de clientes que se muestran
 if ($totalProductos > 0) {
     $data['productos'] = array_slice($productos, $inicio, $cantidadMostrada);
 } else {
     $data['productos'] = [];
 }
 
-include '../View/index_view.php';
-?>
+ // Desactiva el enlace de primera página y página anterior
+ // en caso de que ya esté en la primera
+if ($paginaActual == 1) {
+    $desactivar1 = "style='color: gray;text-decoration:none'";
+} else {
+    $desactivar1 = "";
+}
 
+if ($paginaActual == $paginas) {
+    $desactivar2 = "style='color: gray;text-decoration:none'";
+} else {
+    $desactivar2 = "";
+}
+
+include '../View/index_view.php';

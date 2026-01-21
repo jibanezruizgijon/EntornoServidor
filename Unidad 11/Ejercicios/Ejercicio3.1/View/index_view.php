@@ -47,7 +47,7 @@
                             <input type="hidden" name="codigo" value="<?= $producto->getCodigo() ?>">
                             <input type="submit" name="eliminar" class="eliminar" value="Eliminar">
                         </form>
-                        <form action="../Controller/actualizarProducto.php" method="post">
+                        <form action="../Controller/modificarProducto.php" method="post">
                             <input type="hidden" name="codigo" value="<?= $producto->getCodigo() ?>">
                             <input type="submit" name="modificar" class="modificar" value="Modificar">
                         </form>
@@ -67,18 +67,17 @@
             
             <tr>
                 <td>Página <?= $paginaActual ?> de <?= $paginas ?></td>
-                <td></td>
                 <td>
-                    <a href="?pagina=1" class="enlaces">Primera Página </a>
+                    <a href="?pagina=1" <?= $desactivar1 ?> class="enlaces">Primera Página </a>
                 </td>
                 <td>
-                    <a href="?pagina=<?= max(1, $paginaActual - 1) ?>" class="enlaces">Página Anterior </a>
+                    <a href="?pagina=<?= max(1, $paginaActual - 1) ?>" <?= $desactivar1 ?>  class="enlaces">Página Anterior </a>
                 </td>
                 <td>
-                    <a href="?pagina=<?= min($paginas, $paginaActual + 1) ?>" class="enlaces">Siguiente Página</a>
+                    <a href="?pagina=<?= min($paginas, $paginaActual + 1) ?>" <?= $desactivar2 ?> class="enlaces">Siguiente Página</a>
                 </td>
                 <td>
-                    <a href="?pagina=<?= $paginas ?>" class="enlaces">Última Página</a>
+                    <a href="?pagina=<?= $paginas ?>" <?= $desactivar2 ?> class="enlaces">Última Página</a>
                 </td>
             </tr>
 

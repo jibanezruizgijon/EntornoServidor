@@ -95,7 +95,7 @@ if (isset($_POST['dniC'])) {
     <?php
     echo "<div>";
     for ($i = 1; $i <= $paginas; $i++) {
-        echo "<a href='?pagina=$i'>Página $i</a>";
+        echo "<a  class='enlaces' href='?pagina=$i'>Página $i</a>";
     }
     echo "</div>";
     ?>

@@ -68,6 +68,14 @@ class Producto
     $conexion->exec($borrado);
     $conexion = null;
   }
+
+  public function update()
+  {
+    $conexion = Almacen::connectDB();
+    $actualiza = "UPDATE productos_1 SET nombre='$this->nombre', precio='$this->precio', stock='$this->stock' WHERE codigo='$this->codigo'";
+    $conexion->exec($actualiza);
+    $conexion = null;
+  }
   public static function getProductoByCodigo($codigo)
   {
     $conexion = Almacen::connectDB();

@@ -24,7 +24,7 @@
     if ($consulta->rowCount() > 0) {
     ?>
         Ya existe un artículo con el código<?= $_POST['codigo'] ?><br>
-        Por favor, vuelva a la <a href="Ejercicio5.php">página GESTIMAL</a>.
+        Por favor, vuelva a la <a href="Ejercicio5.php">página GESTISIMAL</a>.
     <?php
     } else {
         $margen = floatval($_POST['precioVenta']) - floatval($_POST['precioCompra']);

@@ -31,15 +31,14 @@
       margin-bottom: 1rem;
   }
 
-  label {
+  .label {
       display: block;
       margin-bottom: 5px;
       color: #666;
       font-size: 0.9rem;
   }
 
-  input[type="text"],
-  input[type="number"] {
+  .titulo {
       width: 100%;
       padding: 10px;
       border: 1px solid #ddd;
@@ -48,13 +47,13 @@
       font-size: 1rem;
   }
 
-  input:focus {
+  .titulo:focus {
       outline: none;
       border-color: #4a90e2;
       box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
   }
 
-  .btn-submit {
+  .btn__enviar {
       width: 100%;
       background-color: #28a745;
       color: white;
@@ -67,11 +66,11 @@
       margin-top: 1rem;
   }
 
-  .btn-submit:hover {
+  .btn__enviar:hover {
       background-color: #218838;
   }
 
-  .btn-back {
+  .btn__volver {
       display: block;
       text-align: center;
       margin-top: 1rem;
@@ -80,6 +79,6 @@
       font-size: 0.9rem;
   }
 
-  .btn-back:hover {
+  .btn__volver:hover {
       text-decoration: underline;
   }

@@ -32,7 +32,7 @@
         </thead>
         <tbody>
             <?php
-            foreach ($_SESSION['carrito'] as $productos => $datos) {
+            foreach ($data['productos'] as $producto => $datos) {
                 if ($datos["unidades"] != 0) {
                     $consulta = $conexion->query("SELECT * FROM articulo WHERE codigo='" . $productos . "'");
                     $articulo = $consulta->fetchObject();
@@ -60,7 +60,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>Total: <?= $_SESSION['total'] ?></td>
+                <td>Total: <?= $total?></td>
             </tr>
         </tbody>
     </table>

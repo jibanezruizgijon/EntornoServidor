@@ -24,7 +24,7 @@
                 echo "<td><a href='detalle.php?id=" . $articulo->id . "'><img src='" .  $articulo->imagen . "'></a> <p>" . $articulo->precio . " euros</p></td>";
         ?>
                 <td class="botonComprar">
-                    <form action="QuitaCarro.php" method="post">
+                    <form action="../Controller/quitaCarro.php" method="post">
                         <input type="hidden" name="id" value="<?= $articulo->id ?>">
                         <input type="submit" value="Eliminar">
                     </form>

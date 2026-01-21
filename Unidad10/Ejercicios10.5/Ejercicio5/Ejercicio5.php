@@ -86,7 +86,7 @@ if (isset($_POST['comprar'])) {
                     $stock = $articulo->stock;
                 }
                 // Para deshabilitar la opcion de compra
-                $valor = ($stock == 0)? "disabled" : "enabled";
+                $valor = ($stock == 0) ? "disabled style='background-color: gray;'" : "enabled";
             ?>
 
                 <tr>
@@ -99,7 +99,7 @@ if (isset($_POST['comprar'])) {
                     <td class="botones">
                         <form action="" method="post">
                             <input type="hidden" name="codigo" value="<?= $articulo->codigo ?>">
-                            <input type="submit" name="comprar" class="enviar" <?=$valor ?>  value="Comprar">
+                            <input type="submit" name="comprar" class="enviar" <?= $valor ?> value="Comprar">
                         </form>
                         <form action="eliminarArticulo.php" method="post">
                             <input type="hidden" name="codigo" value="<?= $articulo->codigo ?>">
@@ -129,13 +129,28 @@ if (isset($_POST['comprar'])) {
                     <a href="?pagina=1" class="enlaces">Primera Página </a>
                 </td>
                 <td>
-                    <a href="?pagina=<?= ($paginaActual - 1) ?>" class="enlaces">Página Anterior </a>
+                    <?php
+                    if ($paginaActual == 1) {
+                        $desactivar = "style='color: gray;text-decoration:none'";
+                    } else {
+                        $desactivar = "";
+                    }
+                    ?>
+                    <a href="?pagina=<?= ($paginaActual - 1) ?>" <?= $desactivar ?> class="enlaces">Página Anterior </a>
                 </td>
                 <td>
                     <a href="?pagina=<?= ($paginaActual + 1) ?>" class="enlaces">Siguiente Página</a>
                 </td>
                 <td>
-                    <a href="?pagina=<?= $paginas ?>" class="enlaces">Última Página</a>
+                    <?php
+                    if ($paginaActual == $paginas) {
+                        $desactivar = "style='color: gray;text-decoration:none'";
+                    } else {
+                        $desactivar = "";
+                    }
+                    ?>
+
+                    <a href="?pagina=<?= $paginas ?>" <?= $desactivar ?>   class="enlaces">Última Página</a>
                 </td>
             </tr>
             <tr class="titulo__nuevo">
