@@ -70,17 +70,10 @@
     <br>
     <a href="../Controller/vaciarCesta.php">Vaciar Cesta</a>
     <br>
-    <form action="" method="post">
+    <form action="../Controller/mostrarCompra.php" method="post">
         <input type="submit" name="procesar" value="Procesar pedido">
     </form>
     <br>
-    <?php
-    if (isset($_POST['procesar'])) {
-    ?>
-        <a href="productosVendidos.txt">Factura Productos</a>
-    <?php
-    }
-    ?>
 </body>
 
 </html>

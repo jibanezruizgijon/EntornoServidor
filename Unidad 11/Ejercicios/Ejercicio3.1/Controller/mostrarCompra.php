@@ -1,20 +1,23 @@
 <?php
+require_once '../Model/Producto.php';
 if (session_status() == PHP_SESSION_NONE) session_start();
 if (isset($_POST['procesar'])) {
-    $fp = fopen("productosVendidos.txt", "a");
-
-    foreach ($_SESSION['carrito'] as $productos => $datos) {
-        if ($datos["unidades"] != 0) {
-            $consulta = $conexion->query("SELECT * FROM articulo WHERE codigo='" . $productos . "'");
-            $articulo = $consulta->fetchObject();
-            fwrite($fp, $articulo->codigo . "," . $articulo->nombre . "," . $articulo->precio * 1.21 . PHP_EOL);
-            $stockNuevo = $articulo->stock - $datos["unidades"];
-            $actualizar = "UPDATE articulo SET stock='$stockNuevo' WHERE codigo='" . $productos . "'";
-            $conexion->exec($actualizar);
+    $total = 0;
+    $data['productos'] = Producto::getProductos();
+    foreach ($data['productos'] as $producto) {
+        $codigo = $producto->getCodigo();
+        if (isset($_SESSION['carrito'][$codigo]) && $_SESSION['carrito'][$codigo]['unidades'] > 0) {
+            $unidades = $_SESSION['carrito'][$codigo]['unidades'];
+            $precio = $producto->getPrecio();
+            $subtotal = $precio * $unidades;
+            $total += $subtotal;
+            $nuevoStock = $producto->getStock() - $unidades;
+            $producto->setStock($nuevoStock);
+            $producto->reponer();
         }
     }
-    fwrite($fp, "Total:" . $_SESSION['total'] * 1.21  . PHP_EOL);
-    fclose($fp);
-    $_SESSION['carrito'] = [];
+    $producto = Producto::procesarVenta($_SESSION['carrito'], $total);
 }
+$_SESSION['carrito'] = [];
+
 include "../View/compraRealizada_view.php";

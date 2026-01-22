@@ -1,0 +1,13 @@
+1,Silla,242
+3,televisor,1742.4
+Total:2226.4
+1,Silla,242
+3,televisor,1742.4
+Total:2226.4
+Silla,242,1
+Total:242
+Silla,242,2
+Total:484
+Silla,242,2
+televisor,1742.4,1
+Total:2226.4

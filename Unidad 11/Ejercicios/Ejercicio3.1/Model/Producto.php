@@ -92,28 +92,41 @@ class Producto
     }
   }
 
-      public static function numeroProductos()
-    {
-        $conexion = Almacen::connectDB();
-        $seleccion = "SELECT COUNT(*) as total FROM productos_1";
-        $consulta = $conexion->query($seleccion);
-        $total = $consulta->fetchColumn();
-        $conexion = null;
-        return $total ;
-    }
+  public static function numeroProductos()
+  {
+    $conexion = Almacen::connectDB();
+    $seleccion = "SELECT COUNT(*) as total FROM productos_1";
+    $consulta = $conexion->query($seleccion);
+    $total = $consulta->fetchColumn();
+    $conexion = null;
+    return $total;
+  }
 
-    public static function productosPagina($inicio, $cantidadMostrada)
-    {
-        $conexion = Almacen::connectDB();
-        $seleccion = "SELECT * FROM productos_1 LIMIT $inicio , $cantidadMostrada";
-        $consulta = $conexion->query($seleccion);
-        $clientes = [];
-        while ($registro = $consulta->fetchObject()) {
-            $clientes[] = new Producto($registro->codigo, $registro->nombre, $registro->precio, $registro->stock);
-        }
-        $conexion = null;
-        return $clientes;
+  public static function productosPagina($inicio, $cantidadMostrada)
+  {
+    $conexion = Almacen::connectDB();
+    $seleccion = "SELECT * FROM productos_1 LIMIT $inicio , $cantidadMostrada";
+    $consulta = $conexion->query($seleccion);
+    $clientes = [];
+    while ($registro = $consulta->fetchObject()) {
+      $clientes[] = new Producto($registro->codigo, $registro->nombre, $registro->precio, $registro->stock);
     }
+    $conexion = null;
+    return $clientes;
+  }
+
+  public static function procesarVenta($carrito, $total)
+  {
+    $fp = fopen("productosvendidos.txt", "a");
+    foreach ($carrito as $codigo => $datos) {
+      if ($datos["unidades"] != 0) {
+        $producto = self::getProductoByCodigo($codigo);
+        fwrite($fp, $producto->nombre . "," . $producto->precio * 1.21  . "," . $datos["unidades"]. PHP_EOL);
+      }
+    }
+    fwrite($fp,"Total:" . ($total * 1.21) . PHP_EOL);
+    fclose($fp);
+  }
 
   public function getNombre()
   {
