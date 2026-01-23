@@ -21,13 +21,12 @@
             foreach ($data['articulos'] as $articulo) {
             ?>
                 <article class="card">
-                    
                     <h3><?= $articulo->getTitulo() ?></h3>
                     
                     <p class="card__fecha"><?= $articulo->getFecha() ?></p>
                     
                     <p class="card__contenido">
-                        <?= $articulo->getContenido() ?>
+                        <?=nl2br( $articulo->getContenido()) ?>
                     </p>
                     
                     <div class="card__botones">

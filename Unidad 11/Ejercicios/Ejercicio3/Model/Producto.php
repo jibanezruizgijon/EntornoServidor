@@ -8,18 +8,17 @@ class Producto
   private $precio;
   private $imgUrl;
   private $descripcion;
+  private $stock;
 
-  function __construct($id = "",$nombre = "", $precio= "",$imgUrl = "", $descripcion = "")
+  function __construct($id = "",$nombre = "", $precio= "",$imgUrl = "", $descripcion = "", $stock = "")
   {
     $this->id = $id;
     $this->nombre = $nombre;
     $this->precio = $precio;
     $this->imgUrl = $imgUrl;
     $this->descripcion = $descripcion;
+    $this->stock = $stock;
   }
-
-
-
 
   // Para obtener todos los productos
   public static function getProductos()
@@ -29,17 +28,33 @@ class Producto
     $consulta = $conexion->query($seleccion);
     $Productos = [];
     while ($registro = $consulta->fetchObject()) {
-      $Productos[] = new Producto($registro->id, $registro->nombre, $registro->precio, $registro->imgUrl, $registro->descripcion);
+      $Productos[] = new Producto($registro->id, $registro->nombre, $registro->precio, $registro->imgUrl, $registro->descripcion, $registro->stock);
     }
     $conexion = null;
     return $Productos;
+  }
+
+   public static function getProductoById($id)
+  {
+    $conexion = Carrito::connectDB();
+    $seleccion = "SELECT * FROM productos WHERE id=$id";
+    $consulta = $conexion->query($seleccion);
+    if ($consulta->rowCount() > 0) {
+      $registro = $consulta->fetchObject();
+      $producto = new Producto($registro->id, $registro->nombre, $registro->precio, $registro->imgUrl, $registro->descripcion, $registro->stock);
+      $conexion = null;
+      return $producto;
+    } else {
+      $conexion = null;
+      return false;
+    }
   }
 
   // Para crear productos 
   public function insert()
   {
     $conexion = Carrito::connectDB();
-    $insercion = "INSERT INTO productos (nombre, precio, imgUrl, descripcion) VALUES ('$this->nombre','$this->precio','$this->imgUrl','$this->descripcion')";
+    $insercion = "INSERT INTO productos (nombre, precio, imgUrl, descripcion, stock) VALUES ('$this->nombre','$this->precio','$this->imgUrl','$this->descripcion','$this->stock')";
     $conexion->exec($insercion);
     $conexion = null;
   }
@@ -110,6 +125,18 @@ class Producto
   public function setImgUrl($imgUrl)
   {
     $this->imgUrl = $imgUrl;
+
+    return $this;
+  }
+
+  public function getStock()
+  {
+    return $this->stock;
+  }
+
+  public function setStock($stock)
+  {
+    $this->stock = $stock;
 
     return $this;
   }
