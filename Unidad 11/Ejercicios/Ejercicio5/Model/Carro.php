@@ -1,8 +1,8 @@
 <?php
-  abstract class BlogDB
+  abstract class Carrito
 {
     private static $server = 'localhost';
-    private static $db = 'blogDB';
+    private static $db = 'carrito';
     private static $user = 'root';
     private static $password = 'toor';
     public static function connectDB()

@@ -1,77 +1,56 @@
-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
+        * {
+            font-family: sans-serif;
+        }
 
-a {
-    margin-left: 10px;
-    text-decoration: none;
-}
+        a {
+            text-decoration: none;
 
-a:hover{
-    text-decoration: underline;
-}
-.botones {
-    display: flex;
-    gap: 10px;
-}
+        }
 
-.eliminar,
-.modificar,
-.enviar,
-.stock {
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 4px;
+        table,
+        tr,
+        td {
+            border: 2px solid rgb(212, 212, 212);
+            border-collapse: collapse;
+        }
 
-}
+        table {
+            margin: auto;
+            border: 9px solid rgb(212, 212, 212);
+            box-shadow: 3px 3px 4px gray;
+        }
 
-.stock{
-    background-color: rgb(16, 53, 176);
-}
+        td {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
 
-.eliminar {
-    background-color: red;
-}
+        img {
+            width: 150px;
+            height: 100px;
+        }
 
-.modificar {
-    background-color: orange;
-}
+        .headerTabla {
+            background-color: rgb(119, 136, 153);
+        }
 
-.enviar {
-    background-color: green;
-}
+        .titulos,
+        a {
+            color: white;
+            text-shadow: 1px 1px red;
+        }
 
-.fila__titulo {
-    background-color: gray;
-}
+        .tienda {
+            color: white;
+            text-shadow: 1px 1px 1px black;
+        }
 
-table {
-    border-collapse: collapse;
-    font-family: sans-serif;
-}
+        .botonComprar {
+            padding: 60px;
+        }
 
-.titulo__nuevo td{
-    text-align: center;
-}
-th,
-td {
-    padding: 12px 8px;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-th {
-    background-color: #f8f9fa;
-    font-weight: bold;
-}
-
-td{
-    width: 250px;
-}
-
-tr:hover {
-    background-color: #f5f5f5;
-}
+        .suma{
+            margin: 0;
+        }

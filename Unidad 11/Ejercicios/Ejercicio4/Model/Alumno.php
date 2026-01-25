@@ -48,6 +48,30 @@ class Alumno
     $conexion = null;
   }
 
+  public function update()
+  {
+    $conexion = Escuela::connectDB();
+    $actualiza = "UPDATE alumno SET nombre='$this->nombre', apellidos='$this->apellidos', curso='$this->curso' WHERE matricula='$this->matricula'";
+    $conexion->exec($actualiza);
+    $conexion = null;
+  }
+
+  public static function getAlumnoByMatricula($matricula)
+  {
+    $conexion = Escuela::connectDB();
+    $seleccion = "SELECT * FROM alumno WHERE matricula = '$matricula'";
+    $consulta = $conexion->query($seleccion);
+    if ($consulta->rowCount() > 0) {
+      $registro = $consulta->fetchObject();
+      $alumno = new Alumno($registro->matricula, $registro->nombre, $registro->apellidos, $registro->curso);
+      $conexion = null;
+      return $alumno;
+    } else {
+      $conexion = null;
+      return false;
+    }
+  }
+
 
   public function getMatricula()
   {

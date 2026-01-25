@@ -8,7 +8,7 @@
 
 <body>
     <h1>Nuevo Alumno</h1>
-    <form action="../Controller/creaAlumno.php" method="POST">
+    <form action="../../Controller/alumno/creaAlumno.php" method="POST">
         <label for="">Matrícula:</label>
         <input type="text" name="matricula"><br><br>
         <label for="">Nombre:</label>
@@ -20,7 +20,7 @@
         <hr> <input type="submit" value="Aceptar">
     </form>
     <br>
-    <a href="../Controller/index.php">Volver</a>
+    <a href="../../Controller/index.php">Volver</a>
 </body>
 
 </html>

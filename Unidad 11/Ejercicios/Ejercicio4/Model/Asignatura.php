@@ -29,7 +29,7 @@ class Asignatura
   public function insert()
   {
     $conexion = Escuela::connectDB();
-    $insercion = "INSERT INTO asignatura (codigo, nombre) VALUES ('$this->codigo', '$this->nombre')";
+    $insercion = "INSERT INTO asignatura (nombre) VALUES ('$this->nombre')";
     $conexion->exec($insercion);
     $conexion = null;
   }
@@ -57,4 +57,16 @@ class Asignatura
     return $this;
   }
 
+
+  public function getCodigo()
+  {
+    return $this->codigo;
+  }
+ 
+  public function setCodigo($codigo)
+  {
+    $this->codigo = $codigo;
+
+    return $this;
+  }
 }
