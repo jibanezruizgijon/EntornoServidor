@@ -25,7 +25,7 @@
 </head>
 
 <body>
-    <h1>Listado de alumnos</h1>
+    <h1>Listado de Asignaturas</h1>
     <hr>
     <table border="1px">
         <tr>

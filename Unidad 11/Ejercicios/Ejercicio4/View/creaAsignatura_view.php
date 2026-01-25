@@ -12,5 +12,6 @@
         <input type="text" name="nombre" required>
         <input type="submit" name="crear" value="Crear">
     </form>
+    <a href="../../Controller/asignatura/mostrarAsignaturas.php">Volver</a>
 </body>
 </html>
