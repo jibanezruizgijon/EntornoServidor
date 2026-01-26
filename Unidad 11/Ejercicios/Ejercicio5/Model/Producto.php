@@ -50,6 +50,15 @@ class Producto
     }
   }
 
+   // Para reponer productos 
+  public function reponer()
+  {
+    $conexion = Carrito::connectDB();
+    $reponer = "UPDATE productos SET stock='$this->stock' WHERE id='$this->id'";
+    $conexion->exec($reponer);
+    $conexion = null;
+  }
+
   // Para crear productos 
   public function insert()
   {

@@ -8,4 +8,4 @@ if (isset($_POST['insertar'])) {
     $ProductoAux = new Producto("", $_POST['nombre'], $_POST['precio'], $_FILES['imgUrl']["name"], $_POST['descripcion'], $_POST['stock']);
     $ProductoAux->insert();
 }
-header("Location: ../Controller/index.php");
+header("Location: ../Controller/indexAdmin.php");
