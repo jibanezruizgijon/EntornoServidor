@@ -1,6 +1,6 @@
 <?php
 require_once 'escuela.php';
-
+require_once 'Asignatura.php';
 class Alumno
 {
   private $matricula;
@@ -70,6 +70,18 @@ class Alumno
       $conexion = null;
       return false;
     }
+  }
+
+  public  function getAsignaturaMat()
+  {
+    $conexion = Escuela::connectDB();
+    $seleccion = "SELECT * FROM asignatura JOIN alumno_asignatura ON asignatura.codigo = alumno_asignatura.codigo_asignatura WHERE alumno_asignatura.matricula='$this->matricula'";
+    $consulta = $conexion->query($seleccion);
+    $asignaturas = [];
+    while ($registro = $consulta->fetchObject()) {
+      $asignaturas[] = new Asignatura($registro->codigo, $registro->nombre);
+    }
+    return $asignaturas;
   }
 
 

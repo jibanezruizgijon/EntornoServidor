@@ -1,7 +1,8 @@
 <?php
 require_once 'escuela.php';
+require_once 'Asignatura.php';
 
-class Codigo_Asignatura
+class Alumno_Asignatura
 {
   private $matricula;
   private $codigo_asignatura;
@@ -19,7 +20,20 @@ class Codigo_Asignatura
     $consulta = $conexion->query($seleccion);
     $Asignaturas = [];
     while ($registro = $consulta->fetchObject()) {
-      $Asignaturas[] = new Codigo_Asignatura($registro->matricula, $registro->codigo_asignatua);
+      $Asignaturas[] = new Alumno_Asignatura($registro->matricula, $registro->codigo_asignatura);
+    }
+    $conexion = null;
+    return $Asignaturas;
+  }
+
+  public static function getAsignaturasLibres($matricula)
+  {
+    $conexion = Escuela::connectDB();
+    $seleccion = "SELECT * FROM asignatura WHERE codigo NOT IN  (SELECT codigo_asignatura FROM alumno_asignatura WHERE matricula='$matricula')";
+    $consulta = $conexion->query($seleccion);
+    $Asignaturas = [];
+    while ($registro = $consulta->fetchObject()) {
+      $Asignaturas[] = new Asignatura($registro->codigo, $registro->nombre);
     }
     $conexion = null;
     return $Asignaturas;
@@ -37,7 +51,7 @@ class Codigo_Asignatura
   public function delete()
   {
     $conexion = Escuela::connectDB();
-    $borrado = "DELETE FROM alumno_asignatura WHERE matricula='$this->matricula'";
+    $borrado = "DELETE FROM alumno_asignatura WHERE matricula='$this->matricula' AND codigo_asignatura='$this->codigo_asignatura'";
     $conexion->exec($borrado);
     $conexion = null;
   }

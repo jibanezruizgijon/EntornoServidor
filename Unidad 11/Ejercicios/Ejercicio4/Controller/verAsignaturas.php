@@ -1,6 +1,10 @@
 <?php
 require_once '../Model/Alumno.php';
 
-$data['matriculado'] = Alumno::getAlumnoByMatricula($_REQUEST['matricula']);
+
+$data['alumno'] = Alumno::getAlumnoByMatricula($_REQUEST['matricula']);
+
+$data['matriculas'] = $data['alumno']->getAsignaturaMat();
+
 
 include '../View/asignaturasAlumno_view.php';

@@ -9,7 +9,8 @@
 
 <body>
     <h1>Alumno: <?= $data['alumno']->getApellidos() ?>, <?= $data['alumno']->getNombre() ?> </h1>
-    <table border="1px solid">
+    <h3>Matricular un nuevo módulo</h3>
+    <table>
         <tr>
             <td>Código</td>
             <td>Asignatura</td>
@@ -20,20 +21,19 @@
             <tr>
                 <td><?= $matricula->getCodigo() ?></td>
                 <td><?= $matricula->getNombre() ?></td>
-                <td >
-                    <form action="../Controller/desmatricular.php" method="post">
-                        <input type="hidden" name="matricula" value="<?= $data['alumno']->getMatricula() ?>">
-                        <input type="hidden" name="codigo_asignatura" value="<?= $matricula->getCodigo() ?>">
-                        <input type="submit" value="Desmatricular" name="desmatricular">
+                <td>
+                    <form action="../Controller/matricular.php" method="post">
+                        <input type="hidden" name="matricula" value="<?= $data['alumno']->getMatricula() ?>">                        
+                        <input type="hidden" name="codigo" value="<?= $matricula->getCodigo() ?>">
+                        <input type="submit" value="matricular" name="Matricular">
                     </form>
                 </td>
             </tr>
         <?php
         }
         ?>
-        <td colspan="3">
-            <a href="../Controller/nuevaMatricula.php?matricula=<?= $data['alumno']->getMatricula() ?>">Matrícula nueva</a>
-            <a href="../Controller/index.php">Volver</a>
+        <td>
+            <a href="../Controller/verAsignaturas.php?matricula='<?= $data['alumno']->getMatricula() ?>'">Volver</a>
         </td>
     </table>
 </body>
