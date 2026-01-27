@@ -30,6 +30,17 @@ class Usuario
     return $Usuarios;
   }
 
+   public  function getProductoCesta()
+  {
+    $conexion = Escuela::connectDB();
+    $seleccion = "SELECT * FROM productos JOIN cesta ON cesta.cod_producto = productos.id WHERE usuario.id='$this->id'";
+    $consulta = $conexion->query($seleccion);
+    $productos = [];
+    while ($registro = $consulta->fetchObject()) {
+      $productos[] = new Producto($registro->id, $registro->nombre, $registro->precio, $registro->imgUrl,$registro->descripcion, $registro->stock);
+    }
+    return $productos;
+  }
   // Para crear Alumnos 
   public function insert()
   {

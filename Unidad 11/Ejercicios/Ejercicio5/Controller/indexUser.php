@@ -1,6 +1,5 @@
 <?php
 require_once '../Model/Producto.php';
-if (session_status() == PHP_SESSION_NONE) session_start();
 // Obtiene todos los productos
 $data['productos'] = Producto::getProductos();
 

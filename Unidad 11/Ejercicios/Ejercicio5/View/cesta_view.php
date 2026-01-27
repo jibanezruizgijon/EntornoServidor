@@ -66,7 +66,7 @@
                     </tr>
         </tbody>
     </table>
-    <a href="../Controller/index.php">Volver</a>
+    <a href="../Controller/indexUser.php">Volver</a>
     <br>
     <a href="../Controller/vaciarCesta.php">Vaciar Cesta</a>
     <br>

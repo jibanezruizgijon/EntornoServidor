@@ -12,7 +12,7 @@
     <table>
         <tr class="headerTabla">
             <td colspan="4" class="tienda">La tiendecita</td>
-            <td><a href="../Controller/mostrarCesta.php">Cesta</a></td>
+            <td><a href="../Controller/login.php">Cerrar Sesión</a></td>
         </tr>
         <tr class="headerTabla">
             <td class="titulos">Producto</td>
@@ -63,7 +63,6 @@
             <?php
             echo "</tr>";
         }
-        $conexion = null;
             ?>
     </table>
 </body>

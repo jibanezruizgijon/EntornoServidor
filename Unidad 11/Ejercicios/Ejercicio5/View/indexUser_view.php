@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,7 +31,7 @@
         ?>
             <td class="botonComprar">
                 <form action="../Controller/comprarProducto.php" method="post">
-                    <input type="hidden" name="id" value="<?= $producto->getId() ?>">
+                    <input type="hidden" name="codigoProducto" value="<?= $producto->getId() ?>">
                     <input type="hidden" name="stock" value="<?= $producto->getStock() ?>">
                     <input type="submit" name="comprar" value="Comprar">
                 </form>

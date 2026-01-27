@@ -50,6 +50,7 @@ class Producto
     }
   }
 
+
    // Para reponer productos 
   public function reponer()
   {
