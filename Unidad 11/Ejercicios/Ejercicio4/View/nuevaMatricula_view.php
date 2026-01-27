@@ -33,7 +33,7 @@
         }
         ?>
         <td>
-            <a href="../Controller/verAsignaturas.php?matricula='<?= $data['alumno']->getMatricula() ?>'">Volver</a>
+            <a href="../Controller/verAsignaturas.php?matricula=<?= $data['alumno']->getMatricula() ?>">Volver</a>
         </td>
     </table>
 </body>

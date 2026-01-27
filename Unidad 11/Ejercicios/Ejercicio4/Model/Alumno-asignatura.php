@@ -1,6 +1,7 @@
 <?php
 require_once 'escuela.php';
 require_once 'Asignatura.php';
+require_once 'Alumno.php';
 
 class Alumno_Asignatura
 {
@@ -42,7 +43,7 @@ class Alumno_Asignatura
   public static function getAlumnosMatriculados($codigo_asignatura)
   {
     $conexion = Escuela::connectDB();
-    $seleccion = "SELECT * FROM alumos WHERE matricula IN  (SELECT matricula FROM alumno_asignatura WHERE codigo_asignatura='$codigo_asignatura')";
+    $seleccion = "SELECT * FROM alumno WHERE matricula IN  (SELECT matricula FROM alumno_asignatura WHERE codigo_asignatura='$codigo_asignatura')";
     $consulta = $conexion->query($seleccion);
     $Alumnos = [];
     while ($registro = $consulta->fetchObject()) {

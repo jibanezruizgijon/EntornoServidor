@@ -39,7 +39,7 @@
                 <td><?= $asignatura->getCodigo() ?></td>
                 <td><?= $asignatura->getNombre() ?></td>
                  <td>
-                    <form action="../../Controller/asignatura/verAlumnos.php" method="post">
+                    <form action="../../Controller/verAlumnos.php" method="post">
                         <input type="hidden" name="codigo" value="<?= $asignatura->getCodigo() ?>">
                         <input type="submit" name="verAlumnos" value="Ver alumnnos">
                     </form>

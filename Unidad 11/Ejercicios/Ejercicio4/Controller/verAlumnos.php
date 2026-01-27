@@ -1,8 +1,9 @@
 <?php
 require_once '../Model/Asignatura.php';
+require_once '../Model/Alumno-asignatura.php';
 
 $data['asignatura'] = Asignatura::getAsignaturaByCodigo($_POST['codigo']);
 
-$data['alumnos'] = $data['asignaturas']-> getAlumnosMatriculados();
+$data['alumnos'] =  Alumno_Asignatura::getAlumnosMatriculados($_POST['codigo']);
 
-include '../View/AlumnosMatriculados_view.php';
+include '../View/alumnosMatriculados_view.php';
