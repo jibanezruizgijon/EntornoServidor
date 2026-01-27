@@ -25,6 +25,22 @@ class Asignatura
     return $Asignaturas;
   }
 
+    public static function getAsignaturaByCodigo($codigo)
+  {
+    $conexion = Escuela::connectDB();
+    $seleccion = "SELECT * FROM asignatura WHERE codigo = '$codigo'";
+    $consulta = $conexion->query($seleccion);
+    if ($consulta->rowCount() > 0) {
+      $registro = $consulta->fetchObject();
+      $asignatura = new Asignatura($registro->codigo, $registro->nombre);
+      $conexion = null;
+      return $asignatura;
+    } else {
+      $conexion = null;
+      return false;
+    }
+  }
+
   // Para crear Alumnos 
   public function insert()
   {

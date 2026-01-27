@@ -6,7 +6,7 @@ class Alumno_Asignatura
 {
   private $matricula;
   private $codigo_asignatura;
- 
+
   function __construct($matricula = "", $codigo_asignatura = "")
   {
     $this->matricula = $matricula;
@@ -39,6 +39,19 @@ class Alumno_Asignatura
     return $Asignaturas;
   }
 
+  public static function getAlumnosMatriculados($codigo_asignatura)
+  {
+    $conexion = Escuela::connectDB();
+    $seleccion = "SELECT * FROM alumos WHERE matricula IN  (SELECT matricula FROM alumno_asignatura WHERE codigo_asignatura='$codigo_asignatura')";
+    $consulta = $conexion->query($seleccion);
+    $Alumnos = [];
+    while ($registro = $consulta->fetchObject()) {
+      $Alumnos[] = new Alumno($registro->matricula, $registro->nombre, $registro->apellidos, $registro->curso);
+    }
+    $conexion = null;
+    return $Alumnos;
+  }
+
   public function insert()
   {
     $conexion = Escuela::connectDB();
@@ -47,7 +60,7 @@ class Alumno_Asignatura
     $conexion = null;
   }
 
- 
+
   public function delete()
   {
     $conexion = Escuela::connectDB();
