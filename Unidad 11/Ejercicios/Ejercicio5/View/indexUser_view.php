@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,7 +19,7 @@
             <td class="titulos">Precio</td>
             <td class="titulos">Imagen</td>
             <td class="titulos">Stock</td>
-            <td></td>
+            <td><a href="../Controller/login.php">Cerrar Sesión</a></td>
         </tr>
         <?php
         foreach ($data['productos'] as $producto) {

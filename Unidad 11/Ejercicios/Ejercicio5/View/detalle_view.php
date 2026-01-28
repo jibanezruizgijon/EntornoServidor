@@ -18,7 +18,7 @@
             <input type="hidden" name="id" value="<?= $data['producto']->getId() ?>">
             <input type="submit" name="seleccionado1" class="botonCompra" value="Comprar">
         </form>
-        <a href="../Controller/index.php">Volver a la tienda</a>
+        <a href="../Controller/indexUser.php">Volver a la tienda</a>
     </div>
 </body>
 

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alumnos Matriculados</title>
+    
     <style>
         html {
             font-family: sans-serif;
@@ -40,7 +41,7 @@
                 <td><?= $alumno->getMatricula() ?></td>
                 <td><?= $alumno->getApellidos() ?>, <?= $alumno->getNombre() ?></td>
                 <td>
-                    <form action="../Controller/asignatura/borrarAsignatura.php" method="post">
+                    <form action="../Controller/asignatura/desmatricular.php" method="post">
                         <input type="hidden" name="codigo" value="<?= $data['asignatura']->getCodigo() ?>">
                         <input type="hidden" name="matricula" value="<?= $alumno->getMatricula() ?>">
                         <input type="submit" name="desmatricular" value="Desmatricular">

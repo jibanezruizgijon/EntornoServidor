@@ -4,11 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Blog</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>	
     <style>
         html {
             font-family: sans-serif;
         }
 
+        table{
+            margin: 10px auto;
+        }
+
+        h1{
+            text-align: center;
+        }
         .enlaces {
             display: flex;
             justify-content: space-around;
@@ -27,7 +36,7 @@
 <body>
     <h1>Listado de alumnos</h1>
     <hr>
-    <table border="1px">
+    <table class="table table-striped table-hover">
         <tr>
             <td></td>
             <td></td>
@@ -42,7 +51,7 @@
         ?>
             <tr>
                 <td>
-                    <form action="../Controller/alumno/borraAlumno.php" method="post">
+                    <form action="../Controller/alumno/borraAlumno.php" class="btn btn-danger" method="post">
                         <input type="hidden" name="matricula" value="<?= $alumno->getMatricula() ?>">
                         <input type="submit" name="eliminar" value="Eliminar">
                     </form>
