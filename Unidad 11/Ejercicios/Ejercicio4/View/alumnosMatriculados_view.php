@@ -41,8 +41,9 @@
                 <td><?= $alumno->getMatricula() ?></td>
                 <td><?= $alumno->getApellidos() ?>, <?= $alumno->getNombre() ?></td>
                 <td>
-                    <form action="../Controller/asignatura/desmatricular.php" method="post">
-                        <input type="hidden" name="codigo" value="<?= $data['asignatura']->getCodigo() ?>">
+                    <form action="../Controller/desmatricular.php" method="post">
+                        <input type="hidden" name="asignaturas" value="asigntura">
+                        <input type="hidden" name="codigo_asignatura" value="<?= $data['asignatura']->getCodigo() ?>">
                         <input type="hidden" name="matricula" value="<?= $alumno->getMatricula() ?>">
                         <input type="submit" name="desmatricular" value="Desmatricular">
                     </form>
