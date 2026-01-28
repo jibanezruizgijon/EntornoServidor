@@ -33,7 +33,7 @@
         ?>
         <td colspan="3">
             <a href="../Controller/nuevaMatricula.php?matricula=<?= $data['alumno']->getMatricula() ?>">Matrícula nueva</a>
-            <a href="../Controller/index.php">Volver</a>
+            <a class="btn btn-primary" href="../Controller/index.php">Volver</a>
         </td>
     </table>
 </body>

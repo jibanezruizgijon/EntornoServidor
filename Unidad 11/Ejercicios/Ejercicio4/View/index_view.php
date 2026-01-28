@@ -69,7 +69,7 @@
                 <td>
                     <form action="../Controller/verAsignaturas.php" method="post">
                         <input type="hidden" name="matricula" value="<?= $alumno->getMatricula() ?>">
-                        <input type="submit" name="asignaturas" value="Ver asignaturas">
+                        <input class="btn btn-primary" type="submit" name="asignaturas" value="Ver asignaturas">
                     </form>
                 </td>
             </tr>
@@ -79,8 +79,8 @@
         <tr>
             <td colspan="7">
                 <div class="enlaces">
-                    <a class="enlace" href="../Controller/alumno/nuevoAlumno.php">Nuevo Alumno</a>
-                    <a class="enlace" href="../Controller/asignatura/mostrarAsignaturas.php">Asiganturas</a>
+                    <a class="btn btn-primary" href="../Controller/alumno/nuevoAlumno.php">Nuevo Alumno</a>
+                    <a  class="btn btn-primary" href="../Controller/asignatura/mostrarAsignaturas.php">Asiganturas</a>
                 </div>
             </td>
         </tr>
