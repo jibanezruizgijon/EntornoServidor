@@ -9,10 +9,11 @@
 </head>
 
 <body>
+    <h1 class="titulo_admin">Cliente: <?= $_SESSION['nombre'] ?></h1>
     <table>
         <tr class="headerTabla">
             <td colspan="4" class="tienda">La tiendecita</td>
-            <td><a href="../Controller/mostrarCesta.php">Cesta</a></td>
+            <td><a href="../Controller/mostrarCesta.php">Cesta: <?= $data['cantidad'] ?>prod</a></td>
         </tr>
         <tr class="headerTabla">
             <td class="titulos">Producto</td>

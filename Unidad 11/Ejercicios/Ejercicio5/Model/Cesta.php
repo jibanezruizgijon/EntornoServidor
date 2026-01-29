@@ -86,6 +86,16 @@ class Cesta
     $conexion->exec($borrado);
     $conexion = null;
   }
+
+  // Para borrar productos 
+  public function reducir()
+  {
+    $conexion = Carrito::connectDB();
+    $borrado = "UPDATE cesta SET cantidad='$this->cantidad' WHERE id_cliente='$this->id_cliente' AND cod_producto='$this->cod_producto'";
+    $conexion->exec($borrado);
+    $conexion = null;
+  }
+
  
 
   public function getId_cliente()

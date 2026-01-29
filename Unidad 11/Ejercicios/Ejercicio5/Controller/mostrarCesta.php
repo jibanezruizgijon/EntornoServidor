@@ -7,4 +7,6 @@ $usuario = Usuario::getUsarioById($_SESSION['idUsuario'] );
 
 $data['productos'] = $usuario->getProductoCesta();
 
+$data['cantidad']= $usuario->cantidadEnCesta();
+
 include '../View/cesta_view.php';

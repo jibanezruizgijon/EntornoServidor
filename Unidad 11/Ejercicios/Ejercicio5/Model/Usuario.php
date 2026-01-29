@@ -1,6 +1,8 @@
 <?php
 require_once 'Carro.php';
 require_once 'Usuario.php';
+require_once 'Producto.php';
+require_once 'Cesta.php';
 
 class Usuario
 {
@@ -17,7 +19,7 @@ class Usuario
   }
 
 
-  // Para obtener todos los alumnos
+  // Para obtener todos los usuarios
   public static function getUsarios()
   {
     $conexion = Carrito::connectDB();
@@ -31,18 +33,33 @@ class Usuario
     return $Usuarios;
   }
 
-   public  function getProductoCesta()
+  public function getProductoCesta()
   {
     $conexion = Carrito::connectDB();
-    $seleccion = "SELECT * FROM productos JOIN cesta ON cesta.cod_producto = productos.id WHERE usuario.id='$this->id'";
+    $seleccion = "SELECT * FROM productos JOIN cesta ON cesta.cod_producto = productos.id WHERE cesta.id_cliente='$this->id'";
     $consulta = $conexion->query($seleccion);
     $productos = [];
     while ($registro = $consulta->fetchObject()) {
-      $productos[] = new Producto($registro->id, $registro->nombre, $registro->precio, $registro->imgUrl,$registro->descripcion, $registro->stock);
+      $producto = new Producto($registro->id, $registro->nombre, $registro->precio, $registro->imgUrl, $registro->descripcion, $registro->stock);
+
+      $cestaAux = Cesta::getCestaByIdAndCod($this->id, $producto->getId());
+
+      $producto->setCantidad($cestaAux->getCantidad());
+
+      $productos[] = $producto;
     }
     return $productos;
   }
-  // Para crear Alumnos 
+
+  public function vaciarCesta()
+  {
+    $conexion = Carrito::connectDB();
+    $borrado = "DELETE FROM cesta WHERE id_cliente='$this->id'";
+    $conexion->exec($borrado);
+    $conexion = null;
+  }
+
+  // Para crear usuarios 
   public function insert()
   {
     $conexion = Carrito::connectDB();
@@ -51,7 +68,7 @@ class Usuario
     $conexion = null;
   }
 
-  // Para borrar artículos 
+  // Para borrar usuarios 
   public function delete()
   {
     $conexion = Carrito::connectDB();
@@ -97,6 +114,19 @@ class Usuario
     } else {
       $conexion = null;
       return false;
+    }
+  }
+
+  public function cantidadEnCesta()
+  {
+    $conexion = Carrito::connectDB();
+    $seleccion = "SELECT SUM(cantidad) FROM cesta WHERE id_cliente ='$this->id'";
+    $consulta = $conexion->query($seleccion);
+    $numero = $consulta->fetchColumn();
+    if ($numero) {
+      return $numero;
+    } else {
+      return 0;
     }
   }
 

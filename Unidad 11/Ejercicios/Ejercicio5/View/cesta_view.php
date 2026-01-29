@@ -17,6 +17,8 @@
             background-color: gray;
         }
     </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
@@ -25,8 +27,8 @@
         <thead class="titulos">
             <tr>
                 <th>Nombre</th>
-                <th>Precio</th>
                 <th>Cantidad</th>
+                <th>Precio</th>
             </tr>
         </thead>
         <tbody>
@@ -34,46 +36,44 @@
             $total = 0;
             foreach ($data['productos'] as $producto) {
                 $id = $producto->getId();
-                if (isset($_SESSION['cesta'][$id]) && $_SESSION['cesta'][$id]['unidades'] > 0) {
-                    $unidades = $_SESSION['cesta'][$id]['unidades'];
-                    $precio = $producto->getPrecio();
-                    $subtotal = $precio * $unidades;
-                    $total += $subtotal;
+                $precio = $producto->getPrecio();
+                $unidades = $producto->getCantidad();
+                $subtotal = $precio * $unidades;
+                $total += $subtotal;
             ?>
-                    <tr>
-                        <td><?= $producto->getNombre()  ?></td>
-                        <td><?= $producto->getPrecio() ?></td>
-                        <td><?= $unidades ?></td>
-
-                        <td>
-                            <form action="../Controller/eliminarProductoCesta.php" method="post">
-                                <input type="hidden" name="id" value="<?= $id ?>">
-                                <input type="submit" name="eliminar" class="eliminar" value="Eliminar">
-                            </form>
-                        </td>
+                <tr>
+                    <td><?= $producto->getNombre()  ?></td>
+                    <td><?= $unidades ?></td>
+                    <td><?= $producto->getPrecio() ?></td>
+                    <td>
+                        <form action="../Controller/eliminarProductoCesta.php" method="post">
+                            <input type="hidden" name="id_producto" value="<?= $producto->getId() ?>">
+                            <input type="submit" name="eliminar" class="eliminar" value="Eliminar">
+                        </form>
+                    </td>
 
                 <?php
 
-                    echo "</tr>";
-                }
+                echo "</tr>";
             }
                 ?>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>Total: <?= $total ?></td>
-                    </tr>
+                <tr>
+                    <td>Total: </td>
+                    <td><?= $data['cantidad'] ?></td>
+                    <td><?= $total ?>€</td>
+                    <td></td>
+                </tr>
         </tbody>
     </table>
     <a href="../Controller/indexUser.php">Volver</a>
     <br>
-    <a href="../Controller/vaciarCesta.php">Vaciar Cesta</a>
+    <a  class="btn btn-warning" href="../Controller/vaciarCesta.php">Vaciar Cesta</a>
     <br>
     <form action="../Controller/mostrarCompra.php" method="post">
-        <input type="submit" name="procesar" value="Procesar pedido">
+        <input class="btn btn-info" type="submit" name="procesar" value="Procesar pedido">
     </form>
     <br>
+
 </body>
 
 </html>

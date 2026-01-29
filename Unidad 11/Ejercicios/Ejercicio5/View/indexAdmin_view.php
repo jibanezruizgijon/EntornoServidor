@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    <h1 class="titulo_admin">Administrador: <?= $_SESSION['nombre']  ?></h1>
     <table>
         <tr class="headerTabla">
             <td colspan="4" class="tienda">La tiendecita</td>
@@ -19,7 +20,7 @@
             <td class="titulos">Precio</td>
             <td class="titulos">Imagen</td>
             <td class="titulos">Stock</td>
-            <td></td>
+            <td class="titulos">Eliminar</td>
         </tr>
         <tr>
             <form enctype="multipart/form-data" action="../Controller/creaProducto.php" method="post">
@@ -43,7 +44,7 @@
             <tr>
                 <td> <?= $producto->getNombre()  ?> </td>
                 <td> <?= $producto->getPrecio()  ?> </td>
-                <td><a href='../Controller/detalle.php?id=""<?= $producto->getId() ?>"'><img src='../View/images/<?= $producto->getImgUrl()  ?>'></a></td>
+                <td><a href='../Controller/detalle.php?id="<?= $producto->getId() ?>"'><img src='../View/images/<?= $producto->getImgUrl()  ?>'></a></td>
                 <td>
                     <?= $producto->getStock() ?>
                     <form action="../Controller/modificarStock.php" method="post">
@@ -54,7 +55,7 @@
                 </td>
 
                 <td class="botonComprar">
-                    <form action="../Controller/eliminarProducto.php" method="post">
+                    <form action="../Controller/comprobarEliminar.php" method="post">
                         <input type="hidden" name="id" value="<?= $producto->getId() ?>">
                         <br>
                         <input type="submit" name="eliminar" value="Eliminar">

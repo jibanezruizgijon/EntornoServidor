@@ -9,6 +9,7 @@ class Producto
   private $imgUrl;
   private $descripcion;
   private $stock;
+  private $cantidad;
 
   function __construct($id = "",$nombre = "", $precio= "",$imgUrl = "", $descripcion = "", $stock = "")
   {
@@ -147,6 +148,20 @@ class Producto
   public function setStock($stock)
   {
     $this->stock = $stock;
+
+    return $this;
+  }
+
+ 
+  public function getCantidad()
+  {
+    return $this->cantidad;
+  }
+
+
+  public function setCantidad($cantidad)
+  {
+    $this->cantidad = $cantidad;
 
     return $this;
   }
