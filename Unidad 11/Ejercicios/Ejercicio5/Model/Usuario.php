@@ -1,5 +1,6 @@
 <?php
 require_once 'Carro.php';
+require_once 'Usuario.php';
 
 class Usuario
 {
@@ -32,7 +33,7 @@ class Usuario
 
    public  function getProductoCesta()
   {
-    $conexion = Escuela::connectDB();
+    $conexion = Carrito::connectDB();
     $seleccion = "SELECT * FROM productos JOIN cesta ON cesta.cod_producto = productos.id WHERE usuario.id='$this->id'";
     $consulta = $conexion->query($seleccion);
     $productos = [];
