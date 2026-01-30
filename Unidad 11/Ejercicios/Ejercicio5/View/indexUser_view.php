@@ -24,12 +24,17 @@
         </tr>
         <?php
         foreach ($data['productos'] as $producto) {
-
+        if ($cesta = Cesta::getProductoById($_SESSION['idUsuario'], $producto->getId())) {
+            $cesta = Cesta::getCestaByIdAndCod($_SESSION['idUsuario'], $producto->getId());
+            $stockTemp = $producto->getStock() - $cesta->getCantidad();
+        } else{
+            $stockTemp = $producto->getStock();
+        }
             echo "<tr>";
             echo "<td>" .  $producto->getNombre() . "</td>";
             echo "<td>" .  $producto->getPrecio() . "</td>";
             echo "<td><a href='../Controller/detalle.php?id=" . $producto->getId() . "'><img src='../View/images/" .  $producto->getImgUrl() . "'></a></td>";
-            echo "<td>" .  $producto->getStock() . "</td>";
+            echo "<td> $stockTemp </td>";
         ?>
             <td class="botonComprar">
                 <form action="../Controller/comprarProducto.php" method="post">

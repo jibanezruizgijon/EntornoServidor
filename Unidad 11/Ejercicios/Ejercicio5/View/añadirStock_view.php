@@ -14,7 +14,7 @@
     <form action="../Controller/añadirStock.php" method="post">
         <input type="hidden" name="id" value="<?= $data['producto']->getId() ?>">
         <label for="stock">Introduce la entrada de stock</label>
-        <input type="number" name="añadido">
+        <input type="number" min="1" name="añadido">
         <br>
         <input type="submit" value="Enviar">
     </form>

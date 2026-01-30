@@ -19,7 +19,7 @@ class Cesta
   public static function getCestaById_cliente($id)
   {
     $conexion = Carrito::connectDB();
-    $seleccion = "SELECT * FROM cesta WHERE id_cliente=''";
+    $seleccion = "SELECT * FROM cesta WHERE id_cliente='$id'";
     $consulta = $conexion->query($seleccion);
     $Productos = [];
     while ($registro = $consulta->fetchObject()) {
@@ -61,10 +61,11 @@ class Cesta
 
 
    // Para reponer
-  public function añadir()
+  public function añadir($num=1)
   {
     $conexion = Carrito::connectDB();
-    $reponer = "UPDATE cesta SET cantidad='$this->cantidad' WHERE id_cliente='$this->id_cliente' AND cod_producto='$this->cod_producto'";
+    $nuevaCantidad = $this->cantidad+$num;
+    $reponer = "UPDATE cesta SET cantidad='$nuevaCantidad' WHERE id_cliente='$this->id_cliente' AND cod_producto='$this->cod_producto'";
     $conexion->exec($reponer);
     $conexion = null;
   }

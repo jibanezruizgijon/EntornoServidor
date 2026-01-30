@@ -7,6 +7,13 @@
     <title>Registro</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        h2{
+            text-align: center;
+            color: red;
+        }
+    </style>
 </head>
 
 <body>
@@ -23,7 +30,8 @@
             <input type="submit" name="iniciar" value="Iniciar sesión">
         </form>
     </div>
-    <?= $mensajeError ?>
+    <br>
+    <h2><?= $mensajeError ?></h2>
 </body>
 
 </html>

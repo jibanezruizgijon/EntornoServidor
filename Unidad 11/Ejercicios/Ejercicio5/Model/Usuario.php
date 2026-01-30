@@ -120,14 +120,11 @@ class Usuario
   public function cantidadEnCesta()
   {
     $conexion = Carrito::connectDB();
-    $seleccion = "SELECT SUM(cantidad) FROM cesta WHERE id_cliente ='$this->id'";
+    $seleccion = "SELECT SUM(cantidad) as total FROM cesta WHERE id_cliente ='$this->id'";
     $consulta = $conexion->query($seleccion);
-    $numero = $consulta->fetchColumn();
-    if ($numero) {
-      return $numero;
-    } else {
-      return 0;
-    }
+    $numero = $consulta->fetchObject()->total ?? 0;
+    $conexion = null;
+    return $numero;
   }
 
 
