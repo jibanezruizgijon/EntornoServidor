@@ -1,3 +1,18 @@
+<?php
+$ciudades = [
+    "Almería",
+    "Cádiz",
+    "Córdoba",
+    "Granada",
+    "Huelva",
+    "Jaén",
+    "Málaga",
+    "Sevilla"
+];
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -22,24 +37,21 @@
 <body>
     <h1>El tiempo en las capitales de Andalucía</h1>
 
+    <form action="" method="post">
+        <select name="ciudad">
+            <?php foreach ($ciudades as $ciudad): ?>
+                <option value="<?= $ciudad ?>"><?= $ciudad ?></option>
+            <?php endforeach; ?>
+        </select>
+        <input type="submit" value="Enviar">
+    </form>
     <?php
-    $apiKey = "b5df264929e6aa48bbefe3589b853aec"; 
-    $ciudades = [
-        "Almería",
-        "Cádiz",
-        "Córdoba",
-        "Granada",
-        "Huelva",
-        "Jaén",
-        "Málaga",
-        "Sevilla"
-    ];
-
-    foreach ($ciudades as $ciudad) {
+    if (isset($_POST['ciudad'])) {
+        $ciudad = $_POST['ciudad'];
+        $apiKey = "b5df264929e6aa48bbefe3589b853aec";
         $url = "https://api.openweathermap.org/data/2.5/weather?q=$ciudad,ES&appid=$apiKey&units=metric&lang=es";
 
         $datos = @file_get_contents($url);
-
         if ($datos) {
             $tiempo = json_decode($datos);
             echo "<div class='provincia'>";
@@ -49,10 +61,13 @@
             echo "<p><strong>Humedad:</strong> " . $tiempo->main->humidity . "%</p>";
             echo "<p><strong>Cielo:</strong> " . ucfirst($tiempo->weather[0]->description) . "</p>";
             echo "</div>";
+            
+
         } else {
             echo "<div class='provincia' style='color:red'>Error al cargar $ciudad</div>";
         }
     }
+    
     ?>
 </body>
 
