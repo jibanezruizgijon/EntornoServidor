@@ -50,57 +50,7 @@ if ($json !== FALSE) {
 <head>
     <meta charset="UTF-8">
     <title>Buscador de Entrenos</title>
-    <style>
-        body {
-            font-family: sans-serif;
-            padding: 20px;
-            background: #f4f4f9;
-        }
-
-        a{
-            text-decoration: none;
-        }
-
-        a:hover{
-            text-decoration: underline;
-        }
-
-        .buscador {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .actividad {
-            border: 1px solid #ddd;
-            padding: 15px;
-            margin-bottom: 10px;
-            background: white;
-            border-radius: 5px;
-        }
-
-        .input {
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .boton {
-            padding: 8px 15px;
-            background: #fc4c02;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .filtro {
-            margin-left: 10px;
-            color: #666;
-        }
-    </style>
+    <link rel="stylesheet" href="css/index.css">
 </head>
 
 <body>
@@ -128,7 +78,7 @@ if ($json !== FALSE) {
             <div class="actividad">
                 <h3>
                     <a href="detalle.php?id=<?php echo $act['id']; ?>">
-                        <?php echo htmlspecialchars($act['name']); ?>
+                        <?php echo $act['name']; ?>
                     </a>
                 </h3>
                 <p>

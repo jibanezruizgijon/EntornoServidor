@@ -1,20 +1,17 @@
 <?php
-require_once 'Config.php'; // Asegúrate que el nombre del archivo coincida (mayúsculas/minúsculas)
+require_once 'Config.php'; 
 
-// 1. Verificamos si nos han pasado un ID
+$error = "";
 if (!isset($_GET['id'])) {
-    die("Error: No has seleccionado ningún entrenamiento.");
+    $error="Error: No has seleccionado ningún entrenamiento.";
 }
 
 $actividadId = $_GET['id'];
 $accessToken = obtenerTokenStrava();
 
-// 2. Pedimos los datos DETALLADOS
+// Se piden los datos del entreno específico
 $url = "https://www.strava.com/api/v3/activities/" . $actividadId;
 
-// --- CAMBIO: SUSTITUIMOS CURL POR STREAM_CONTEXT (Método del Libro) ---
-
-// Definimos las opciones de la cabecera HTTP
 $opciones = [
     "http" => [
         "method" => "GET",
@@ -25,20 +22,20 @@ $opciones = [
 // Creamos el contexto
 $contexto = stream_context_create($opciones);
 
-// Hacemos la petición
-// El @ delante sirve para que no salga un "Warning" feo en pantalla si la petición falla (ej: error 404)
+// Se hace la petición
 $response = @file_get_contents($url, false, $contexto);
 
 if ($response === FALSE) {
-    // Si file_get_contents falla, devolvió FALSE
-    die("Error: No se pudo cargar la actividad. Puede que el ID no exista o el token haya fallado.");
+  
+    $error="Error: No se pudo cargar la actividad. Puede que el ID no exista o el token haya fallado.";
 }
 
 $detalle = json_decode($response, true);
 
-function msKmh($velocidadMS)
+// Se pasa de metros por segundo a km/h
+function cambioKm($velocidadMS)
 {
-    return number_format($velocidadMS * 3.6, 1) . " km/h";
+    return round($velocidadMS * 3.6, 1) . " km/h";
 }
 ?>
 
@@ -49,64 +46,18 @@ function msKmh($velocidadMS)
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalle del Entreno</title>
-    <style>
-        body {
-            font-family: sans-serif;
-            padding: 20px;
-            background: #f4f4f9;
-        }
-
-        .ficha {
-            background: white;
-            padding: 30px;
-            max-width: 600px;
-            margin: 0 auto;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .dato-grande {
-            font-size: 2em;
-            font-weight: bold;
-
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .caja-dato {
-            background: #eee;
-            padding: 15px;
-            border-radius: 5px;
-            text-align: center;
-        }
-
-        .volver {
-            display: block;
-            margin-top: 20px;
-            color: black;
-            text-decoration: none;
-        }
-
-        .volver:hover{
-            text-decoration: underline;
-        }
-    </style>
+  <link rel="stylesheet" href="css/detalle.css">
 </head>
 
 <body>
 
     <div class="ficha">
         <small>Entrenamiento detallado</small>
-        <h1><?php echo isset($detalle['name']) ? htmlspecialchars($detalle['name']) : 'Actividad sin nombre'; ?></h1>
+        <h1><?php echo isset($detalle['name']) ? $detalle['name'] : 'Actividad sin nombre'; ?></h1>
 
-        <?php if (isset($detalle['start_date_local'])): ?>
-            <p><?php echo date("l, d F Y \a \l\a\s H:i", strtotime($detalle['start_date_local'])); ?></p>
-        <?php endif; ?>
+        <?php if (isset($detalle['start_date_local'])){?>
+            <p><?php echo date("d/m/Y  H:i", strtotime($detalle['start_date_local'])); ?></p>
+        <?php }?>
 
         <hr>
 
@@ -133,7 +84,7 @@ function msKmh($velocidadMS)
 
             <div class="caja-dato">
                 <span>Velocidad Max</span><br>
-                <span class="dato-grande"><?php echo msKmh($detalle['max_speed']); ?></span>
+                <span class="dato-grande"><?php echo cambioKm($detalle['max_speed']); ?></span>
             </div>
             <div class="caja-dato">
                 <span>Cadencia media</span><br>

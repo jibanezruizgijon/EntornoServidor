@@ -37,7 +37,7 @@ function obtenerTokenStrava()
     $response = file_get_contents($oauthUrl, false, $contexto);
 
     if ($response === FALSE) {
-        die("Error al conectar con Strava para obtener el token.");
+        $error="Error al conectar con Strava para obtener el token.";
     }
 
     $data = json_decode($response, true);
@@ -45,6 +45,6 @@ function obtenerTokenStrava()
     if (isset($data['access_token'])) {
         return $data['access_token'];
     } else {
-        die("Error obteniendo token: " . print_r($data, true));
+        $error="Error obteniendo token: " . print_r($data, true);
     }
 }

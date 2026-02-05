@@ -6,15 +6,15 @@ class Producto
   private $id;
   private $nombre;
   private $precio;
-  private $imgUrl;
+  private $urlImg;
 
 
-  function __construct($id = "",$nombre = "", $precio= "",$imgUrl = "")
+  function __construct($id = "",$nombre = "", $precio= "",$urlImg = "")
   {
     $this->id = $id;
     $this->nombre = $nombre;
     $this->precio = $precio;
-    $this->imgUrl = $imgUrl;
+    $this->urlImg = $urlImg;
   }
 
   // Para obtener todos los productos
@@ -25,7 +25,7 @@ class Producto
     $consulta = $conexion->query($seleccion);
     $Productos = [];
     while ($registro = $consulta->fetchObject()) {
-      $Productos[] = new Producto($registro->id, $registro->nombre, $registro->precio, $registro->imgUrl);
+      $Productos[] = new Producto($registro->id, $registro->nombre, $registro->precio, $registro->urlImg);
     }
     $conexion = null;
     return $Productos;
@@ -38,7 +38,7 @@ class Producto
     $consulta = $conexion->query($seleccion);
     if ($consulta->rowCount() > 0) {
       $registro = $consulta->fetchObject();
-      $producto = new Producto($registro->id, $registro->nombre, $registro->precio, $registro->imgUrl);
+      $producto = new Producto($registro->id, $registro->nombre, $registro->precio, $registro->urlImg);
       $conexion = null;
       return $producto;
     } else {
@@ -50,11 +50,11 @@ class Producto
     public static function getProductoByNombre($nombre)
   {
     $conexion = Carrito::connectDB();
-    $seleccion = "SELECT * FROM productos WHERE nombre=$nombre";
+    $seleccion = "SELECT * FROM productos WHERE nombre='$nombre'";
     $consulta = $conexion->query($seleccion);
     if ($consulta->rowCount() > 0) {
       $registro = $consulta->fetchObject();
-      $producto = new Producto($registro->id, $registro->nombre, $registro->precio, $registro->imgUrl);
+      $producto = new Producto($registro->id, $registro->nombre, $registro->precio, $registro->urlImg);
       $conexion = null;
       return $producto;
     } else {
@@ -63,14 +63,27 @@ class Producto
     }
   }
 
+  // método para validar el token y sumar la petición
+public static function validarToken($token) {
+    $conexion = Carrito::connectDB();
+    $consulta = $conexion->prepare("SELECT nombre FROM clientes WHERE token = :token");
+    $consulta->execute(['token' => $token]);
+    
+    if ($consulta->rowCount() > 0) {
+        $update = $conexion->prepare("UPDATE clientes SET peticiones = peticiones + 1 WHERE token = :token");
+        $update->execute(['token' => $token]);
+        return true;
+    }
+    return false;
+}
 public static function getProductosFiltroNombre($nombre)
   {
     $conexion = Carrito::connectDB();
-    $seleccion = "SELECT * FROM productos WHERE nombre='%$nombre%'";
+    $seleccion = "SELECT * FROM productos WHERE nombre LIKE '%$nombre%'";
     $consulta = $conexion->query($seleccion);
     $Productos = [];
     while ($registro = $consulta->fetchObject()) {
-      $Productos[] = new Producto($registro->id, $registro->nombre, $registro->precio, $registro->imgUrl);
+      $Productos[] = new Producto($registro->id, $registro->nombre, $registro->precio, $registro->urlImg);
     }
     $conexion = null;
     return $Productos;
@@ -83,7 +96,7 @@ public static function getProductosFiltroNombre($nombre)
     $consulta = $conexion->query($seleccion);
     $Productos = [];
     while ($registro = $consulta->fetchObject()) {
-      $Productos[] = new Producto($registro->id, $registro->nombre, $registro->precio, $registro->imgUrl);
+      $Productos[] = new Producto($registro->id, $registro->nombre, $registro->precio, $registro->urlImg);
     }
     $conexion = null;
     return $Productos;
@@ -102,7 +115,7 @@ public static function getProductosFiltroNombre($nombre)
   public function insert()
   {
     $conexion = Carrito::connectDB();
-    $insercion = "INSERT INTO productos (nombre, precio, imgUrl) VALUES ('$this->nombre','$this->precio','$this->imgUrl')";
+    $insercion = "INSERT INTO productos (nombre, precio, urlImg) VALUES ('$this->nombre','$this->precio','$this->urlImg')";
     $conexion->exec($insercion);
     $conexion = null;
   }
@@ -152,17 +165,15 @@ public static function getProductosFiltroNombre($nombre)
     return $this;
   }
 
-  public function getImgUrl()
+  public function getUrlImg()
   {
-    return $this->imgUrl;
+    return $this->urlImg;
   }
 
-
-  public function setImgUrl($imgUrl)
+  public function setUrlImg($urlImg)
   {
-    $this->imgUrl = $imgUrl;
+    $this->urlImg = $urlImg;
 
     return $this;
   }
-
 }

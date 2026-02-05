@@ -23,23 +23,5 @@
                 Máximo <input type="number" name="max" required> 
                 <input type="submit" name="filtraPrecio" value="Filtrar"> 
             </form><hr> 
-            <form action="peticion.php" method="post"> 
-                <h2>Insertar nuevo producto:</h2>  
-                Nombre <input type="text" name="nombre" required> 
-                Precio <input type="number" name="precio" required> 
-                Stock <input type="number" name="stock" required> <br><br> 
-                <input type="submit" name="insertar" value="Insertar"> 
-            </form><hr> 
-            <form action="peticion.php" method="POST"> 
-                <h2>Borrar producto:</h2>  
-                Nombre <input type="text" name="nombre" required> 
-                <input type="submit" name="borrar" value="Borrar"> 
-            </form><hr> 
-            <form action="peticion.php" method="POST"> 
-                <h2>Añadir stock:</h2>  
-                Nombre <input type="text" name="nombre" required> 
-                Añadir <input type="number" name="cantidad" require> Unidades 
-                <input type="submit" name="stock" value="Añadir"> 
-            </form><hr> 
     </div> 
     </body>
