@@ -10,8 +10,6 @@ $ciudades = [
     "Sevilla"
 ];
 
-
-
 ?>
 <!DOCTYPE html>
 <html lang="es">

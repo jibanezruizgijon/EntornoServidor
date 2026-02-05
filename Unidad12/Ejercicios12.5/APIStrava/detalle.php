@@ -36,7 +36,6 @@ if ($response === FALSE) {
 
 $detalle = json_decode($response, true);
 
-// Funciones auxiliares
 function msKmh($velocidadMS)
 {
     return number_format($velocidadMS * 3.6, 1) . " km/h";
@@ -69,7 +68,7 @@ function msKmh($velocidadMS)
         .dato-grande {
             font-size: 2em;
             font-weight: bold;
-            color: #fc4c02;
+
         }
 
         .grid {
@@ -89,8 +88,12 @@ function msKmh($velocidadMS)
         .volver {
             display: block;
             margin-top: 20px;
+            color: black;
             text-decoration: none;
-            color: #666;
+        }
+
+        .volver:hover{
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -100,8 +103,8 @@ function msKmh($velocidadMS)
     <div class="ficha">
         <small>Entrenamiento detallado</small>
         <h1><?php echo isset($detalle['name']) ? htmlspecialchars($detalle['name']) : 'Actividad sin nombre'; ?></h1>
-        
-        <?php if(isset($detalle['start_date_local'])): ?>
+
+        <?php if (isset($detalle['start_date_local'])): ?>
             <p><?php echo date("l, d F Y \a \l\a\s H:i", strtotime($detalle['start_date_local'])); ?></p>
         <?php endif; ?>
 
@@ -110,7 +113,7 @@ function msKmh($velocidadMS)
         <div class="grid">
             <div class="caja-dato">
                 <span>Distancia</span><br>
-                <span class="dato-grande"><?php echo number_format($detalle['distance'] / 1000, 2); ?> km</span>
+                <span class="dato-grande"><?php echo round($detalle['distance'] / 1000, 2); ?> km</span>
             </div>
             <div class="caja-dato">
                 <span>Tiempo Mov.</span><br>
@@ -124,7 +127,7 @@ function msKmh($velocidadMS)
             <div class="caja-dato">
                 <span>Calorías</span><br>
                 <span class="dato-grande">
-                    <?php echo isset($detalle['calories']) ? $detalle['calories'] : round($detalle['kilojoules'] / 4.184); ?> kcal
+                    <?php echo $detalle['calories'] ?> kcal
                 </span>
             </div>
 
@@ -135,13 +138,15 @@ function msKmh($velocidadMS)
             <div class="caja-dato">
                 <span>Cadencia media</span><br>
                 <span class="dato-grande">
-                    <?php echo isset($detalle['average_cadence']) ? $detalle['average_cadence'] . " ppm" : "N/D"; ?>
+                    <?php
+                    echo (isset($detalle['average_cadence']))? $detalle['average_cadence'] . " ppm" : "N/D";
+                    ?>
                 </span>
             </div>
         </div>
 
         <br>
-        <a href="index.php" class="volver">← Volver al listado</a>
+        <a href="index.php" class="volver">Volver al listado</a>
     </div>
 
 </body>

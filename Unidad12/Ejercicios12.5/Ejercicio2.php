@@ -12,7 +12,6 @@ $array_datos = [
 
 $contexto = stream_context_create($array_datos);
 
-
 $respuesta = @file_get_contents($url, false, $contexto);
 ?>
 <!DOCTYPE html>
@@ -42,7 +41,7 @@ $respuesta = @file_get_contents($url, false, $contexto);
             padding: 10px;
         }
 
-        .card__equipo:hover{
+        .card__equipo:hover {
             background-color: #ffeeee;
         }
 
@@ -74,7 +73,6 @@ $respuesta = @file_get_contents($url, false, $contexto);
                     </div>
                 </a>
     <?php
-
             }
         } else {
             echo "<p>La API respondió, pero no envió equipos.</p>";
