@@ -25,11 +25,44 @@ if (isset($_POST['filtraGrupo'])) {
 }
 
 
-function mostrarEstado($codEstado, $mensaje) {
-    
+function mostrarEstado($codEstado, $mensaje)
+{
+    echo "STARUS:" . $codEstado;
+    echo "";
 }
 
-function mostrarAlumnos($url, $parametros) {}
-function mostrarAsignaturas ($url, $parametros){
-  
+function mostrarAlumnos($url, $parametros)
+{
+    $data = @file_get_contents($url . $parametros);
+    $respuesta = json_decode($data);
+    $codEstado = substr($http_response_header[0], 9, 3);
+    $mensaje = substr($http_response_header[0], 13);
+    if ($codEstado == 200) {
+        echo "<table border='1'><tr><th>Nombre</th><th>Precio</th><th>stock</th></tr>";
+        foreach ($respuesta as $producto) {
+            echo "<tr><td>" . $producto->nombre . "</td>";
+            echo "<td>" . $producto->precio . "</td>";
+            echo "<td>" . $producto->stock . "</td></tr>";
+        }
+        echo "</table>";
+    } else {
+        mostrarEstado($codEstado, $mensaje);
+    }
+}
+function mostrarAsignaturas($url, $parametros) {}
+
+function hacerPeticion($datos, $metodo, $url)
+{
+    $opciones = [
+        "http" => [
+            "header" => "Content-type: application/x-www-form-urlencoded\r\n",
+            "method" => $metodo,
+            "content" => http_build_query($datos)
+        ],
+    ];
+    $contexto = stream_context_create($opciones);
+    @file_get_contents($url, false, $contexto);
+    $codEstado = substr($http_response_header[0], 9, 3);
+    $mensaje = substr($http_response_header[0], 13);
+    mostrarEstado($codEstado, $mensaje);
 }

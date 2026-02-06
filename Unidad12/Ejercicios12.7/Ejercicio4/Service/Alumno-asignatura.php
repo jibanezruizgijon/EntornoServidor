@@ -27,6 +27,20 @@ class Alumno_Asignatura
     return $Asignaturas;
   }
 
+  // CCORREGIR
+  public static function obtenerMaricula($matricula, )
+  {
+    $conexion = Escuela::connectDB();
+    $seleccion = "SELECT * FROM alumno_asignatura";
+    $consulta = $conexion->query($seleccion);
+    $Asignaturas = [];
+    while ($registro = $consulta->fetchObject()) {
+      $Asignaturas[] = new Alumno_Asignatura($registro->matricula, $registro->codigo_asignatura);
+    }
+    $conexion = null;
+    return $Asignaturas;
+  }
+
   public static function getAsignaturasLibres($matricula)
   {
     $conexion = Escuela::connectDB();

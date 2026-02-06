@@ -172,7 +172,7 @@ function handleDelete($p) {
 }
 
 function setCabecera($estado, $msg) {
-    // Mapeo básico de códigos HTTP
+
     header("HTTP/1.1 $estado $msg");
     header("Content-Type: application/json;charset=utf-8");
 }

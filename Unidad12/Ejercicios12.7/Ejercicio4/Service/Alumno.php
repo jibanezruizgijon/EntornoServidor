@@ -56,7 +56,7 @@ class Alumno
     $conexion = null;
   }
 
-  public static function getAlumnoByMatricula($matricula)
+  public static function getAlumnoById($matricula)
   {
     $conexion = Escuela::connectDB();
     $seleccion = "SELECT * FROM alumno WHERE matricula = '$matricula'";
