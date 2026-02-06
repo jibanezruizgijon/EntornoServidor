@@ -2,22 +2,30 @@
 header('Content-Type: application/json; charset=utf-8');
 define('pesetas', 166.386);
 
+$codigo = 200;
+$mensaje = "OK";
+$resultado = 0;
+$monedaDestino = "";
+$cantidadInicial = $_REQUEST['cantidad']?? '';
+$monedaInicial = $_REQUEST['tipo']?? '';
 if (isset($_REQUEST['cantidad']) && isset($_REQUEST['tipo'])) {
     $cantidad = (float)$_REQUEST['cantidad'];
     $tipo = $_REQUEST['tipo'];
-    $resultado = "";
 
     if ($tipo == "euros") {
-        $conversion = $cantidad * pesetas;
-        $resultado = round($conversion) . " pesetas";
+        $resultado = $cantidad * pesetas;
+        $monedaDestino = "pesetas";
     } elseif ($tipo == "pesetas") {
-        $conversion = $cantidad / pesetas;
-        $resultado = number_format($conversion, 2) . " €";
+        $resultado = $cantidad / pesetas;
+        $monedaDestino = "euros";
     } else {
-        $resultado = "Error: tipo de moneda no válido";
+        $mensaje = "Tipo de moneda no válido";
+    $codigo = 400;
     }
-
-    echo json_encode($resultado);
 } else {
-    echo json_encode("Error: faltan parámetros");
+    $mensaje = "Faltan parámetros";
+    $codigo = 400;
 }
+header("HTTP/1.1 $codigo $mensaje");
+header("Content-Type: application/json;charset=utf-8");
+echo json_encode(['resultado'=> $resultado, 'moneda_destino'=> $monedaDestino, 'cantidad_inicial'=>$cantidadInicial, 'moneda_inicial'=>$monedaInicial]);

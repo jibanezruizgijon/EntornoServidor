@@ -1,5 +1,5 @@
    <?php
-    $respuesta = "";
+    $respuesta = null;
     $error = "";
     if (isset($_POST['cantidad'])) {
       $url = "http://localhost/EntornoServidor/Unidad12/Ejercicios12.7/Ejercicio1/servidor.php";
@@ -13,14 +13,10 @@
 
       if ($json_recibido === false) {
         $error = "Error: No se pudo conectar con el servicio web. Revisa la URL.";
-        // Si hay cabeceras de respuesta, intentamos ver el código de error
-        if (isset($http_response_header)) {
-          $error .= " Estado: " . $http_response_header[0];
-        }
       } else {
         $respuesta = json_decode($json_recibido);
         if ($respuesta === null) {
-          $error = "Error: La respuesta del servidor no es un JSON válido. Recibido: " . htmlspecialchars($json_recibido);
+          $error = "Error: La respuesta del servidor no es un JSON válido";
         }
       }
     }
@@ -53,13 +49,15 @@
      </form>
 
      <?php
-      if ($error != "") {
+
+      if (!empty($error)) {
         echo "<p style='color:red;'>$error</p>";
       }
 
-      if ($respuesta !== null && $respuesta != "") {
-        echo "<h3>Resultado: $respuesta</h3>";
-      }
+      if ($respuesta != null) {
+        echo "$respuesta->cantidad_inicial $respuesta->moneda_inicial";
+        echo " son " . round($respuesta->resultado, 2) . " $respuesta->moneda_destino";
+      } 
       ?>
    </body>
 

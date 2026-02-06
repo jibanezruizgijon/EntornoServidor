@@ -1,3 +1,14 @@
+<?php
+  if (session_status() == PHP_SESSION_NONE) session_start();
+  
+  if(isset($_POST['cerrar'])){
+    session_destroy();
+  }
+  if (isset($_POST)) {
+    # code...
+  }
+?>
+
 <!DOCTYPE html> 
 <html lang="en"> 
 <head> 

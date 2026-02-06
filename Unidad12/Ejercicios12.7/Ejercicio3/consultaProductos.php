@@ -7,7 +7,7 @@ $token = $_REQUEST['token'] ?? '';
 if (!Producto::validarToken($token)) {
   header("HTTP/1.1 401 Unauthorized");
   echo json_encode(["error" => "Token no valido o ausente. Acceso denegado."]);
-  exit; 
+  exit;
 }
 $metodo = $_SERVER['REQUEST_METHOD'];
 $codEstado = 200;
@@ -34,7 +34,9 @@ if ($metodo == 'GET') {
 }
 
 setCabecera($codEstado, $mensaje);
-echo json_encode($devolver);
+if ($codEstado == 200) {
+  echo json_encode($devolver);
+}
 
 function setCabecera($codEstado, $mensaje)
 {

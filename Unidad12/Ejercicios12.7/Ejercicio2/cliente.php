@@ -1,6 +1,7 @@
 <?php
 if (isset($_POST['cantidad'])) {
-  $respuesta = "";
+  $respuesta = null;
+  $error_msg = "";
   $url = "http://localhost/EntornoServidor/Unidad12/Ejercicios12.7/Ejercicio2/servicio.php";
 
   $parametros = http_build_query([
@@ -8,7 +9,7 @@ if (isset($_POST['cantidad'])) {
   ]);
   $json_recibido = @file_get_contents($url . "?" . $parametros);
 
-  if ($json_recibido === false) {
+  if ($http_response_header[0] != "HTTP/1.1 200 OK") {
     $error_msg = "Error: No se pudo conectar con el servicio web. Revisa la URL.";
     // Si hay cabeceras de respuesta, intentamos ver el código de error
     if (isset($http_response_header)) {
@@ -46,7 +47,7 @@ if (isset($_POST['cantidad'])) {
     echo "<h3>Cartas obtenidas:</h3>";
     echo "<ul>";
     foreach ($respuesta as $carta) {
-      echo "<li> $carta </li>";
+      echo "<li>" . $carta . "</li>";
     }
     echo "</ul>";
   }

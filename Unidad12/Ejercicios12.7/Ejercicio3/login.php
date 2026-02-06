@@ -12,6 +12,8 @@
     <form action="" method="post">
         <label> Introduce tu nombre</label>
         <input type="text" name="nombre">
+        <label> Introduce tu token</label>
+        <input type="text" name="token">
         <input type="submit" value="Enviar">
     </form>
 </body>

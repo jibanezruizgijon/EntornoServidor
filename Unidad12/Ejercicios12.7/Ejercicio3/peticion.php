@@ -27,7 +27,7 @@ function mostrarDatos($url, $parametros)
         foreach ($respuesta as $producto) {
             echo "<tr><td>" . $producto->nombre . "</td>";
             echo "<td>" . $producto->precio . "</td>";
-            echo "<td> <img style='width: 200px;' src='" . $producto->urlImg . "'></td></tr>";
+            echo "<td> <img style='width: 200px;' src='http://localhost/EntornoServidor/Unidad12/Ejercicios12.7/Ejercicio3/" . $producto->urlImg . "'></td></tr>";
         }
         echo "</table>";
     } else {
