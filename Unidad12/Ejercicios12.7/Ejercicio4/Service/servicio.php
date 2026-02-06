@@ -1,5 +1,4 @@
 <?php
-// Ejercicio4/servicio.php
 
 require_once 'Model/Alumno.php';
 require_once 'Model/Alumno-asignatura.php';
@@ -11,7 +10,7 @@ $codEstado = 200;
 $mensaje = "OK";
 $datosDevolver = [];
 
-// Capturamos datos de PUT y DELETE que no vienen en $_REQUEST nativamente
+
 $datosEntrada = [];
 if ($metodo == 'PUT' || $metodo == 'DELETE') {
     parse_str(file_get_contents("php://input"), $datosEntrada);

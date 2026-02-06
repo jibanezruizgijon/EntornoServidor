@@ -1,12 +1,13 @@
 <?php
 $token = "abc12345";
 $url = "http://localhost/EntornoServidor/Unidad12/Ejercicios12.7/Ejercicio3/consultaProductos.php";
+$rutaImg = "http://localhost/EntornoServidor/Unidad12/Ejercicios12.7/Ejercicio3/";
 if (isset($_REQUEST['filtraPrecio'])) {
     $parametros = '?min=' . $_REQUEST['min'] . '&max=' . $_REQUEST['max'] . "&token=" . $token;
-    mostrarDatos($url, $parametros);
+    mostrarDatos($url, $parametros, $rutaImg);
 } else if (isset($_REQUEST['filtraNombre'])) {
     $parametros = "?nombre=" . $_REQUEST['nombre'] . "&token=" . $token;;
-    mostrarDatos($url, $parametros);
+    mostrarDatos($url, $parametros, $rutaImg);
 }
 
 function mostrarEstado($codEstado, $mensaje)
@@ -16,7 +17,7 @@ function mostrarEstado($codEstado, $mensaje)
 }
 
 
-function mostrarDatos($url, $parametros)
+function mostrarDatos($url, $parametros, $rutaImg)
 {
     $data = @file_get_contents($url . $parametros);
     $respuesta = json_decode($data);
@@ -27,7 +28,7 @@ function mostrarDatos($url, $parametros)
         foreach ($respuesta as $producto) {
             echo "<tr><td>" . $producto->nombre . "</td>";
             echo "<td>" . $producto->precio . "</td>";
-            echo "<td> <img style='width: 200px;' src='http://localhost/EntornoServidor/Unidad12/Ejercicios12.7/Ejercicio3/" . $producto->urlImg . "'></td></tr>";
+            echo "<td> <img style='width: 200px;' src='" . $rutaImg . $producto->urlImg . "'></td></tr>";
         }
         echo "</table>";
     } else {

@@ -5,7 +5,7 @@
     session_destroy();
   }
   if (isset($_POST)) {
-    # code...
+    
   }
 ?>
 
