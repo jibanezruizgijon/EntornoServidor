@@ -27,18 +27,20 @@ class Alumno_Asignatura
     return $Asignaturas;
   }
 
-  // CCORREGIR
-  public static function obtenerMaricula($matricula, )
+  public static function ObtenerMatricula($matricula, $codigo_asignatura)
   {
     $conexion = Escuela::connectDB();
-    $seleccion = "SELECT * FROM alumno_asignatura";
+    $seleccion = "SELECT * FROM alumno_asignatura WHERE matricula='$matricula' AND codigo_asignatura='$codigo_asignatura'";
     $consulta = $conexion->query($seleccion);
-    $Asignaturas = [];
-    while ($registro = $consulta->fetchObject()) {
-      $Asignaturas[] = new Alumno_Asignatura($registro->matricula, $registro->codigo_asignatura);
+    if ($consulta->rowCount() > 0) {
+      $registro = $consulta->fetchObject();
+      $alumno_asignatura = new Alumno_Asignatura($registro->matricula, $registro->codigo_asignatura);
+      $conexion = null;
+      return $alumno_asignatura;
+    } else {
+      $conexion = null;
+      return false;
     }
-    $conexion = null;
-    return $Asignaturas;
   }
 
   public static function getAsignaturasLibres($matricula)
