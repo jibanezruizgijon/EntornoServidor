@@ -36,17 +36,15 @@
     <?php
     
       foreach ($data['fotos'] as $foto) {
-         $usuario= Foto::getUsuarioById($foto->getId_usuario());
-         
         ?>
          <tr>
-            <td><img src="../View/imagen/<?= $foto->getImagen()  ?>" alt="IMAGEN"></td>
-            <td><?=$usuario->getNombre() ?></td>
-            <td>3</td>
+            <td><img src="../View/imagen/<?= $foto['imagen']  ?>" alt="IMAGEN"></td>
+            <td><?=$foto['nombre'] ?></td>
+            <td><?= $foto['likes'] ?></td>
          </tr> 
         <?php
       }  
-        
+       
     ?> 
 </table>
 </body>

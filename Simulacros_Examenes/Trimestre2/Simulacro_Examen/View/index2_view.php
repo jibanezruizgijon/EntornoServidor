@@ -39,19 +39,17 @@
         <?php
 
         foreach ($data['fotos'] as $foto) {
-            $usuario = Foto::getUsuarioById($foto->getId_usuario());
-
         ?>
             <tr>
-                <td><a href="../Controller/detalle.php?id=<?= $foto->getId() ?>"><img src="../View/imagen/<?= $foto->getImagen()  ?>" alt="IMAGEN"></a></td>
-                <td><?= $usuario->getNombre() ?></td>
-                <td>3</td>
+                <td><a href="../Controller/detalle.php?id=<?= $foto['id'] ?>"><img src="../View/imagen/<?= $foto['imagen'] ?>" alt="IMAGEN"></a></td>
+                <td><?= $foto['nombre'] ?></td>
+                <td><?= $foto['likes'] ?></td>
                 <?php
-                if (Like::getLikeById($foto['id'], $data['id_usuario'])) {
-                    echo "Me gusta";
+                if (Like::getLikeById($foto['id'], $data['usuario']->getId())) {
+                    echo "<td>Me gusta </td>";
                 } else {
                 ?>
-                    <td><a href="../Controller/like.php">Me gusta</a></td>
+                    <td><a href="../Controller/like.php?id_foto=<?= $foto['id'] ?>&id_usuario=<?= $data['usuario']->getId() ?>">Me gusta</a></td>
                 <?php
                 }
                 ?>

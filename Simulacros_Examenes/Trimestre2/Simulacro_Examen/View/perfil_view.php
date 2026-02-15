@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil</title>
+    <style>
+        img{
+            width: 400px;
+        }
+    </style>
 </head>
 
 <body>
@@ -31,7 +36,8 @@
     <?php
       foreach ($data['fotos'] as $foto) {
         ?>
-         <img src="<?= $foto->getImagen() ?>" alt=""> 
+         <img src="../View/imagen/<?= $foto['imagen'] ?>" alt="imagen"> 
+         <br>
         <?php
       }  
     ?>

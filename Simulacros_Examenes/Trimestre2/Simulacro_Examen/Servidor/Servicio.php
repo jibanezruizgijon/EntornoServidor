@@ -14,7 +14,17 @@ if ($metodo == 'GET') {
     if (isset($_REQUEST['nombre'])) {
         $usuario = Usuario::getUsuarioByNombre($_REQUEST['nombre']);
         if ($usuario) {
-            $datosDevolver[] = $usuario->getFotosByUsuario();
+            $fotosObjetos = $usuario->getFotosByUsuario();
+            foreach ($fotosObjetos as $foto) {
+                $numLikes = Like::getLikesByFoto($foto->getId());
+                $nombreSinExtension = pathinfo($foto->getImagen(), PATHINFO_FILENAME);
+                $datosDevolver[] = [
+                    'id' => $foto->getId(),
+                    'imagen' => "http://localhost/EntornoServidor/Simulacros_Examenes/Trimestre2/Simulacro_Examen/Servidor/images". $nombreSinExtension,
+                    'id_usuario' => $foto->getId_usuario(),
+                    'likes' => $numLikes
+                ];
+            }
         } else {
             $codEstado = 400;
             $mensaje = "Usuario no enecontrado";
@@ -26,7 +36,14 @@ if ($metodo == 'GET') {
 } else if ($metodo == 'POST') {
     $usuario = Usuario::getUsuarioByNombre($_REQUEST['nombre']);
     if ($usuario) {
-        $datosDevolver = $usuario->getFotosByUsuario();
+        $fotosObjetos = $usuario->getFotosByUsuario();
+        foreach ($fotosObjetos as $foto) {
+            $datosDevolver[] = [
+                'id' => $foto->getId(),
+                'imagen' => $foto->getImagen(),
+                'id_usuario' => $foto->getId_usuario()
+            ];
+        }
     } else {
         $codEstado = 400;
         $mensaje = "Usuario no enecontrado";

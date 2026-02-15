@@ -9,14 +9,21 @@ if (!isset($_SESSION['nombre'])) {
     exit();
 }
 
-$fotos = Foto::getFotos();;
-foreach ($fotos as $foto) {
-    $autor = Usuario::getUsarioById($foto->getId_usuario());
-    $likes = Like::getLikesByFoto($foto->getId());
-    $data['fotos'][] = ['id' => $foto->getId(), 'imagen' => $foto->getImagen(), 'autor' => $autor, 'likes' => $likes];
+
+$data['fotos'] = [];
+$objetoFotos = Foto::getFotos();
+foreach ($objetoFotos as $foto) {
+    $numLikes = Like::getLikesByFoto($foto->getId());
+    $usuario = Foto::getUsuarioById($foto->getId_usuario());
+    $data['fotos'][] = [
+        'id' => $foto->getId(),
+        'imagen' => $foto->getImagen(),
+        'id_usuario' => $foto->getId_usuario(),
+        'likes' => $numLikes,
+        'nombre' => $usuario->getNombre()
+    ];
 }
 
-$data['fotos'] = Foto::getFotos();
-$data['usuarios'] = Usuario::getUsuarios();
+$data['usuario'] = Usuario::getUsuarioByNombre($_SESSION['nombre']);
 // Carga la vista de listado 
 include '../View/index2_view.php';

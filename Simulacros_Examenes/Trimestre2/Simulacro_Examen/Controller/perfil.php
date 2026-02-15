@@ -11,6 +11,15 @@ if (!isset($_SESSION['nombre'])) {
 
 $usuario = Usuario::getUsuarioByNombre($_SESSION['nombre']);
 
-$data['fotos'] = Foto::getFotosById($usuario->getId());
+$objetoFotos = Foto::getFotosById($usuario->getId());
+$data['fotos'] = [];
+foreach ($objetoFotos as $foto) {
+    $data['fotos'][] = [
+        'id' => $foto->getId(),
+        'imagen' => $foto->getImagen(),
+        'id_usuario' => $foto->getId_usuario()
+    ];
+}
+
 
 include '../View/perfil_view.php';

@@ -4,6 +4,8 @@ require_once '../Model/Foto.php';
 require_once '../Model/Usuario.php';
 require_once '../Model/Like.php';
 
-// $nuevoLike = new Like ( )
+ $nuevoLike = new Like ($_REQUEST['id_foto'], $_REQUEST['id_usuario']);
 
-// $nuevoLike->insert();
+ $nuevoLike->insert();
+
+ header("Location: ../Controller/index2.php");

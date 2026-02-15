@@ -26,17 +26,8 @@ class Like
 		$conexion->exec($borrado);
 	}
 
-	public function likesByFoto()
+	public static function getLikesByFoto($id)
 	{
-		$conexion = FotografiasDB::connectDB();
-		$seleccion = "SELECT COUNT(*) as total FROM likes WHERE id_foto='$this->id_foto'";
-		$consulta = $conexion->query($seleccion);
-		$total = $consulta->fetchColumn();
-		$conexion = null;
-		return $total;
-	}
-
-	public static function getLikesByFoto($id){
 		$conexion = FotografiasDB::connectDB();
 		$seleccion = "SELECT COUNT(*) as total FROM likes WHERE id_foto='$id'";
 		$consulta = $conexion->query($seleccion);
@@ -46,9 +37,17 @@ class Like
 	}
 
 
-public static function getLikeById ($id){
-  
-}
-	// getUserByLikesFoto($id)
-	// Select * from likes WHERE id_foto=$id
+	public static function getLikeById($id)
+	{
+		$conexion = FotografiasDB::connectDB();
+		$seleccion = "SELECT * FROM likes WHERE id= '$id'";
+		$consulta = $conexion->query($seleccion);
+		if ($consulta->rowCount() > 0) {
+			$conexion = null;
+			return true;
+		} else {
+			$conexion = null;
+			return false;
+		}
+	}
 }

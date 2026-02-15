@@ -22,7 +22,9 @@
     <h2>Usuarios que han dado like:</h2>
 
     <?php
-
+   foreach ($data['nombresLike'] as $nombre) {
+                echo "<li>" . $nombre . "</li>";
+            }
     ?>
 
     <hr>
