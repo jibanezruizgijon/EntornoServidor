@@ -72,18 +72,17 @@ class Usuario
 			return false;
 		}
 	}
-
 	public function getFotosByUsuario()
-  {
-    $conexion = FotografiasDB::connectDB();
-    $seleccion = "SELECT * FROM fotos JOIN usuarios ON fotos.id_usuario = usuarios.id WHERE ida='$this->id'";
-    $consulta = $conexion->query($seleccion);
-    $fotos = [];
-    while ($registro = $consulta->fetchObject()) {
-      $fotos[] = new Foto($registro->id, $registro->imagen, $registro->id_usuario);
-    }
-    return $fotos;
-  }
+	{
+		$conexion = FotografiasDB::connectDB();
+		$seleccion = "SELECT * FROM fotos  WHERE id_usuario='$this->id'";
+		$consulta = $conexion->query($seleccion);
+		$fotos = [];
+		while ($registro = $consulta->fetchObject()) {
+			$fotos[] = new Foto($registro->id, $registro->imagen, $registro->id_usuario);
+		}
+		return $fotos;
+	}
 
 	public function getId()
 	{

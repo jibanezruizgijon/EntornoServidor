@@ -1,6 +1,5 @@
 <?php
 require_once 'FotografiasDB.php';
-require_once 'Like.php';
 class Foto {
 	private $id;
 	private $imagen;
@@ -14,7 +13,7 @@ class Foto {
 
 	public function insert() {
 		$conexion = FotografiasDB::connectDB();
-		$insercion = "INSERT INTO fotos VALUES (null, '$this->imagen', '$this->id_usuario')";
+		$insercion = "INSERT INTO fotos VALUES (null, '$this->imagen', $this->id_usuario)";
 		$conexion->exec($insercion);
 	}
 	public function delete() {
@@ -24,10 +23,9 @@ class Foto {
 	}
 	public function update() {
 		$conexion = FotografiasDB::connectDB();
-		$actualiza = "UPDATE fotos SET id_usuario=$this->id_usuario WHERE id='$this->id'";
+		$actualiza = "UPDATE fotos SET id_usuario=$this->id_usuario WHERE id=$this->id";
         $conexion->exec($actualiza);
 	}
-	
 	public static function getFotos() {
 		$conexion = FotografiasDB::connectDB();
 		$seleccion = "SELECT * FROM fotos ORDER BY imagen";
@@ -38,10 +36,9 @@ class Foto {
 		}
 		return $fotos;
 	}
-
-	public static function getFotosById($id_usuario) {
+	public static function getFotosByUsu($id) {
 		$conexion = FotografiasDB::connectDB();
-		$seleccion = "SELECT * FROM fotos WHERE id_usuario='$id_usuario'";
+		$seleccion = "SELECT * FROM fotos WHERE id_usuario=$id";
 		$consulta = $conexion->query($seleccion);
 		$fotos = [];
 		while ($registro = $consulta->fetchObject()) {
@@ -49,23 +46,17 @@ class Foto {
 		}
 		return $fotos;
 	}
-
-  public static function getFotoById($id)
-  {
-    $conexion = FotografiasDB::connectDB();
-    $seleccion = "SELECT * FROM fotos WHERE id = '$id'";
-    $consulta = $conexion->query($seleccion);
-    if ($consulta->rowCount() > 0) {
-      $registro = $consulta->fetchObject();
-      $foto = new Foto($registro->id, $registro->imagen, $registro->id_usuario);
-      $conexion = null;
-      return $foto;
-    } else {
-      $conexion = null;
-      return false;
-    }
-  }
-		
+	public static function getFotoById($id) {
+		$conexion = FotografiasDB::connectDB();
+		$seleccion = "SELECT * FROM fotos WHERE id=$id";
+		$consulta = $conexion->query($seleccion);
+		if ($registro = $consulta->fetchObject()) {
+			return new Foto($registro->id, $registro->imagen, $registro->id_usuario);
+		} else {
+			return false;
+		}
+	}
+	
 	public function getId(){
 		return $this->id;
 	}

@@ -7,7 +7,7 @@
     <title>Perfil</title>
     <style>
         img{
-            width: 400px;
+            width: 200px;
         }
     </style>
 </head>
@@ -37,6 +37,7 @@
       foreach ($data['fotos'] as $foto) {
         ?>
          <img src="../View/imagen/<?= $foto['imagen'] ?>" alt="imagen"> 
+         <p>Likes acumulados <?= $foto['numLikes'] ?></p>
          <br>
         <?php
       }  

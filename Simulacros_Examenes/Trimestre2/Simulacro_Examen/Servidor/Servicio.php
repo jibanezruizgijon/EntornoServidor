@@ -1,5 +1,4 @@
 <?php
-require_once 'FotografiasDB.php';
 require_once 'Usuario.php';
 require_once 'Foto.php';
 require_once 'Like.php';
@@ -9,7 +8,7 @@ $codEstado = 200;
 $mensaje = "OK";
 $datosDevolver = [];
 
-
+// --- Método GET --- 
 if ($metodo == 'GET') {
     if (isset($_REQUEST['nombre'])) {
         $usuario = Usuario::getUsuarioByNombre($_REQUEST['nombre']);
@@ -20,7 +19,7 @@ if ($metodo == 'GET') {
                 $nombreSinExtension = pathinfo($foto->getImagen(), PATHINFO_FILENAME);
                 $datosDevolver[] = [
                     'id' => $foto->getId(),
-                    'imagen' => "http://localhost/EntornoServidor/Simulacros_Examenes/Trimestre2/Simulacro_Examen/Servidor/images". $nombreSinExtension,
+                    'imagen' => "http://localhost/EntornoServidor/Simulacros_Examenes/Trimestre2/Simulacro_Examen/Servidor/images" . $nombreSinExtension,
                     'id_usuario' => $foto->getId_usuario(),
                     'likes' => $numLikes
                 ];
@@ -33,6 +32,7 @@ if ($metodo == 'GET') {
         $codEstado = 400;
         $mensaje = "falta el parámetro nombre en la petición";
     }
+    // --- Método POST ---
 } else if ($metodo == 'POST') {
     $usuario = Usuario::getUsuarioByNombre($_REQUEST['nombre']);
     if ($usuario) {
@@ -48,6 +48,7 @@ if ($metodo == 'GET') {
         $codEstado = 400;
         $mensaje = "Usuario no enecontrado";
     }
+    // Método PUT
 } else if ($metodo == 'PUT') {
     parse_str(file_get_contents("PHP://input"), $parametros);
     if (isset($parametros['id_foto']) && isset($parametros['id_usuario'])) {
@@ -69,8 +70,23 @@ if ($metodo == 'GET') {
         $codEstado = 400;
         $mensaje = "falta el id de usaurio o el id de foto";
     }
+    // Método DELETE
+} elseif ($metodo == 'DELETE') {
+    if (isset($_REQUEST['id'])) {
+        $foto = Foto::getFotoById($_REQUEST['id']);
+        if ($foto) {
+            $foto->delete();
+        } else {
+            $codEstado = 404;
+            $mensaje = "No existe el foto con ese id";
+        }
+    } else {
+        $codEstado = 400;
+        $mensaje = "falta el parámetro id en la petición";
+    }
 }
 
+//CABECERA
 setCabecera($codEstado, $mensaje);
 if ($codEstado == 200) {
     echo json_encode($datosDevolver);

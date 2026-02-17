@@ -14,7 +14,7 @@ if (!isset($_GET['id'])) {
     exit();
 } else {
     $data['foto'] = Foto::getFotoById($_GET['id']);
-    $data['usuario']  = Foto::getUsuarioById($data['foto']->getId_usuario());
+    $data['usuario']  = Usuario::getUsuarioById($data['foto']->getId_usuario());
 
     $data['nombresLike'] = $data['foto']->getNombresUsuariosLikes();
     include '../View/detalle_view.php';

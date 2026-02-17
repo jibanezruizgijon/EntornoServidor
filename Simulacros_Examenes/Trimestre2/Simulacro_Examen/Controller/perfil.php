@@ -14,10 +14,12 @@ $usuario = Usuario::getUsuarioByNombre($_SESSION['nombre']);
 $objetoFotos = Foto::getFotosById($usuario->getId());
 $data['fotos'] = [];
 foreach ($objetoFotos as $foto) {
+    $numLikes = Like::getLikesByFoto($foto->getId());
     $data['fotos'][] = [
         'id' => $foto->getId(),
         'imagen' => $foto->getImagen(),
-        'id_usuario' => $foto->getId_usuario()
+        'id_usuario' => $foto->getId_usuario(),
+        'numLikes' => $numLikes
     ];
 }
 

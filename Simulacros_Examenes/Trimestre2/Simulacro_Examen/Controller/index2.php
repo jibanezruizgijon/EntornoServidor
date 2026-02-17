@@ -14,7 +14,7 @@ $data['fotos'] = [];
 $objetoFotos = Foto::getFotos();
 foreach ($objetoFotos as $foto) {
     $numLikes = Like::getLikesByFoto($foto->getId());
-    $usuario = Foto::getUsuarioById($foto->getId_usuario());
+    $usuario = Usuario::getUsuarioById($foto->getId_usuario());
     $data['fotos'][] = [
         'id' => $foto->getId(),
         'imagen' => $foto->getImagen(),

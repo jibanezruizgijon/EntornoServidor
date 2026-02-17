@@ -74,21 +74,6 @@ class Foto
 		return $fotos;
 	}
 
-	public static function getUsuarioById($id)
-	{
-		$conexion = FotografiasDB::connectDB();
-		$seleccion = "SELECT * FROM usuarios WHERE id = '$id'";
-		$consulta = $conexion->query($seleccion);
-		if ($consulta->rowCount() > 0) {
-			$registro = $consulta->fetchObject();
-			$usuario = new Usuario($registro->id, $registro->nombre);
-			$conexion = null;
-			return $usuario;
-		} else {
-			$conexion = null;
-			return false;
-		}
-	}
 
 	public static function getFotoById($id)
 	{
