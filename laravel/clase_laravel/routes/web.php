@@ -9,7 +9,6 @@ Route::get('/', function () {
     return "<h1>Bienvenido a la aplicacic¡ón de laravel </h1>";
 })->name('home');
 
-
 Route::get('/home', HomeController::class)->name('home'); 
 
 Route::get('/curso/{curso}', [CursoController::class, "show"])->name('cursos.show');
