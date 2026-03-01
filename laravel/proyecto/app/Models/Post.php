@@ -12,7 +12,8 @@ class Post extends Model
 
     // Especifica la tabla asociada al modelo
     protected $table = 'posts';
-    
+     
+    // El campo titulo se guardará con la primera letra en mayúscula y el resto en minúscula
     protected function title(): Attribute
     {
         return Attribute::make(
@@ -20,6 +21,13 @@ class Post extends Model
                 return ucfirst(strtolower($value)) ; 
             },
         );
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'is_active' => 'boolean',
+        ];
     }
    
 

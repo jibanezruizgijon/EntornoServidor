@@ -7,9 +7,10 @@
     <title>Proyecto Post</title>
 </head>
 <body>
-    <h1>Aquí se mostrará el post: {{ $post }}</h1>
-    @if (true)
-        <p>Contenido de Prueba</p>
-    @endif
+    <h1>Aquí se mostrará el post: {{ $post->id }}</h1>
+    <h2><b>Título: </b>{{ $post->title }}</h2>
+    <p>{{ $post->content }}</p>
+    <a href="/post/{{ $post->id }}/edit">Editar Post</a>
+    <a href="/post">Volver</a>
 </body>
 </html>
