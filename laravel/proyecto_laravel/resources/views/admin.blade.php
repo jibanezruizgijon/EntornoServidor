@@ -24,15 +24,16 @@
                     <img src="{{ asset($cuadro->urlImg) }}" alt="{{ $cuadro->nombre }}"
                         style="max-width: 100%; height: auto;">
                 @endif
-                @if(auth()->user()->rol === 'ADMIN')
-                    <form action="{{ route('cuadros.destroy', $cuadro) }}" method="POST" style="margin-top: 10px;">
-                        @csrf @method('DELETE') <button type="submit" 
-                                onclick="return confirm('¿Estás seguro de que deseas borrar el cuadro {{ $cuadro->nombre }}?')" 
-                                style="background-color: #dc3545; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; width: 100%;">
-                            🗑️ Eliminar Cuadro
+                @can('delete-cuadro')
+                    <form action="{{ route('galeria.destroy', $cuadro->id) }}" method="POST" style="margin-top: 10px;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" style="background-color: red; color: white; border: none; padding: 5px 10px; cursor: pointer;">
+                            Eliminar
                         </button>
                     </form>
-                @endif
+                @endcan
+                
             </div>
         @endforeach
     </div>

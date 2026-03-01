@@ -12,5 +12,10 @@
     <p>{{ $post->content }}</p>
     <a href="/post/{{ $post->id }}/edit">Editar Post</a>
     <a href="/post">Volver</a>
+    <form action="/post/{{ $post->id }}" method="post">
+        @csrf
+        @method('DELETE')
+        <button type="submit">Eliminar Post</button>
+    </form>
 </body>
 </html>

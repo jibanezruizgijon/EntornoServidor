@@ -28,6 +28,9 @@ Route::get('post/{id}/edit', [PostController::class, 'edit'])->name('post');
 // Ruta para actualizar un post existente en la base de datos
 Route::put('/post/{id}', [PostController::class, 'update'])->name('post.update');
 
+//Ruta para eliminar un post existente de la base de datos
+ Route::delete('/post/{id}', [PostController::class, 'destroy']);
+
 // Ruta para crear un nuevo post
 Route::get('/prueba', function() {
     $post = new Post;
