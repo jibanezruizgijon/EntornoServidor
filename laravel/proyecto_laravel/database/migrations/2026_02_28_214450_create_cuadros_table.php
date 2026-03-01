@@ -6,20 +6,20 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+
     public function up(): void
     {
         Schema::create('cuadros', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre');
+            $table->string('autor');
+            $table->string('epocaPintura');
+            $table->string('urlImg')->nullable();   
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
+
     public function down(): void
     {
         Schema::dropIfExists('cuadros');
