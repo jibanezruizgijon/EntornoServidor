@@ -10,9 +10,11 @@
     <h1>Aquí se mostrará el post: {{ $post->id }}</h1>
     <h2><b>Título: </b>{{ $post->title }}</h2>
     <p>{{ $post->content }}</p>
-    <a href="/post/{{ $post->id }}/edit">Editar Post</a>
-    <a href="/post">Volver</a>
-    <form action="/post/{{ $post->id }}" method="post">
+    <a href="{{ route('post.edit', $post->id) }}">Editar Post</a>
+    <br><br>
+    <a href="{{ route('post.index') }}">Volver</a>
+    <br><br>
+    <form action="{{ route('post.destroy', $post->id) }}" method="post">
         @csrf
         @method('DELETE')
         <button type="submit">Eliminar Post</button>

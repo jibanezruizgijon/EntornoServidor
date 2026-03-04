@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/login');
 
+
 Route::middleware(['auth', 'verified'])->group(function () {
     // Tu ruta actual de la galería
     Route::get('/galeria', [CuadroController::class, 'index'])->name('home');

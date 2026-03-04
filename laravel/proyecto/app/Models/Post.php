@@ -12,13 +12,13 @@ class Post extends Model
 
     // Especifica la tabla asociada al modelo
     protected $table = 'posts';
-     
+
     // El campo titulo se guardará con la primera letra en mayúscula y el resto en minúscula
     protected function title(): Attribute
     {
         return Attribute::make(
             set: function ($value) {
-                return ucfirst(strtolower($value)) ; 
+                return ucfirst(strtolower($value));
             },
         );
     }
@@ -29,6 +29,16 @@ class Post extends Model
             'is_active' => 'boolean',
         ];
     }
-   
 
+    // Si queremos que se busque por el título en lugar del id
+    // public function getRouteKeyName()
+    // {
+    //     return 'title';
+    // }
+
+    // Especifica los campos que se pueden asignar 
+    protected $fillable = ['title', 'content', 'author'];
+
+    // Campos que no se pueden asignar masivamente
+    protected $guarded = ['id', 'created_at', 'updated_at', 'is_active'];
 }
