@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CuadroController;
+use App\Models\Cuadro;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/login');
@@ -9,16 +10,20 @@ Route::redirect('/', '/login');
 Route::middleware(['auth', 'verified'])->group(function () {
     // Tu ruta actual de la galería
     Route::get('/galeria', [CuadroController::class, 'index'])->name('home');
-
-    // NUEVA RUTA: Para eliminar un cuadro (Fíjate que usa Route::delete)
-    Route::delete('/cuadros/{cuadro}', [CuadroController::class, 'destroy'])->name('cuadros.destroy');
-
-    // Tu ruta temporal del admin
-    Route::get('/admin', function () {
-        return "<h1>Panel de Administrador en construcción...</h1>";
-    })->name('admin.panel');
 });
+
+Route::resource('cuadros', CuadroController::class);
 // Ruta para mostrar la vista de cuadros
+
+Route::get('/prueba', function () {
+    Cuadro::create([
+        'nombre' => 'PRUEBAAAA',
+        'autor' => 'Leonardo da Vinci',
+        'epocaPintura' => 'Renacimiento',
+        'urlImg' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/800px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg',
+    ]);
+    return 'Cuadro de prueba creado';
+});
 //Route::get('/galeria', [CuadroController::class, 'index'])->name('galeria.index');
 
 require __DIR__.'/settings.php';

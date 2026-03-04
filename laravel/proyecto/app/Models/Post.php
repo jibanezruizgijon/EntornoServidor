@@ -23,6 +23,13 @@ class Post extends Model
         );
     }
 
+    // Relación uno a muchos con el modelo Comment
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    // la columna is_active se guardará como un booleano
     protected function casts(): array
     {
         return [

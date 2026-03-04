@@ -9,12 +9,8 @@ class Cuadro extends Model
 {
     use HasFactory;
 
-    // !!!!!!!! No entiendo esta parte
-    protected $fillable = [
-        'autor',
-        'epocaPintura',
-        'urlImg',
-    ];
+    protected $table = 'cuadros';
+
 
     public function votos()
     {
@@ -25,4 +21,14 @@ class Cuadro extends Model
     {
         return $this->votos()->avg('puntuacion') ?? 0.0;
     }
+
+    
+    protected $fillable = [
+        'nombre',
+        'autor',
+        'epocaPintura',
+        'urlImg',
+    ];
+
+    protected $guarded = ['id', 'created_at', 'updated_at'];
 }

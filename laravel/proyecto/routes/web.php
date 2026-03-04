@@ -6,7 +6,7 @@ use App\Http\Controllers\PostController;
 use App\Models\Phone;
 use App\Models\Post;
 use App\Models\User;
-
+use App\Models\Comment;
 Route::get('/', [PostController::class, 'index'])->name('post');
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -21,9 +21,17 @@ Route::get('/prueba', function () {
     // $user = User::where('id', 12)->with('phone')->first();
     // return $user;
 
-    $phone = Phone::find(1);
-    return $phone;
-});
+    // $phone = Phone::find(1);
+    // return $phone;
+
+    // Comment::create([
+    //     'content' => 'Comentario de prueba',
+    //     'post_id' => 107,
+    // ]);
+
+        $post = Post::find(105);
+        return $post->comments;
+    });
 /*
 // Ruta para mostrar el formulario de creación de un nuevo post
 Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
@@ -48,15 +56,15 @@ Route::resource('post', PostController::class);
 
 
 // Ruta para crear un nuevo post
-// Route::get('/prueba', function () {
-//     $post = new Post;
-//     $post->title = 'tíTuLo de PrUeba 4';
-//     $post->content = 'Contenido de Prueba 4';
-//     $post->author = 'Autor de Prueba 4';
-//     $post->save();
+Route::get('/prueba', function () {
+    $post = new Post;
+    $post->title = 'tíTuLo de PrUeba 4';
+    $post->content = 'Contenido de Prueba 4';
+    $post->author = 'Autor de Prueba 4';
+    $post->save();
 
-//     return view('prueba', ['post' => $post]);
-// })->name('prueba');
+    return view('prueba', ['post' => $post]);
+})->name('prueba');
 
 // // Ruta para mostrar todos los posts
 // Route::get('/recoger', function () {

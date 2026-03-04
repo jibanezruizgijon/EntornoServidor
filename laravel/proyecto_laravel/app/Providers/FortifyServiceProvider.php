@@ -32,21 +32,11 @@ class FortifyServiceProvider extends ServiceProvider
         $this->configureActions();
         $this->configureViews();
         $this->configureRateLimiting();
-        // --- NUESTRA REDIRECCIÓN INTELIGENTE (LOGIN) ---
+       
         $this->app->singleton(LoginResponse::class, function () {
-            // Si el usuario es ADMIN, lo mandamos a su panel
-            if (Auth::user()->rol === 'ADMIN') {
-                return redirect()->intended(route('admin.panel', absolute: false));
-            }
-            
-            // Si es un USUARIO normal, lo mandamos a la galería
             return redirect()->intended(route('home', absolute: false));
         });
 
-        // --- NUESTRA REDIRECCIÓN PARA NUEVOS REGISTROS ---
-        $this->app->singleton(RegisterResponse::class, function () {
-            return redirect()->intended(route('home', absolute: false));
-        });
     }
 
     /**
