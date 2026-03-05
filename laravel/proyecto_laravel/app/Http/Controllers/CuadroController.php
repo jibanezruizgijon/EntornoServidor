@@ -11,7 +11,7 @@ class CuadroController extends Controller
     public function index()
     {
         $cuadros = Cuadro::orderBy('created_at', 'desc')->paginate(12); 
-        return view('galeria', compact('cuadros')); 
+        return view('cuadros.index', compact('cuadros')); 
     }
 
     public function create()

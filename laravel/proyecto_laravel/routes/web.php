@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CuadroController;
+use App\Http\Controllers\VotoController;
 use App\Models\Cuadro;
 use Illuminate\Support\Facades\Route;
 
@@ -9,7 +10,7 @@ Route::redirect('/', '/login');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     // Tu ruta actual de la galería
-    Route::get('/galeria', [CuadroController::class, 'index'])->name('home');
+    Route::get('/cuadros.index', [CuadroController::class, 'index'])->name('home');
 });
 
 Route::resource('cuadros', CuadroController::class);
@@ -24,6 +25,11 @@ Route::get('/prueba', function () {
     ]);
     return 'Cuadro de prueba creado';
 });
+Route::get('/ranking', function () {
+    return view('ranking');
+})->name('ranking');
+// Ruta para manejar el voto
+Route::post('/voto', [VotoController::class, 'store'])->name('voto.store');
 //Route::get('/galeria', [CuadroController::class, 'index'])->name('galeria.index');
 
 require __DIR__.'/settings.php';

@@ -1,48 +1,82 @@
-<!DOCTYPE html>
-<html lang="es">
+<x-app>
+    @section('head')
+        <div class="col">
+            <nav class="navbar navbar-expand-lg bg-danger" data-bs-theme="dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">Inicio</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="navbar-nav">
+                            <a class="nav-link active" aria-current="page" href="{{ route('home') }}">Inicio</a>
+                            <a class="nav-link" href="{{ route('ranking') }}">Ranking</a>
+                            @if (auth()->user()->rol === 'ADMIN')
+                                <a href="{{ route('cuadros.create') }}" class="nav-link">Nuevo Cuadro</a>
+                            @endif
+                            <form action="{{ route('logout') }}" method="post">
+                                @csrf
+                                <button type="submit" class="nav-link btn btn-link">Cerrar Sesión</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    @endsection
+    @section('content')
+        <div class="container">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prueba de Galería</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"> </script>
-</head>
+            <h1>Mi Galería de Arte</h1>
+            <hr>
+            <div class="row">
+                @foreach ($cuadros as $cuadro)
+                    <div class="card">
 
-<body>
-    <h1>Mi Galería de Arte</h1>
-    <hr>
- <a href="{{ route('cuadros.create') }}" class="btn btn-primary">Nuevo Cuadro</a>
-    <div style="display: flex; flex-wrap: wrap; gap: 20px;">
-        @foreach ($cuadros as $cuadro)
-            <div style="border: 1px solid #ccc; padding: 10px; text-align: center; width: 250px;">
-                <h3>{{ $cuadro->nombre }}</h3>
-                <p><strong>Autor:</strong> {{ $cuadro->autor }}</p>
-                <p><em>{{ $cuadro->epocaPintura }}</em></p>
+                        @if (Str::startsWith($cuadro->urlImg, 'http'))
+                            <a href="{{ route('cuadros.show', $cuadro) }}">
+                                <img src="{{ $cuadro->urlImg }}" class="card-img-top" alt="{{ $cuadro->nombre }}">
+                            </a>
+                        @else
+                            <a href="{{ route('cuadros.show', $cuadro) }}">
+                                <img src="{{ asset($cuadro->urlImg) }}" class="card-img-top" alt="{{ $cuadro->nombre }}">
+                            </a>
+                        @endif
+                        <div class="card-body text-center">
+                            <h3 class="card-title">{{ $cuadro->nombre }}</h3>
+                            <p class="card-text"><strong>Autor:</strong> {{ $cuadro->autor }}</p>
+                            <p class="card-text"><em>{{ $cuadro->epocaPintura }}</em></p>
+                        </div>
 
-                @if (Str::startsWith($cuadro->urlImg, 'http'))
-                    <img src="{{ $cuadro->urlImg }}" alt="{{ $cuadro->nombre }}" style="max-width: 100%; height: auto;">
-                @else
-                    <img src="{{ asset($cuadro->urlImg) }}" alt="{{ $cuadro->nombre }}"
-                        style="max-width: 100%; height: auto;">
-                @endif
-                @if(auth()->user()->rol === 'ADMIN')
-                    <form action="{{ route('cuadros.destroy', $cuadro) }}" method="POST" style="margin-top: 10px;">
-                        @csrf @method('DELETE') <button type="submit" 
-                                onclick="return confirm('¿Estás seguro de que deseas borrar el cuadro {{ $cuadro->nombre }}?')" 
-                                style="background-color: #dc3545; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; width: 100%;">
-                            Eliminar Cuadro
-                        </button>
-                    </form>
-                    <a href="{{ route('cuadros.edit', $cuadro) }}" class="btn btn-warning">Editar Cuadro</a>
-                @endif
+                        @if (auth()->user()->rol === 'ADMIN')
+                            <form action="{{ route('cuadros.destroy', $cuadro) }}" method="POST"
+                                style="margin-top: 10px;">
+                                @csrf @method('DELETE') <button type="submit" class="btn btn-danger w-100"
+                                    onclick="return confirm('¿Estás seguro de que deseas borrar el cuadro \'{{ $cuadro->nombre }}?\'')">
+                                    Eliminar Cuadro
+                                </button>
+                            </form>
+                            <a href="{{ route('cuadros.edit', $cuadro) }}" class="btn btn-warning">Editar Cuadro</a>
+                        @else
+                            <form action="{{ route('votos.store') }}" method="post">
+                                @csrf
+                                <select name="voto" id="voto" class="form-select mb-2">
+                                    <option value="">Seleccione una puntuación</option>
+                                    <option value="1">1 - Muy mala</option>
+                                    <option value="2">2 - Mala</option>
+                                    <option value="3">3 - Regular</option>
+                                    <option value="4">4 - Buena</option>
+                                    <option value="5">5 - Excelente</option>
+                                </select>
+                                <input type="submit" class="btn btn-primary" value="Votar">
+                            </form>
+                        @endif
+                    </div>
+                @endforeach
+
             </div>
-        @endforeach
-        
-    </div>
-{{ $cuadros->links() }}
-</body>
-
-</html>
+            {{ $cuadros->links() }}
+        </div>
+    @endsection
+</x-app>
