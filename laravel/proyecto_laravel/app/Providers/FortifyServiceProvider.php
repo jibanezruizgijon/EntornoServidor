@@ -37,6 +37,16 @@ class FortifyServiceProvider extends ServiceProvider
             return redirect()->intended(route('home', absolute: false));
         });
 
+        $this->app->singleton(RegisterResponse::class, function () {
+            return new class implements RegisterResponse {
+                public function toResponse($request)
+                {
+                    // Mantiene la sesión iniciada y te manda directo a la galería
+                    return redirect()->intended(route('home', absolute: false));
+                }
+            };
+        });
+
     }
 
     /**

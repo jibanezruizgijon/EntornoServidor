@@ -60,7 +60,8 @@
                             </form>
                             
                         @else
-                            <form action="{{ route('votos.store') }}" method="post">
+                        {{-- {{ route('votos.store') }} --}}
+                            <form action="#" method="post">
                                 @csrf
                                 <select name="voto" id="voto" class="form-select mb-2">
                                     <option value="">Seleccione una puntuación</option>
