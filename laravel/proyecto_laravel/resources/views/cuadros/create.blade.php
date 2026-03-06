@@ -7,7 +7,7 @@
                     <h1>Aquí crear un nuevo Cuadro</h1>
 
 
-                    <form action="{{ route('cuadros.store') }}" class="p-4 bg-primary-subtle border rounded needs-validation"
+                    <form action="{{ route('cuadros.store') }}" enctype="multipart/form-data" class="p-4 bg-primary-subtle border rounded needs-validation"
                         method="post">
                         @csrf
                         @error('nombre')

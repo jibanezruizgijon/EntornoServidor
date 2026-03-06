@@ -40,7 +40,7 @@
                             </a>
                         @else
                             <a href="{{ route('cuadros.show', $cuadro) }}">
-                                <img src="{{ asset($cuadro->urlImg) }}" class="card-img-top" alt="{{ $cuadro->nombre }}">
+                                <img src="{{ asset('storage/' .$cuadro->urlImg) }}" class="card-img-top" alt="{{ $cuadro->nombre }}">
                             </a>
                         @endif
                         <div class="card-body text-center">
@@ -50,6 +50,7 @@
                         </div>
 
                         @if (auth()->user()->rol === 'ADMIN')
+                        <a href="{{ route('cuadros.edit', $cuadro) }}" class="btn btn-warning">Editar Cuadro</a>
                             <form action="{{ route('cuadros.destroy', $cuadro) }}" method="POST"
                                 style="margin-top: 10px;">
                                 @csrf @method('DELETE') <button type="submit" class="btn btn-danger w-100"
@@ -57,7 +58,7 @@
                                     Eliminar Cuadro
                                 </button>
                             </form>
-                            <a href="{{ route('cuadros.edit', $cuadro) }}" class="btn btn-warning">Editar Cuadro</a>
+                            
                         @else
                             <form action="{{ route('votos.store') }}" method="post">
                                 @csrf

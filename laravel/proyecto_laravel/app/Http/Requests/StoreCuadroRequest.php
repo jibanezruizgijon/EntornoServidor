@@ -25,7 +25,7 @@ class StoreCuadroRequest extends FormRequest
             'nombre' => 'required|string|max:255',
             'autor' => 'required|string|max:255',
             'epocaPintura' => 'required|string|max:255',
-            'urlImg' => 'required|url|max:255',
+            'urlImg' => 'required|image',
         ];
     }
 
