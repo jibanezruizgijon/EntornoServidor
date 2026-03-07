@@ -1,0 +1,3 @@
+<svg viewBox="0 0 100 100" {{ $attributes }}>
+  <path d="M49.5,12C26.5,12,8,30.5,8,53.5c0,21.5,16,39.5,37,41.5c4.5,0.5,8-3,8-7.5v-7.5c0-6.5,5.5-12,12-12h5.5 c15.5,0,28.5-13,28.5-28.5C99,26.5,76.5,12,49.5,12z" fill="currentColor"/>
+  <circle cx="28" cy="48" r="6" fill="#dc3545"/> <circle cx="40" cy="30" r="6" fill="#ffc107"/> <circle cx="60" cy="26" r="6" fill="#28a745"/> <circle cx="78" cy="40" r="6" fill="#007bff"/> </svg>

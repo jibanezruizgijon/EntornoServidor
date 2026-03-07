@@ -1,12 +1,12 @@
 <x-app>
-    @section('title', 'Ranking de Obras')
+    @section('title', 'Ranking de Cuadros')
     
     @section('content')
         <div class="bg-light min-vh-100 pt-5 pb-5">
             <div class="container mt-5">
                 
                 <div class="d-flex justify-content-between align-items-center mb-5">
-                    <h1 class="display-6 fw-light m-0">Ranking de Obras</h1>
+                    <h1 class="display-6 fw-light m-0">Ranking de Cuadros</h1>
                     <a href="{{ route('home') }}" class="btn btn-outline-dark px-4 py-2">
                         Volver a la galería
                     </a>

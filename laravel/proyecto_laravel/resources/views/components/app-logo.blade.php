@@ -3,7 +3,15 @@
 ])
 
 @if($sidebar)
-    <flux:sidebar.brand name="Galería de Arte" style="font-size: 1.5rem; font-weight: bold; white-space: nowrap;" {{ $attributes }} />
+    <flux:sidebar.brand name="Galería de Arte" {{ $attributes }}>
+        <x-slot name="logo" class="flex aspect-square size-8 items-center justify-center rounded-md">
+            <x-app-logo-icon class="size-6 text-black dark:text-white" />
+        </x-slot>
+    </flux:sidebar.brand>
 @else
-    <flux:brand name="Galería de Arte" style="font-size: 1.5rem; font-weight: bold; white-space: nowrap;" {{ $attributes }} />
+    <flux:brand name="Galería de Arte" {{ $attributes }}>
+        <x-slot name="logo" class="flex aspect-square size-8 items-center justify-center rounded-md">
+            <x-app-logo-icon class="size-6 text-black dark:text-white" />
+        </x-slot>
+    </flux:brand>
 @endif

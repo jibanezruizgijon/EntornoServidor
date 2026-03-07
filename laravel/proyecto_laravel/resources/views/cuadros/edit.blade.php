@@ -1,5 +1,5 @@
 <x-app>
-    @section('title', 'Editar Obra')
+    @section('title', 'Editar Cuadro')
     
     @section('content')
         <section class="container pt-5  mb-5">
@@ -14,7 +14,7 @@
                 <div class="col-lg-7 col-md-9">
                     <div class="card border-0 shadow-lg p-4 p-md-5">
                         
-                        <h2 class="display-6 fw-bold mb-4 text-center">Editar Obra</h2>
+                        <h2 class="display-6 fw-bold mb-4 text-center">Editar Cuadro</h2>
                         
                         {{-- Previsualización de la imagen actual mejorada --}}
                         <div class="text-center mb-2  rounded ">
@@ -37,7 +37,7 @@
                             @enderror
                             <div class="form-floating mb-4">
                                 <input type="text" class="form-control" id="floatingInputNombre" name="nombre" placeholder="Nombre" value="{{ old('nombre', $cuadro->nombre) }}">
-                                <label for="floatingInputNombre">Título de la obra</label>
+                                <label for="floatingInputNombre">Título del cuadro</label>
                             </div>
 
                             {{-- Campo AUTOR --}}

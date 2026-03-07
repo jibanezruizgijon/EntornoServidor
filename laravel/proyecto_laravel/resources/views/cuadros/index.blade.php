@@ -1,4 +1,5 @@
 <x-app>
+    @section('title', 'Galería de Arte')
     {{-- Menú de navegación --}}
     @section('head')
         <nav class="navbar navbar-expand-lg bg-dark fixed-top shadow-sm z-3 " data-bs-theme="dark">
@@ -25,7 +26,7 @@
     @section('content')
         <div class="bg-light min-vh-100 pt-5 pb-5">
             <div class="container mt-5">
-                <h1 class="display-5 fw-light text-center mb-5">Colección de Obras</h1>
+                <h1 class="display-5 fw-light text-center mb-5">Colección de Cuadros</h1>
                 
                 <div class="row">
                     @foreach ($cuadros as $cuadro)
@@ -42,8 +43,11 @@
                                 @endif
                                 
                                 <div class="card-body d-flex flex-column text-center">
-                                    <h4 class="card-title fw-bold">{{ $cuadro->nombre }}</h4>
-                                    <p class="card-text text-muted mb-1">{{ $cuadro->autor }}</p>
+                                    <h4 class="card-title fw-bold" style="font-family: Georgia, 'Times New Roman', serif; letter-spacing: 0.5px;">{{ $cuadro->nombre }}</h4>
+                                    <p class="card-text mb-1">
+                                        <span class="text-muted small">Autor:</span> 
+                                        <span class="fw-semibold text-dark">{{ $cuadro->autor }}</span>
+                                    </p>
                                     <p class="card-text small fst-italic text-secondary mb-4">{{ $cuadro->epocaPintura }}</p>
                                     
                                     <div class="mt-auto">

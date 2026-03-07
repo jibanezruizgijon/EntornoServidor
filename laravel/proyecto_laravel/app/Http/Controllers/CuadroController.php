@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCuadroRequest;
 use App\Models\Cuadro;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CuadroController extends Controller
 {
@@ -85,6 +86,11 @@ class CuadroController extends Controller
     public function destroy($id)
     {
         $cuadro = Cuadro::find($id);
+
+        // se comprueba si la imagen no empieza por 'http' 
+        if (!str_starts_with($cuadro->urlImg, 'http')) {
+            Storage::disk('public')->delete($cuadro->urlImg);
+        }
         $cuadro->delete();
         return redirect()->route('home');
     }
