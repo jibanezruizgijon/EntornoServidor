@@ -1,7 +1,8 @@
 <x-app>
+    {{--  Menú de navegación --}}
     @section('head')
         <div class="col">
-            <nav class="navbar navbar-expand-lg bg-danger" data-bs-theme="dark">
+            <nav class="navbar navbar-expand-lg bg-danger position-fixed w-100 z-3" data-bs-theme="dark">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="#">Inicio</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
@@ -10,7 +11,6 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div class="navbar-nav">
-                            <a class="nav-link active" aria-current="page" href="{{ route('home') }}">Inicio</a>
                             <a class="nav-link" href="{{ route('ranking') }}">Ranking</a>
                             @if (auth()->user()->rol === 'ADMIN')
                                 <a href="{{ route('cuadros.create') }}" class="nav-link">Nuevo Cuadro</a>
@@ -26,54 +26,65 @@
         </div>
     @endsection
     @section('content')
-        <div class="container">
-
+        <div class="container pt-5">
             <h1>Mi Galería de Arte</h1>
             <hr>
             <div class="row">
+                {{-- Bucle de cuadros --}}
                 @foreach ($cuadros as $cuadro)
-                    <div class="card">
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            {{-- Comprueba si es un enlace externo o una imagen local --}}
+                            @if (Str::startsWith($cuadro->urlImg, 'http'))
+                                <a href="{{ route('cuadros.show', $cuadro) }}">
+                                    <img src="{{ $cuadro->urlImg }}" class="card-img-top" alt="{{ $cuadro->nombre }}">
+                                </a>
+                            @else
+                                <a href="{{ route('cuadros.show', $cuadro) }}">
+                                    <img src="{{ asset('storage/' . $cuadro->urlImg) }}" class="card-img-top"
+                                        alt="{{ $cuadro->nombre }}">
+                                </a>
+                            @endif
+                            <div class="card-body text-center">
+                                <h3 class="card-title">{{ $cuadro->nombre }}</h3>
+                                <p class="card-text"><strong>Autor:</strong> {{ $cuadro->autor }}</p>
+                                <p class="card-text"><em>{{ $cuadro->epocaPintura }}</em></p>
+                            </div>
+                            {{-- El user Admin podrá editar y eliminar cuadros --}}  
+                            @if (auth()->user()->rol === 'ADMIN')
+                                <a href="{{ route('cuadros.edit', $cuadro) }}" class="btn btn-warning">Editar Cuadro</a>
+                                <form action="{{ route('cuadros.destroy', $cuadro) }}" method="POST"
+                                    style="margin-top: 10px;">
+                                    @csrf @method('DELETE') <button type="submit" class="btn btn-danger w-100"
+                                        onclick="return confirm('¿Estás seguro de que deseas borrar el cuadro \'{{ $cuadro->nombre }}?\'')">
+                                        Eliminar Cuadro
+                                    </button>
+                                </form>
+                            @else
+                            {{-- El user normal podrá votar en caso de que no haya votado aún --}}
+                                @if ($cuadro->miVoto)
+                                    <h4 class="text-center bg-success mb-5 p-3 text-dark bg-opacity-50 rounded">
+                                        Ya votaste este cuadro con un <strong>{{ $cuadro->miVoto->puntuacion }}</strong>
+                                    </h4>
+                                @else
+                                    <div class="text-center p-4">
+                                        <form action=" {{ route('votos.store', $cuadro) }}" method="post">
+                                            @csrf
+                                            <select name="puntuacion" id="puntuacion" class="form-select mb-2">
+                                                <option value="">Seleccione una puntuación</option>
+                                                <option value="1">1 - Muy mala</option>
+                                                <option value="2">2 - Mala</option>
+                                                <option value="3">3 - Regular</option>
+                                                <option value="4">4 - Buena</option>
+                                                <option value="5">5 - Excelente</option>
+                                            </select>
+                                            <input type="submit" class="btn btn-primary" value="Votar">
+                                        </form>
+                                    </div>
+                                @endif
+                            @endif
 
-                        @if (Str::startsWith($cuadro->urlImg, 'http'))
-                            <a href="{{ route('cuadros.show', $cuadro) }}">
-                                <img src="{{ $cuadro->urlImg }}" class="card-img-top" alt="{{ $cuadro->nombre }}">
-                            </a>
-                        @else
-                            <a href="{{ route('cuadros.show', $cuadro) }}">
-                                <img src="{{ asset('storage/' .$cuadro->urlImg) }}" class="card-img-top" alt="{{ $cuadro->nombre }}">
-                            </a>
-                        @endif
-                        <div class="card-body text-center">
-                            <h3 class="card-title">{{ $cuadro->nombre }}</h3>
-                            <p class="card-text"><strong>Autor:</strong> {{ $cuadro->autor }}</p>
-                            <p class="card-text"><em>{{ $cuadro->epocaPintura }}</em></p>
                         </div>
-
-                        @if (auth()->user()->rol === 'ADMIN')
-                        <a href="{{ route('cuadros.edit', $cuadro) }}" class="btn btn-warning">Editar Cuadro</a>
-                            <form action="{{ route('cuadros.destroy', $cuadro) }}" method="POST"
-                                style="margin-top: 10px;">
-                                @csrf @method('DELETE') <button type="submit" class="btn btn-danger w-100"
-                                    onclick="return confirm('¿Estás seguro de que deseas borrar el cuadro \'{{ $cuadro->nombre }}?\'')">
-                                    Eliminar Cuadro
-                                </button>
-                            </form>
-                            
-                        @else
-                        {{-- {{ route('votos.store') }} --}}
-                            <form action="#" method="post">
-                                @csrf
-                                <select name="voto" id="voto" class="form-select mb-2">
-                                    <option value="">Seleccione una puntuación</option>
-                                    <option value="1">1 - Muy mala</option>
-                                    <option value="2">2 - Mala</option>
-                                    <option value="3">3 - Regular</option>
-                                    <option value="4">4 - Buena</option>
-                                    <option value="5">5 - Excelente</option>
-                                </select>
-                                <input type="submit" class="btn btn-primary" value="Votar">
-                            </form>
-                        @endif
                     </div>
                 @endforeach
 

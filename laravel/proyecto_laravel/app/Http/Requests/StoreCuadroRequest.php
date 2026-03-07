@@ -29,4 +29,16 @@ class StoreCuadroRequest extends FormRequest
         ];
     }
 
+    public function messages(): array
+    {
+        return [
+            'nombre.required' => 'El nombre es obligatorio.',
+            'autor.required' => 'El autor es obligatorio.',
+            'epocaPintura.required' => 'La época de pintura es obligatoria.',
+            'urlImg.required' => 'La imagen es obligatoria.',
+            'urlImg.image' => 'El archivo debe ser una imagen válida.',
+            'urlImg.max' => 'La imagen no debe pesar más de 2MB.',
+            'urlImg.uploaded' => 'La imagen pesa demasiado. El tamaño máximo permitido por el servidor es de 2MB.',
+        ];
+    }
 }

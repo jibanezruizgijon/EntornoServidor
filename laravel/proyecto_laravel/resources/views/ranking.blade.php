@@ -1,6 +1,7 @@
 <x-app>
  @section('title', 'Ranking de cuadros')
     @section('content')
+     <a href="{{route('home')}}">Volver a la página principal</a>
         <div class="container">
             <h1>Ranking de Cuadros</h1>
             <hr>
@@ -21,10 +22,9 @@
                                 <h3 class="card-title">{{ $cuadro->nombre }}</h3>
                                 <p class="card-text"><strong>Autor:</strong> {{ $cuadro->autor }}</p>
                                 <p class="card-text"><em>{{ $cuadro->epocaPintura }}</em></p>
-                                <p class="card-text"><strong>Puntuación:</strong> {{ number_format($cuadro->votos()->avg('voto'), 2) }}</p>
+                                <p class="card-text"><strong>Puntuación:</strong> {{ number_format($cuadro->votos()->avg('puntuacion'), 2) }}</p>
                             </div>
                         </div>
-                    {{ $cuadros->links() }}
                     </div>
                 @endforeach
             </div>

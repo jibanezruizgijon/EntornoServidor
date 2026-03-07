@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\Auth;
 class Cuadro extends Model
 {
     use HasFactory;
@@ -17,6 +17,10 @@ class Cuadro extends Model
         return $this->hasMany(Voto::class);
     }
 
+    public function miVoto()
+    {
+        return $this->hasOne(Voto::class)->where('user_id', Auth::id());
+    }
     public function getMediaAttribute()
     {
         return $this->votos()->avg('puntuacion') ?? 0.0;

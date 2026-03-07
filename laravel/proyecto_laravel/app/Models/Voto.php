@@ -9,6 +9,8 @@ class Voto extends Model
 {
     use HasFactory;
 
+    protected $table = 'votos';
+
     protected $fillable = [
         'puntuacion',
         'user_id',
