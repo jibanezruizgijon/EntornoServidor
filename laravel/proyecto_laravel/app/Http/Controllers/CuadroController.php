@@ -10,8 +10,8 @@ class CuadroController extends Controller
 {
     public function index()
     {
-        $cuadros = Cuadro::with('miVoto')->orderBy('created_at', 'desc')->paginate(9); 
-        return view('cuadros.index', compact('cuadros')); 
+        $cuadros = Cuadro::with('miVoto')->orderBy('created_at', 'desc')->paginate(9);
+        return view('cuadros.index', compact('cuadros'));
     }
 
     public function create()
@@ -19,43 +19,43 @@ class CuadroController extends Controller
         return view('cuadros.create');
     }
 
-    
+
     public function store(StoreCuadroRequest $request)
     {
         $cuadro = $request->validated();
 
 
         if ($request->hasFile('urlImg')) {
-            
-         
+
+
             $foto = $request->file('urlImg');
 
-          
+
             $nombreArchivo = $foto->getClientOriginalName();
 
-         
+
             $rutaImagen = $foto->storeAs('img', $nombreArchivo, 'public');
-            
-           
+
+
             $cuadro['urlImg'] = $rutaImagen;
         }
 
 
         Cuadro::create($cuadro);
 
-         return redirect()->route('home');
+        return redirect()->route('home');
     }
 
-    
-     public function edit(Cuadro $cuadro)
+
+    public function edit(Cuadro $cuadro)
     {
-        
+
         return view('cuadros.edit', compact('cuadro'));
     }
 
     public function update(Request $request, Cuadro $cuadro)
     {
-         $request->validate([
+        $request->validate([
             'nombre' => "required|string|max:255|unique:cuadros,nombre,{$cuadro->id}",
             'autor' => 'required|string',
             'epocaPintura' => 'required|string',
@@ -71,10 +71,9 @@ class CuadroController extends Controller
 
     public function ranking()
     {
-        $cuadros = Cuadro::withCount('votos')
-            ->orderByDesc('votos_count')
-            ->get();
-
+        $cuadros = Cuadro::withAvg('votos', 'puntuacion')
+            ->orderByDesc('votos_avg_puntuacion') 
+            ->paginate(9);
         return view('ranking', compact('cuadros'));
     }
 
