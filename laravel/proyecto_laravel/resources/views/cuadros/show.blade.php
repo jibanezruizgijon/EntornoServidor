@@ -34,9 +34,8 @@
                             
                             @if (auth()->user()->rol === 'ADMIN')
                                 <div class="mt-4 pt-4 border-top mt-auto">
-                                    <h6 class="text-muted mb-3">Gestión de la Obra</h6>
                                     <div class="d-flex flex-column gap-2">
-                                        <a href="{{ route('cuadros.edit', $cuadro->id) }}" class="btn btn-secondary w-100">Editar Obra</a>
+                                        <a href="{{ route('cuadros.edit', $cuadro->id) }}" class="btn btn-secondary w-100">Editar Cuadro</a>
                                         
                                         <form action="{{ route('cuadros.destroy', $cuadro->id) }}" method="post">
                                             @csrf
